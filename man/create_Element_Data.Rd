@@ -13,3 +13,8 @@ tibble
 Auxiliar Function that create data. Format is prepared for easy update. Contained within the package.
 Explanation is in Element_Data dataset.
 }
+\examples{
+REE_data <- create_Element_Data()
+
+
+}
