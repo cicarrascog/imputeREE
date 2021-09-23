@@ -105,7 +105,7 @@ create_Element_Data <- function() {
     tibble::tribble(
       ###  This data is ionic Radii from Shannon
 
-      ~Element_name,  ~Atomic_Mass , ~ShannonRadiiVII_Coord_3plus,
+      ~Element_name,  ~Atomic_Mass , ~ShannonRadiiVIII_Coord_3plus,
       'H'      ,     1.0079      ,     NA ,
       'He'     ,     4.0026      ,     NA ,
       'Li'     ,     6.941       ,     NA ,
