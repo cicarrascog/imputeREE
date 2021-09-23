@@ -18,4 +18,7 @@ Suggests:
 Config/testthat/edition: 3
 Imports: 
     tibble,
-    dplyr
+    dplyr,
+    magrittr
+Depends: 
+    R (>= 2.10)
