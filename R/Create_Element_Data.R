@@ -8,18 +8,21 @@
 #' @export
 #'
 #' @examples
-create_REE_Data <- function() {
+#' REE_data <- create_Element_Data()
+#'
+#'
+create_Element_Data <- function() {
+#
+#   if (!require(tibble)) {
+#
+#     stop("tibble not installed")
+#   } else if (!require(dplyr)) {
+#
+#     stop("dplyr not installed")
+#
+#   } else {
 
-  if (!require(tibble)) {
-
-    stop("tibble not installed")
-  } else if (!require(dplyr)) {
-
-    stop("dplyr not installed")
-
-  } else {
-
-    REE_DATA <- left_join( tribble(
+    REE_DATA <- dplyr::left_join( tibble::tribble(
       ~Z , ~Element_name, ~Unit  ,~Oneill2014CI  ,~Oneill2014CI_RSD, ~Oneill2014Mantle, ~Oneill2014Mantle_RSD,  ~ McDonough1995CI,
       1 , "H"           ,"pct"  ,1.97          ,10                ,0.012            ,20     ,        NA                        ,
       3 , "Li"          ,"ppm"  ,1.45          ,10                ,10               ,1.6    ,       1.5                        ,
@@ -99,7 +102,7 @@ create_REE_Data <- function() {
       90, "Th"          ,"ppm"  ,0.0300        , 7                ,0.0849           ,15     ,             29    /1000          ,
       92, "U"           ,"ppm"  ,0.00810       , 7                ,0.0229           ,15     ,              7.4 /1000
     )  ,
-    tribble(
+    tibble::tribble(
       ###  This data is ionic Radii from Shannon
 
       ~Element_name,  ~Atomic_Mass , ~ShannonRadiiVII_Coord_3plus,
@@ -225,6 +228,6 @@ create_REE_Data <- function() {
     )
 
     return(REE_DATA)
-  }
+  # }
 }
 
