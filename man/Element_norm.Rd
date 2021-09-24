@@ -33,7 +33,7 @@ Element_norm(
 a data frame
 }
 \description{
-Element norm normalize values according to published values for the Primitive mantle and chondrites. By defect, it uses the values from Palme and O'Neill (2014).
+Element norm normalize values according to published values for the Primitive mantle and chondrites. By defect, it uses the values from Palme and O'Neill (2014). By default, REE + Y list is provided
 }
 \examples{
 testing_data \%>\%  Element_norm()
