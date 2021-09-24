@@ -21,7 +21,11 @@
 #'
 Element_norm <- function(dat, return = 'rect',  method = Oneill2014CI , prefix = 'Zr', sufix = 'ppm', Element_list = REE_plus_Y_Elements, ID = 'rowid') {
 
- var <-  Oneill2014CI <- rowid <- Element_name <- matches <- value <- . <-  NULL
+## NOte deleteing
+
+ var <-  Oneill2014CI <- rowid <- Element_name <-  value <- . <-  NULL
+
+ ### variable Checkin
 
   if (!is.data.frame(dat)){
 
@@ -33,22 +37,50 @@ Element_norm <- function(dat, return = 'rect',  method = Oneill2014CI , prefix =
     stop('Please choose a valid option: \n"rect" for a wide data return.\n"raw" for a long data return. \n"append" to append the results to the input data.')
   }
 
+ ## add ID
+
   dat <- dat %>% Add_ID(var = var)
 
   original <- dat
 
-  Element_list <-  paste(prefix, Element_list, sufix, sep = '_')
-  Element_Data <- Element_Data %>%  dplyr::mutate(Element_name = paste(prefix, Element_name, sufix, sep = '_')) %>%  dplyr::select({{method}}, Element_name)
+## matches names
 
-  # Add_ID(dat)
+  Element_list <-  paste(prefix, Element_list, sufix, sep = '_')
+
+    if (is.null(prefix)) {
+    Element_list <- gsub('^_','', Element_list)
+
+  }
+
+  if (is.null(sufix)) {
+    Element_list <- gsub('_$','', Element_list)
+
+  }
+
+  ## matches names in the elemental data
+  Element_Data <- Element_Data %>%
+    dplyr::mutate(Element_name = paste(prefix, Element_name, sufix, sep = '_'))
+
+
+  if (is.null(prefix)) {Element_Data <-  Element_Data %>% dplyr::mutate(Element_name = stringr::str_remove(Element_name, '^_'))}
+
+  if (is.null(sufix )) {Element_Data <-  Element_Data %>% dplyr::mutate(Element_name = stringr::str_remove(Element_name, '_$'))}
+
+
+  Element_Data <-  Element_Data %>% dplyr::select({{method}}, Element_name)
+
+
+  # Normalize data
 
   dat <- dat %>%
-    dplyr::select(rowid, matches(Element_list)) %>% # Select all the columns with REE-Y plus the ID column
+    dplyr::select(rowid, tidyselect::matches(paste('^',Element_list,"$", sep = ""))) %>% # Select all the columns with REE-Y plus the ID column
     tidyr::pivot_longer(-rowid, names_to = "Element_name") %>% # makes data long, so it is easier to calculate
     dplyr::left_join(., Element_Data, by = "Element_name") %>%
     dplyr::mutate(Element_name = paste(Element_name, 'Normalized', sep = '_'),
                   value = value/{{method}}) %>%
     dplyr::select(-{{method}})
+
+  ### Returns
 
   if (return == 'rect') {
     dat <- dat %>%
@@ -70,6 +102,7 @@ Element_norm <- function(dat, return = 'rect',  method = Oneill2014CI , prefix =
   }
 
 }
+
 # REE_norm #####################################################################
 
 # This function takes a table as input with REE values as ppm as input.
