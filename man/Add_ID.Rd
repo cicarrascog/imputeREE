@@ -4,12 +4,12 @@
 \alias{Add_ID}
 \title{Add_ID}
 \usage{
-Add_ID(dat, var = "rowid", ...)
+Add_ID(dat, ID = "rowid", ...)
 }
 \arguments{
 \item{dat}{a tibble or a dataframe}
 
-\item{var}{Name of column to use for rownames.}
+\item{ID}{Name of column to use for rownames.}
 
 \item{...}{Other parameters passed onto the \code{tibble::rowid_to_column()} function}
 }
