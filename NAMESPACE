@@ -2,5 +2,6 @@
 
 export("%>%")
 export(Add_ID)
+export(REE_norm)
 export(create_Element_Data)
 importFrom(magrittr,"%>%")
