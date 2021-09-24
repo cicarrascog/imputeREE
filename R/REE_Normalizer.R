@@ -1,3 +1,70 @@
+#' Title
+#'
+#' @param dat a datafram
+#' @param return a characther from: "rect" for a wide data return,"raw" for a long data return,"append" to append the results to the input data
+#' @param method an opction from: Oneill2014CI, Oneill2014Mantle, McDonough1995CI
+#' @param prefix a character: by defaulkt it is 'Zr'
+#' @param sufix  a character: by default it expect to be the unit, usually in 'ppm'
+#' @param Element_list a character vector: indicating the elements that should be normalized
+#' @param ... Additional arguments passed on to functions.
+#'
+#' @return a data frame
+#' @export
+#'
+#' @examples
+#' testing_data %>%  REE_norm()
+#'
+REE_norm <- function(dat, return = 'rect',  method = Oneill2014CI , prefix = 'Zr', sufix = 'ppm', Element_list = REE_plus_Y_Elements, ...) {
+
+  Oneill2014CI <- rowid <- Element_name <- matches <- value <- . <-  NULL
+
+  if (!is.data.frame(dat)){
+
+    stop('dat should be a dataframe, you provided:', class(dat)[1])
+  }
+
+  if(!any(return == 'rect',return == 'raw',return == 'append')){
+
+    stop('Please choose a valid option: \n"rect" for a wide data return.\n"raw" for a long data return. \n"append" to append the results to the input data.')
+  }
+
+  dat <- dat %>% Add_ID()
+
+  original <- dat
+
+  Element_list <-  paste(prefix, Element_list, sufix, sep = '_')
+  Element_Data <- Element_Data %>%  dplyr::mutate(Element_name = paste(prefix, Element_name, sufix, sep = '_')) %>%  dplyr::select({{method}}, Element_name)
+
+  # Add_ID(dat)
+
+  dat <- dat %>%
+    dplyr::select(rowid, matches(Element_list)) %>% # Select all the columns with REE-Y plus the ID column
+    tidyr::pivot_longer(-rowid, names_to = "Element_name") %>% # makes data long, so it is easier to calculate
+    dplyr::left_join(., Element_Data, by = "Element_name") %>%
+    dplyr::mutate(Element_name = paste(Element_name, 'Normalized', sep = '_'),
+                  value = value/{{method}}) %>%
+    dplyr::select(-{{method}})
+
+  if (return == 'rect') {
+    dat <- dat %>%
+      tidyr::pivot_wider(id_cols = rowid, names_from = Element_name, values_from = value)
+    return(dat)
+  }
+
+  if (return == 'raw') {
+
+    return(dat)
+  }
+
+  if (return == 'append') {
+    dat <- dat %>%
+      tidyr::pivot_wider(id_cols = rowid, names_from = Element_name, values_from = value)
+    dat <- dplyr::left_join(original, dat, by = 'rowid')
+
+    return(dat)
+  }
+
+}
 # REE_norm #####################################################################
 
 # This function takes a table as input with REE values as ppm as input.
@@ -9,28 +76,3 @@
 #  pivot_longer: a logical that tells the function to return data in a long format (useful for REE diagrams), or wide format (useful for binary plots)
 # join: a logical that determines if other columns in the input should be kept or not.
 
-
-REE_norm <- function(dat, pivot_longer = T, join = F) {
-  dat <- check_ID(dat)
-  original <- dat
-  source('code/final_code/Constant_data.R')
-  dat <- dat %>%
-    select(ID, all_of(REE_Y_group)) %>% # Select all the columns with REE-Y plus the ID column
-    pivot_longer(-ID, names_to = "Element_Labels") %>% # makes data long, so it is easier to calculate
-    left_join(., REE_database, by = "Element_Labels") %>% # left join the data from
-    mutate(Element_Labels = paste0(Element_Labels, "_c"),
-           norm_values = ifelse(Element_Labels == 0, NA, value / Sun_and_mc_1995)) %>%
-    select(-names(select(REE_database, -Element_Labels))) #
-
-  if (pivot_longer == F) {
-    dat <- dat %>%
-      select(-value) %>%
-      pivot_wider(id_cols = ID, names_from = Element_Labels, values_from = norm_values)
-  }
-
-  if (join == T) {
-    dat <- left_join(original, dat, by = "ID")
-  }
-
-  dat
-}
