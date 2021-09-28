@@ -7,8 +7,8 @@
 #' @param dat a dataframe
 #' @param return a characther from: "rect" for a wide data return,"raw" for a long data return,"append" to append the results to the input data
 #' @param method an opction from: Oneill2014CI, Oneill2014Mantle, McDonough1995CI
-#' @param prefix a character: by defaulkt it is 'Zr'
-#' @param sufix  a character: by default it expect to be the unit, usually in 'ppm'
+#' @param prefix a character: by default it is 'Zr', to skip set to `NULL`
+#' @param sufix  a character: by default it expect to be the unit, usually in 'ppm', to skip set to `NULL`
 #' @param Element_list a character vector: indicating the elements that should be normalized
 #' @param ID Name of column to use for rownames. Is name is alredy in use, an error message will ask for a new name
 #'
