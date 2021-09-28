@@ -7,7 +7,9 @@ Add_Element_data <- function(dat, prefix = "Zr", sufix = "ppm_Normalized", Eleme
 
   ## add ID
   if (add_ID == TRUE) {
+
     dat <- dat %>% Add_ID(var = var)
+
   }
 
   original <- dat
@@ -42,6 +44,7 @@ Add_Element_data <- function(dat, prefix = "Zr", sufix = "ppm_Normalized", Eleme
 
     dat %>% dplyr::left_join(., Element_Data, by = "Element_name")
   } else {
+
   Element_Data <- Element_Data %>% dplyr::select(ShannonRadiiVIII_Coord_3plus, Element_name) }
 
   dat %>% dplyr::left_join(., Element_Data, by = "Element_name")
