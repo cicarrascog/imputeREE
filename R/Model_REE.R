@@ -1,6 +1,8 @@
 Model_REE <- function(dat, group = rowid, prefix = 'Zr', sufix = 'ppm', exclude = c('La','Ce','Eu'), include_Y = TRUE, r0 = 0.84) {
 
-
+Original <- dat %>%  Add_ID()
+dat <- dat %>% Element_norm('raw') %>%  Add_Element_data()
+#
 ### Select element data
 
 if(include_Y == F){
@@ -33,8 +35,9 @@ model_nree <- dat %>% dplyr::filter(!is.na(value)) %>%
   dplyr::group_by({{group}}) %>%
   dplyr::summarise(nree = sum(!is.na(Element_name)))
 
-lessthan3REE <- model_nree %>% dplyr::filter(model_nree < 4) %>% nrow()
-warning('There are ', lessthan3REE, ' groups with less than 4 REE to model, consider filtering that data')
+lessthan3REE <- model_nree %>% dplyr::ungroup() %>%  dplyr::filter(nree < 4) %>% nrow()
+
+warning('There are ', lessthan3REE, ' Samples with less than 3 or less REE to model, consider filtering that data')
 
 
 dat <- dplyr::left_join(dat, model_nree, by = 'rowid')
@@ -68,7 +71,7 @@ dat <- dat %>%
 # # dplyr::relocate(!dplyr::matches('Slope'))
 
 
-dat <- dplyr::left_join(dat, )
+dat <- dplyr::left_join(Original, dat, by = 'rowid' )
 
  return(dat)
 }
