@@ -1,0 +1,85 @@
+Model_REE <- function(dat, group = rowid, prefix = 'Zr', sufix = 'ppm', exclude = c('La','Ce','Eu'), include_Y = TRUE, r0 = 0.84) {
+
+
+### Select element data
+
+if(include_Y == F){
+
+  Element_list <- REE_Elements
+
+} else {
+
+  Element_list <- REE_plus_Y_Elements
+
+  }
+
+
+
+missingREE <-  dat %>%
+  dplyr::filter(stringr::str_detect(string = Element_name ,
+                                    pattern = exclude ,
+                                    negate = F
+  )) %>%  dplyr::mutate(value = NA_real_)
+
+dat <-  dat %>%
+  dplyr::filter(stringr::str_detect(string = Element_name ,
+                                    pattern = exclude ,
+                                    negate = T
+  ))
+
+dat <-  dplyr::bind_rows(dat, missingREE)
+
+model_nree <- dat %>% dplyr::filter(!is.na(value)) %>%
+  dplyr::group_by({{group}}) %>%
+  dplyr::summarise(nree = sum(!is.na(Element_name)))
+
+lessthan3REE <- model_nree %>% dplyr::filter(model_nree < 4) %>% nrow()
+warning('There are ', lessthan3REE, ' groups with less than 4 REE to model, consider filtering that data')
+
+
+dat <- dplyr::left_join(dat, model_nree, by = 'rowid')
+
+dat <- dat %>%
+  dplyr::mutate(
+    `(ri/3 + r0/6)(ri-r0)^2` = (ShannonRadiiVIII_Coord_3plus / 3 + r0/6)*(ShannonRadiiVIII_Coord_3plus -r0)^2)
+
+dat <- dat %>%
+  dplyr::group_by({{group}}) %>%
+  tidyr::nest() %>%
+  dplyr::mutate(
+  models = purrr::map(data,   ~lm(log(value)~`(ri/3 + r0/6)(ri-r0)^2`, na.action = na.omit, data = .x)),
+  tidied =   purrr::map(models, broom::tidy),
+  glanced = purrr::map(models, broom::glance)
+) %>%
+  tidyr::unnest(tidied) %>%
+  dplyr::mutate(term = ifelse(stringr::str_detect('Intercept', term), 'Intercept', 'Slope')) %>%
+  tidyr::pivot_wider(names_from = term, values_from = c(estimate, std.error, statistic, p.value)) %>%
+  tidyr::unnest(glanced, names_sep = 'model_') %>%
+  tidyr::unnest(data) %>%
+  dplyr::mutate(Element_name = paste0(Element_name, 'Calc'),
+                value = exp(`(ri/3 + r0/6)(ri-r0)^2` * estimate_Slope+ estimate_Intercept )) %>%
+  dplyr::ungroup() %>%
+   dplyr::rename_with(.cols = dplyr::matches('^glanced'), ~stringr::str_replace_all(pattern = 'glanced', replacement = '', string = .x)) %>%
+  dplyr::select(-c(models, ShannonRadiiVIII_Coord_3plus,`(ri/3 + r0/6)(ri-r0)^2` )) %>%
+  tidyr::pivot_wider(names_from = Element_name, values_from = value) %>%
+  dplyr::relocate({{group}}, nree, dplyr::matches(REE_plus_Y_Elements, ignore.case = FALSE))
+#   dplyr::relocate({{group}}, nree, !dplyr::matches(Element_list))
+# #   dplyr::relocate(!dplyr::matches('Intercept'))
+# # dplyr::relocate(!dplyr::matches('Slope'))
+
+
+dat <- dplyr::left_join(dat, )
+
+ return(dat)
+}
+
+# model_ree ####################################################################
+
+## This function quickly takes the data from REE_norm() function and model the REE using a nested Table.
+# Arguments:
+# dat: a data frame in long data format from the REE_norm() function
+# group: unique identification for each observation in the long data. By default is ID.
+
+
+
+
