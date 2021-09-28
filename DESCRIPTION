@@ -23,6 +23,9 @@ Imports:
     tidyr,
     stringr,
     janitor,
-    tidyselect
+    tidyselect,
+    purrr,
+    broom,
+    rlang
 Depends: 
     R (>= 2.10)
