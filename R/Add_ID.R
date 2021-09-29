@@ -29,8 +29,9 @@ Add_ID <- function(dat, ID = "rowid", ...) {
   }
 
   if (ID %in% colnames(dat)) {
-    stop( "It seems that you already have a `rowid` column. Please choose a new name with the `ID` parameter")
-  } else {
+    warning( "It seems that you already have a `rowid` column. No changes has been made.")
+
+} else {
     dat <- dat %>% tibble::rowid_to_column(var = ID)
     return(dat)
   }
