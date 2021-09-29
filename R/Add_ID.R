@@ -22,7 +22,7 @@ Add_ID <- function(dat, ID = "rowid", ...) {
          'You have provided an object of class: ', class(dat)[1])
   }
 
-  if(!is.character(ID)) {
+  if(!is.character(ID) | length(ID) > 1) {
 
     stop('ID should be a character vector of lenght 1',
          'You have provided an object of class: ', class(ID)[1])
