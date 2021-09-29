@@ -7,11 +7,9 @@
 #' @param dat a dataframe
 #' @param return a characther from: "rect" for a wide data return,"raw" for a long data return,"append" to append the results to the input data
 #' @param method an opction from: Oneill2014CI, Oneill2014Mantle, McDonough1995CI
-#' @param prefix a character: by default it is 'Zr', to skip set to `NULL`
-#' @param sufix  a character: by default it expect to be the unit, usually in 'ppm', to skip set to `NULL`
-#' @param Element_list a character vector: indicating the elements that should be normalized
-#' @param ID Name of column to use for rownames. Is name is alredy in use, an error message will ask for a new name
-#'
+#' @param preffix a character: by default it is 'Zr', to skip set to `NULL`
+#' @param suffix  a character: by default it expect to be the unit, usually in 'ppm', to skip set to `NULL`
+#' @param Element_list a character vector: indicating the elements that should be normalized. REE + Y by default
 #'
 #' @return a data frame
 #' @export
@@ -19,13 +17,9 @@
 #' @examples
 #' testing_data %>%  Element_norm()
 #'
-Element_norm <- function(dat, return = 'rect',  method = Oneill2014CI , prefix = 'Zr', sufix = 'ppm', Element_list = REE_plus_Y_Elements, ID = 'rowid') {
+Element_norm <- function(dat, return = 'rect',  method = PalmeOneill2014CI , preffix = NULL, suffix = NULL, Element_list = REE_plus_Y_Elements) {
 
-## NOte deleteing
-
- var <-  Oneill2014CI <- rowid <- Element_name <-  value <- . <-  NULL
-
- ### variable Checkin
+### variable Checkin
 
   if (!is.data.frame(dat)){
 
@@ -39,47 +33,25 @@ Element_norm <- function(dat, return = 'rect',  method = Oneill2014CI , prefix =
 
  ## add ID
 
-  dat <- dat %>% Add_ID(var = var)
+dat <- dat %>% Add_ID()
 
-  original <- dat
+original <- dat
 
-## matches names
+dat <- dat %>% CleanColnames(preffix = preffix ,suffix = suffix)
 
-  Element_list <-  paste(prefix, Element_list, sufix, sep = '_')
-
-    if (is.null(prefix)) {
-    Element_list <- gsub('^_','', Element_list)
-
-  }
-
-  if (is.null(sufix)) {
-    Element_list <- gsub('_$','', Element_list)
-
-  }
-
-  ## matches names in the elemental data
-  Element_Data <- Element_Data %>%
-    dplyr::mutate(Element_name = paste(prefix, Element_name, sufix, sep = '_'))
-
-
-  if (is.null(prefix)) {Element_Data <-  Element_Data %>% dplyr::mutate(Element_name = stringr::str_remove(Element_name, '^_'))}
-
-  if (is.null(sufix )) {Element_Data <-  Element_Data %>% dplyr::mutate(Element_name = stringr::str_remove(Element_name, '_$'))}
-
-
-  Element_Data <-  Element_Data %>% dplyr::select({{method}}, Element_name)
+Element_Data <-  Element_Data %>% dplyr::select({{method}}, Element_name)
 
 
   # Normalize data
 
   dat <- dat %>%
-    dplyr::select(rowid, tidyselect::matches(paste('^',Element_list,"$", sep = ""))) %>% # Select all the columns with REE-Y plus the ID column
+    dplyr::select(rowid, tidyr::matches(paste0('^',Element_list,"$"), ignore.case = FALSE)) %>% # Select all the columns with REE-Y plus the ID column
     tidyr::pivot_longer(-rowid, names_to = "Element_name") %>% # makes data long, so it is easier to calculate
     dplyr::left_join(., Element_Data, by = "Element_name") %>%
     dplyr::mutate(Element_name = paste(Element_name, 'Normalized', sep = '_'),
                   value = value/{{method}}) %>%
     dplyr::select(-{{method}})
-
+# #
   ### Returns
 
   if (return == 'rect') {
@@ -101,6 +73,7 @@ Element_norm <- function(dat, return = 'rect',  method = Oneill2014CI , prefix =
     return(dat)
   }
 
+return(dat)
 }
 
 # REE_norm #####################################################################
