@@ -14,7 +14,7 @@
 #' @export
 #'
 #' @examples
-#' testing_data %>%  Element_norm()
+#' testing_data %>% Element_norm()
 #'
 #'
 Element_norm <- function(
