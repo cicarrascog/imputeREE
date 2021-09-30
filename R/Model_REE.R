@@ -90,8 +90,6 @@ if(stopper >= 2 ) {
   dat <- dat %>%
      dplyr::filter(!is.na(model_nree) & model_nree > 2)
 
-# #   dplyr::relocate(!dplyr::matches('Intercept'))
-# # dplyr::relocate(!dplyr::matches('Slope'))
 
 
 dat <- dplyr::left_join(Original, dat, by = 'rowid' )
