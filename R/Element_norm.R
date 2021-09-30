@@ -6,10 +6,9 @@
 #'
 #' @param dat a dataframe
 #' @param return a characther from: "rect" for a wide data return,"raw" for a long data return,"append" to append the results to the input data
-#' @param method an opction from: Oneill2014CI, Oneill2014Mantle, McDonough1995CI
-#' @param preffix a character: by default it is 'Zr', to skip set to `NULL`
-#' @param suffix  a character: by default it expect to be the unit, usually in 'ppm', to skip set to `NULL`
+#' @param method an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI
 #' @param Element_list a character vector: indicating the elements that should be normalized. REE + Y by default
+#' @inheritParams CleanColnames
 #'
 #' @return a data frame
 #' @export
