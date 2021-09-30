@@ -51,6 +51,10 @@ model_nree <- dat %>% dplyr::filter(!is.na(value)) %>%
   dplyr::group_by(rowid) %>%
   dplyr::summarise(model_nree = sum(!is.na(value) ))
 
+dat <- dplyr::left_join(dat, model_nree, by = 'rowid')
+
+#### warning about samples with 3 data points for modelling
+
 lessthan3REE <- model_nree %>% dplyr::ungroup() %>%  dplyr::filter(model_nree <  4) %>% nrow()
 
 warning('There are ', lessthan3REE, ' Samples with less than 3 or less REE to model, consider filtering that data, or including more elements')
