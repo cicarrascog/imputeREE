@@ -30,17 +30,17 @@ if(include_Y == F){
 
   }
 
-
-
-missingREE <-  dat %>%
+#
+###
+excludedREE <-  dat %>%
   dplyr::filter(stringr::str_detect(string = Element_name ,
-                                    pattern = exclude ,
+                                    pattern = paste0(exclude, collapse = '|') ,
                                     negate = F
   )) %>%  dplyr::mutate(value = NA_real_)
 
 dat <-  dat %>%
   dplyr::filter(stringr::str_detect(string = Element_name ,
-                                    pattern = exclude ,
+                                    pattern = paste0(exclude, collapse = '|') ,
                                     negate = T
   ))
 
