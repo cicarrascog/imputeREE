@@ -101,7 +101,31 @@ dat <- dat %>%
 
 
 
-dat <- dplyr::left_join(Original, dat, by = 'rowid' )
+dat <- dat %>%
+  dplyr::group_by(rowid) %>%
+  tidyr::nest() %>%
+  dplyr::mutate(
+  models = purrr::map(data,   ~lm(log(value)~`(ri/3 + r0/6)(ri-r0)^2`, na.action = na.omit, data = .x)),
+  tidied =   purrr::map(models, broom::tidy),
+  glanced = purrr::map(models, broom::glance)) %>%
+  tidyr::unnest(tidied) %>%
+  dplyr::mutate(term = ifelse(stringr::str_detect('Intercept', term), 'Intercept', 'Slope')) %>%
+  tidyr::pivot_wider(names_from = term, values_from = c(estimate, std.error, statistic, p.value)) %>%
+  tidyr::unnest(glanced, names_sep = 'model_') %>%
+  tidyr::unnest(data) %>%
+  dplyr::mutate(Element_name = paste0(Element_name, '_NormalizedCalc'),
+                value = exp(`(ri/3 + r0/6)(ri-r0)^2` * estimate_Slope+ estimate_Intercept )) %>%
+  dplyr::ungroup() %>%
+   dplyr::rename_with(.cols = dplyr::matches('^glanced'), ~stringr::str_replace_all(pattern = 'glanced', replacement = '', string = .x)) %>%
+  dplyr::select(-c(models, ShannonRadiiVIII_Coord_3plus,`(ri/3 + r0/6)(ri-r0)^2` )) %>%
+  tidyr::pivot_wider(names_from = Element_name, values_from = value)  %>%  dplyr::relocate(rowid, model_nree, dplyr::matches(paste0('^',Element_list), ignore.case = FALSE))  %>%
+dplyr::relocate(!dplyr::matches('Intercept')) %>%
+ dplyr::relocate(!dplyr::matches('Slope'))
+
+#   dplyr::relocate(rowid, model_nree, !dplyr::matches(Element_list))
+
+
+# dat <- dplyr::left_join(Original, dat, by = 'rowid' )
 
  return(dat)
 }
