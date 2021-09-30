@@ -1,4 +1,22 @@
-Model_REE <- function(dat, group = rowid, prefix = 'Zr', sufix = 'ppm', exclude = c('La','Ce','Eu'), include_Y = TRUE, r0 = 0.84) {
+Model_REE <- function(dat,
+                      r0 = 0.84,
+                      include_Y = TRUE,
+                      exclude = c('La','Ce','Eu'),
+                      preffix = NULL,
+                      suffix = NULL
+                      ) {
+
+
+Original <- dat %>%  Add_ID() ## backup of original data.
+
+dat <- dat %>%
+       Element_norm('raw',
+               preffix = preffix,
+               suffix  = suffix) %>%
+  dplyr::mutate(Element_name = stringr::str_remove(Element_name, '[:punct:]?Normalized')) %>%
+  Add_IonicRadii()
+
+
 
 Original <- dat %>%  Add_ID()
 dat <- dat %>% Element_norm('raw') %>%  Add_Element_data()
