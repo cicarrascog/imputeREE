@@ -16,13 +16,15 @@
 #' @examples
 #' testing_data %>%  Element_norm()
 #'
-Element_norm <- function(dat, return = 'rect',  method = PalmeOneill2014CI , preffix = NULL, suffix = NULL, Element_list = REE_plus_Y_Elements) {
+#'
+Element_norm <- function(
+  dat,
+  return = "rect",
+  method = PalmeOneill2014CI,
+  preffix = NULL, ## in case you use prefix like: Whole_Rock_Ce
+  suffix = NULL, ## in case you use prefix like: Ce_wt%
+  Element_list = REE_plus_Y_Elements) {
 
-### variable Checkin
-
-  if (!is.data.frame(dat)){
-
-    stop('dat should be a dataframe, you provided:', class(dat)[1])
   }
 
   if(!any(return == 'rect',return == 'raw',return == 'append')){
