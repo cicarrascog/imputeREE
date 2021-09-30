@@ -43,8 +43,8 @@ dat <-  dat %>%
                                     pattern = paste0(exclude, collapse = '|') ,
                                     negate = T
   ))
-
-dat <-  dplyr::bind_rows(dat, missingREE)
+# #
+dat <-  dplyr::bind_rows(dat, excludedREE)
 
 model_nree <- dat %>% dplyr::filter(!is.na(value)) %>%
   dplyr::group_by({{group}}) %>%
