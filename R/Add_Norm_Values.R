@@ -22,7 +22,7 @@ Add_NormValues <- function(dat, method = PalmeOneill2014CI) {
 
 Element_Data <-  Element_Data %>% dplyr::select({{method}}, Element_name)
 
-dplyr::left_join(dat, Element_Data, by = 'Element_name')
+dat <- dplyr::left_join(dat, Element_Data, by = 'Element_name')
 
 return(dat)
 
