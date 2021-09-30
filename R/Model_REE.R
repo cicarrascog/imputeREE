@@ -62,6 +62,13 @@ warning('There are ', lessthan3REE, ' Samples with less than 3 or less REE to mo
 
 
 
+
+
+
+
+#### warning about samples with 3 data points for modelling
+stopper <- dat %>% dplyr::ungroup() %>%  dplyr::filter(is.na(model_nree)|model_nree == 1) %>% nrow()
+
 if(stopper >= 2 ) {
 
   stopper <- dat %>%
