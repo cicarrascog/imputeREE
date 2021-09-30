@@ -27,8 +27,11 @@ Element_norm <- function(
 
   ### variable Checkin
 
-  if(!any(return == 'rect',return == 'raw',return == 'append')){
+  if (!is.data.frame(dat)) {
+    stop("dat should be a dataframe, you provided:", class(dat)[1])
+  }
 
+  if (!any(return == "rect", return == "raw", return == "append")) {
     stop('Please choose a valid option: \n"rect" for a wide data return.\n"raw" for a long data return. \n"append" to append the results to the input data.')
   }
 
