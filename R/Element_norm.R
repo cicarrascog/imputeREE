@@ -92,4 +92,3 @@ Element_norm <- function(
 # dat : a data frame with zircon REE data in ppm.
 #  pivot_longer: a logical that tells the function to return data in a long format (useful for REE diagrams), or wide format (useful for binary plots)
 # join: a logical that determines if other columns in the input should be kept or not.
-
