@@ -53,32 +53,33 @@ Element_norm <- function(
     tidyr::pivot_longer(-rowid, names_to = "Element_name") %>% # makes data long, so it is easier to calculate
     Add_NormValues(method = {{ method }}) %>%
     dplyr::left_join(., Element_Data, by = "Element_name") %>%
-    dplyr::mutate(Element_name = paste(Element_name, 'Normalized', sep = '_'),
-                  value = value/{{method}}) %>%
-    dplyr::select(-{{method}})
-# #
+    dplyr::mutate(
+      Element_name = paste(Element_name, "Normalized", sep = "_"),
+      value = value / {{ method }}
+    ) %>%
+    dplyr::select(-{{ method }})
+  # #
   ### Returns
 
-  if (return == 'rect') {
+  if (return == "rect") {
     dat <- dat %>%
       tidyr::pivot_wider(id_cols = rowid, names_from = Element_name, values_from = value)
     return(dat)
   }
 
-  if (return == 'raw') {
-
+  if (return == "raw") {
     return(dat)
   }
 
-  if (return == 'append') {
+  if (return == "append") {
     dat <- dat %>%
       tidyr::pivot_wider(id_cols = rowid, names_from = Element_name, values_from = value)
-    dat <- dplyr::left_join(original, dat, by = 'rowid')
+    dat <- dplyr::left_join(original, dat, by = "rowid")
 
     return(dat)
   }
 
-return(dat)
+  return(dat)
 }
 
 # REE_norm #####################################################################
