@@ -7,11 +7,10 @@
 Element_norm(
   dat,
   return = "rect",
-  method = Oneill2014CI,
-  prefix = "Zr",
-  sufix = "ppm",
-  Element_list = REE_plus_Y_Elements,
-  ID = "rowid"
+  method = PalmeOneill2014CI,
+  preffix = NULL,
+  suffix = NULL,
+  Element_list = REE_plus_Y_Elements
 )
 }
 \arguments{
@@ -19,15 +18,13 @@ Element_norm(
 
 \item{return}{a characther from: "rect" for a wide data return,"raw" for a long data return,"append" to append the results to the input data}
 
-\item{method}{an opction from: Oneill2014CI, Oneill2014Mantle, McDonough1995CI}
+\item{method}{an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI}
 
-\item{prefix}{a character: by defaulkt it is 'Zr'}
+\item{preffix}{A character of lengt 1}
 
-\item{sufix}{a character: by default it expect to be the unit, usually in 'ppm'}
+\item{suffix}{A character of lengt 1}
 
-\item{Element_list}{a character vector: indicating the elements that should be normalized}
-
-\item{ID}{Name of column to use for rownames. Is name is alredy in use, an error message will ask for a new name}
+\item{Element_list}{a character vector: indicating the elements that should be normalized. REE + Y by default}
 }
 \value{
 a data frame
@@ -36,6 +33,7 @@ a data frame
 Element norm normalize values according to published values for the Primitive mantle and chondrites. By defect, it uses the values from Palme and O'Neill (2014). By default, REE + Y list is provided
 }
 \examples{
-testing_data \%>\%  Element_norm()
+testing_data \%>\% Element_norm()
+
 
 }
