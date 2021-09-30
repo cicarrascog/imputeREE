@@ -37,13 +37,13 @@ Element_norm <- function(
 
   ## add ID
 
-dat <- dat %>% Add_ID()
+  dat <- dat %>% Add_ID()
 
-original <- dat
+  original <- dat
 
-dat <- dat %>% CleanColnames(preffix = preffix ,suffix = suffix)
+  dat <- dat %>% CleanColnames(preffix = preffix, suffix = suffix)
 
-Element_Data <-  Element_Data %>% dplyr::select({{method}}, Element_name)
+  # Element_Data <-  Element_Data %>% dplyr::select({{method}}, Element_name)
 
 
   # Normalize data
