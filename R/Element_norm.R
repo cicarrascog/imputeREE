@@ -25,7 +25,7 @@ Element_norm <- function(
   suffix = NULL, ## in case you use prefix like: Ce_wt%
   Element_list = REE_plus_Y_Elements) {
 
-  }
+  ### variable Checkin
 
   if(!any(return == 'rect',return == 'raw',return == 'append')){
 
