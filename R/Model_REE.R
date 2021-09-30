@@ -47,12 +47,12 @@ dat <-  dat %>%
 dat <-  dplyr::bind_rows(dat, excludedREE)
 
 model_nree <- dat %>% dplyr::filter(!is.na(value)) %>%
-  dplyr::group_by({{group}}) %>%
-  dplyr::summarise(nree = sum(!is.na(Element_name)))
+  dplyr::group_by(rowid) %>%
+  dplyr::summarise(model_nree = sum(!is.na(value) ))
 
-lessthan3REE <- model_nree %>% dplyr::ungroup() %>%  dplyr::filter(nree < 4) %>% nrow()
+lessthan3REE <- model_nree %>% dplyr::ungroup() %>%  dplyr::filter(model_nree <  4) %>% nrow()
 
-warning('There are ', lessthan3REE, ' Samples with less than 3 or less REE to model, consider filtering that data')
+warning('There are ', lessthan3REE, ' Samples with less than 3 or less REE to model, consider filtering that data, or including more elements')
 
 
 dat <- dplyr::left_join(dat, model_nree, by = 'rowid')
