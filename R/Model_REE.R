@@ -60,33 +60,8 @@ lessthan3REE <- model_nree %>% dplyr::ungroup() %>%  dplyr::filter(model_nree < 
 warning('There are ', lessthan3REE, ' Samples with less than 3 or less REE to model, consider filtering that data, or including more elements')
 
 
-dat <- dplyr::left_join(dat, model_nree, by = 'rowid')
 
-dat <- dat %>%
-  dplyr::mutate(
-    `(ri/3 + r0/6)(ri-r0)^2` = (ShannonRadiiVIII_Coord_3plus / 3 + r0/6)*(ShannonRadiiVIII_Coord_3plus -r0)^2)
 
-dat <- dat %>%
-  dplyr::group_by({{group}}) %>%
-  tidyr::nest() %>%
-  dplyr::mutate(
-  models = purrr::map(data,   ~lm(log(value)~`(ri/3 + r0/6)(ri-r0)^2`, na.action = na.omit, data = .x)),
-  tidied =   purrr::map(models, broom::tidy),
-  glanced = purrr::map(models, broom::glance)
-) %>%
-  tidyr::unnest(tidied) %>%
-  dplyr::mutate(term = ifelse(stringr::str_detect('Intercept', term), 'Intercept', 'Slope')) %>%
-  tidyr::pivot_wider(names_from = term, values_from = c(estimate, std.error, statistic, p.value)) %>%
-  tidyr::unnest(glanced, names_sep = 'model_') %>%
-  tidyr::unnest(data) %>%
-  dplyr::mutate(Element_name = paste0(Element_name, 'Calc'),
-                value = exp(`(ri/3 + r0/6)(ri-r0)^2` * estimate_Slope+ estimate_Intercept )) %>%
-  dplyr::ungroup() %>%
-   dplyr::rename_with(.cols = dplyr::matches('^glanced'), ~stringr::str_replace_all(pattern = 'glanced', replacement = '', string = .x)) %>%
-  dplyr::select(-c(models, ShannonRadiiVIII_Coord_3plus,`(ri/3 + r0/6)(ri-r0)^2` )) %>%
-  tidyr::pivot_wider(names_from = Element_name, values_from = value) %>%
-  dplyr::relocate({{group}}, nree, dplyr::matches(REE_plus_Y_Elements, ignore.case = FALSE))
-#   dplyr::relocate({{group}}, nree, !dplyr::matches(Element_list))
 if(stopper >= 2 ) {
 
   stopper <- dat %>%
