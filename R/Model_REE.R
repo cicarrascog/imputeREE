@@ -90,6 +90,15 @@ if(stopper >= 2 ) {
   dat <- dat %>%
      dplyr::filter(!is.na(model_nree) & model_nree > 2)
 
+}
+
+
+### Calculate "strain"
+
+dat <- dat %>%
+  dplyr::mutate(
+    `(ri/3 + r0/6)(ri-r0)^2` = (ShannonRadiiVIII_Coord_3plus / 3 + r0/6)*(ShannonRadiiVIII_Coord_3plus -r0)^2)
+
 
 
 dat <- dplyr::left_join(Original, dat, by = 'rowid' )
