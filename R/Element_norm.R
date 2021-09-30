@@ -49,7 +49,7 @@ Element_norm <- function(
   # Normalize data
 
   dat <- dat %>%
-    dplyr::select(rowid, tidyr::matches(paste0('^',Element_list,"$"), ignore.case = FALSE)) %>% # Select all the columns with REE-Y plus the ID column
+    dplyr::select(rowid, tidyr::matches(paste0("^", Element_list, "$"), ignore.case = FALSE)) %>% # Select all the columns with REE-Y plus the ID column
     tidyr::pivot_longer(-rowid, names_to = "Element_name") %>% # makes data long, so it is easier to calculate
     dplyr::left_join(., Element_Data, by = "Element_name") %>%
     dplyr::mutate(Element_name = paste(Element_name, 'Normalized', sep = '_'),
