@@ -18,9 +18,6 @@ dat <- dat %>%
 
 
 
-Original <- dat %>%  Add_ID()
-dat <- dat %>% Element_norm('raw') %>%  Add_Element_data()
-#
 ### Select element data
 
 if(include_Y == F){
