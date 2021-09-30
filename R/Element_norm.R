@@ -6,101 +6,80 @@
 #'
 #' @param dat a dataframe
 #' @param return a characther from: "rect" for a wide data return,"raw" for a long data return,"append" to append the results to the input data
-#' @param method an opction from: Oneill2014CI, Oneill2014Mantle, McDonough1995CI
-#' @param prefix a character: by default it is 'Zr', to skip set to `NULL`
-#' @param sufix  a character: by default it expect to be the unit, usually in 'ppm', to skip set to `NULL`
-#' @param Element_list a character vector: indicating the elements that should be normalized
-#' @param ID Name of column to use for rownames. Is name is alredy in use, an error message will ask for a new name
-#'
+#' @param method an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI
+#' @param Element_list a character vector: indicating the elements that should be normalized. REE + Y by default
+#' @inheritParams CleanColnames
 #'
 #' @return a data frame
 #' @export
 #'
 #' @examples
-#' testing_data %>%  Element_norm()
+#' testing_data %>%  Element_norm(preffix = 'Zr', suffix = 'ppm')
+#' testing_data %>%  Element_norm(return = 'raw', preffix = 'Zr', suffix = 'ppm')
+#' testing_data %>%  Element_norm(return = 'append',preffix = 'Zr', suffix = 'ppm')
 #'
-Element_norm <- function(dat, return = 'rect',  method = Oneill2014CI , prefix = 'Zr', sufix = 'ppm', Element_list = REE_plus_Y_Elements, ID = 'rowid') {
+Element_norm <- function(
+  dat,
+  return = "rect",
+  method = PalmeOneill2014CI,
+  preffix = NULL, ## in case you use prefix like: Whole_Rock_Ce
+  suffix = NULL, ## in case you use prefix like: Ce_wt%
+  Element_list = REE_plus_Y_Elements) {
 
-## NOte deleteing
+  ### variable Checkin
 
- var <-  Oneill2014CI <- rowid <- Element_name <-  value <- . <-  NULL
-
- ### variable Checkin
-
-  if (!is.data.frame(dat)){
-
-    stop('dat should be a dataframe, you provided:', class(dat)[1])
+  if (!is.data.frame(dat)) {
+    stop("dat should be a dataframe, you provided:", class(dat)[1])
   }
 
-  if(!any(return == 'rect',return == 'raw',return == 'append')){
-
+  if (!any(return == "rect", return == "raw", return == "append")) {
     stop('Please choose a valid option: \n"rect" for a wide data return.\n"raw" for a long data return. \n"append" to append the results to the input data.')
   }
 
- ## add ID
+  ## add ID
 
-  dat <- dat %>% Add_ID(var = var)
+  dat <- dat %>% Add_ID()
 
   original <- dat
 
-## matches names
+  dat <- dat %>% CleanColnames(preffix = preffix, suffix = suffix)
 
-  Element_list <-  paste(prefix, Element_list, sufix, sep = '_')
-
-    if (is.null(prefix)) {
-    Element_list <- gsub('^_','', Element_list)
-
-  }
-
-  if (is.null(sufix)) {
-    Element_list <- gsub('_$','', Element_list)
-
-  }
-
-  ## matches names in the elemental data
-  Element_Data <- Element_Data %>%
-    dplyr::mutate(Element_name = paste(prefix, Element_name, sufix, sep = '_'))
-
-
-  if (is.null(prefix)) {Element_Data <-  Element_Data %>% dplyr::mutate(Element_name = stringr::str_remove(Element_name, '^_'))}
-
-  if (is.null(sufix )) {Element_Data <-  Element_Data %>% dplyr::mutate(Element_name = stringr::str_remove(Element_name, '_$'))}
-
-
-  Element_Data <-  Element_Data %>% dplyr::select({{method}}, Element_name)
+  # Element_Data <-  Element_Data %>% dplyr::select({{method}}, Element_name)
 
 
   # Normalize data
 
   dat <- dat %>%
-    dplyr::select(rowid, tidyselect::matches(paste('^',Element_list,"$", sep = ""))) %>% # Select all the columns with REE-Y plus the ID column
+    dplyr::select(rowid, tidyr::matches(paste0("^", Element_list, "$"), ignore.case = FALSE)) %>% # Select all the columns with REE-Y plus the ID column
     tidyr::pivot_longer(-rowid, names_to = "Element_name") %>% # makes data long, so it is easier to calculate
-    dplyr::left_join(., Element_Data, by = "Element_name") %>%
-    dplyr::mutate(Element_name = paste(Element_name, 'Normalized', sep = '_'),
-                  value = value/{{method}}) %>%
-    dplyr::select(-{{method}})
-
+    Add_NormValues(method = {{ method }}) %>%
+    dplyr::mutate(
+      Element_name = paste(Element_name, "Normalized", sep = "_"),
+      value = value / {{ method }}
+    ) %>%
+    dplyr::select(-{{ method }})
+  # #
   ### Returns
 
-  if (return == 'rect') {
+  if (return == "rect") {
     dat <- dat %>%
       tidyr::pivot_wider(id_cols = rowid, names_from = Element_name, values_from = value)
     return(dat)
   }
 
-  if (return == 'raw') {
-
+  if (return == "raw") {
     return(dat)
   }
 
-  if (return == 'append') {
+  if (return == "append") {
     dat <- dat %>%
       tidyr::pivot_wider(id_cols = rowid, names_from = Element_name, values_from = value)
-    dat <- dplyr::left_join(original, dat, by = 'rowid')
+    dat <- dplyr::left_join(original, dat, by = "rowid")
 
     return(dat)
   }
 
+  return(dat)
 }
 
 # REE_norm #####################################################################
@@ -113,4 +92,3 @@ Element_norm <- function(dat, return = 'rect',  method = Oneill2014CI , prefix =
 # dat : a data frame with zircon REE data in ppm.
 #  pivot_longer: a logical that tells the function to return data in a long format (useful for REE diagrams), or wide format (useful for binary plots)
 # join: a logical that determines if other columns in the input should be kept or not.
-

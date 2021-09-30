@@ -1,6 +1,6 @@
 #' Add_ID
 #'
-#' Add an unique ID per observation and checks that is not overwriting an existing column.
+#' Add an unique ID per observation and checks that is not overwriting an existing column. If the column already exist, it will take no action.
 #'
 #' @param dat a tibble or a dataframe
 #' @param ID Name of column to use for rownames.
@@ -22,15 +22,16 @@ Add_ID <- function(dat, ID = "rowid", ...) {
          'You have provided an object of class: ', class(dat)[1])
   }
 
-  if(!is.character(ID)) {
+  if(!is.character(ID) | length(ID) > 1) {
 
     stop('ID should be a character vector of lenght 1',
          'You have provided an object of class: ', class(ID)[1])
   }
 
   if (ID %in% colnames(dat)) {
-    stop( "It seems that you already have a `rowid` column. Please choose a new name with the `ID` parameter")
-  } else {
+    warning( "It seems that you already have a `rowid` column. No changes has been made.")
+
+} else {
     dat <- dat %>% tibble::rowid_to_column(var = ID)
     return(dat)
   }

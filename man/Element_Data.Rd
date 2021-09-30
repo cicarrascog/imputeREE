@@ -11,10 +11,10 @@ A data frame with 53940 rows and 10 variables:
 \item{Element_name}{Element Symbol}
 \item{Atomic_Mass}{Atomic Mass from IUPAC}
 \item{Unit}{Measure Unit of the Concentrations, ppm = parts per million, pct = percentage}
-\item{Oneill2014CI}{Chondrite values from Palme and Oneil (2014)}
-\item{Oneill2014CI_RSD}{Uncertainty from chondrite values from palme and Oneil (2014) as RSD (Relative standard Deviation)}
-\item{Oneill2014Mantle}{Primitive Mantle values from Palme and Oneil (2014)}
-\item{Oneill2014Mantle_RSD}{Uncertainty from Primitive Mantlevalues from palme and Oneil (2014) as RSD (Relative standard Deviation)}
+\item{PalmeOneill2014CI}{Chondrite values from Palme and Oneil (2014)}
+\item{PalmeOneill2014CI_RSD}{Uncertainty from chondrite values from palme and Oneil (2014) as RSD (Relative standard Deviation)}
+\item{PalmeOneill2014Mantle}{Primitive Mantle values from Palme and Oneil (2014)}
+\item{PalmeOneill2014Mantle_RSD}{Uncertainty from Primitive Mantlevalues from palme and Oneil (2014) as RSD (Relative standard Deviation)}
 \item{McDonough1995CI}{Chondrite values from Mcdonough and Sun (1995)}
 \item{ShannonRadiiVIII_Coord_3plus}{Shannon (1976) Ionic Radii for elements in Eightfold coordination and 3+ charge}
 ...

@@ -2,6 +2,8 @@
 
 export("%>%")
 export(Add_ID)
+export(Add_NormValues)
+export(CleanColnames)
 export(Element_norm)
 export(create_Element_Data)
 importFrom(magrittr,"%>%")

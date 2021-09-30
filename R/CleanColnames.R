@@ -1,6 +1,17 @@
+#' Title
+#'
+#' @param dat
+#' @param preffix A character of lengt 1
+#' @param suffix A character of lengt 1
+#'
+#' @return A dataframe
+#' @export
+#'
+#' @examples
+#'
+#' testing_data %>% CleanColnames(preffix = 'Zr', suffix = 'ppm')
+#'
 CleanColnames <- function(dat, preffix = NULL, suffix = NULL) {
-
-
 
    if (!is.null(preffix)) {
 
