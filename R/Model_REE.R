@@ -82,6 +82,27 @@ dat <- dat %>%
   tidyr::pivot_wider(names_from = Element_name, values_from = value) %>%
   dplyr::relocate({{group}}, nree, dplyr::matches(REE_plus_Y_Elements, ignore.case = FALSE))
 #   dplyr::relocate({{group}}, nree, !dplyr::matches(Element_list))
+if(stopper >= 2 ) {
+
+  stopper <- dat %>%
+    dplyr::ungroup() %>%
+    dplyr::arrange(model_nree) %>%
+    dplyr::filter(is.na(model_nree) | model_nree <= 2) %>%
+    dplyr::select(rowid) %>%
+    dplyr::distinct()
+
+  stopper <- paste0(stopper$rowid, collapse = ' ,  ')
+
+  warning('rowid: ', stopper[1] , '\n do not have enough data for modelling. They have been excluded from the modelling.')
+
+  exluded_rows <- dat %>%
+    dplyr::ungroup() %>%
+    dplyr::arrange(model_nree) %>%
+    dplyr::filter(is.na(model_nree) | model_nree <= 2)
+
+  dat <- dat %>%
+     dplyr::filter(!is.na(model_nree) & model_nree > 2)
+
 # #   dplyr::relocate(!dplyr::matches('Intercept'))
 # # dplyr::relocate(!dplyr::matches('Slope'))
 
