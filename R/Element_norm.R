@@ -14,8 +14,9 @@
 #' @export
 #'
 #' @examples
-#' testing_data %>% Element_norm()
-#'
+#' testing_data %>%  Element_norm(preffix = 'Zr', suffix = 'ppm')
+#' testing_data %>%  Element_norm(return = 'raw', preffix = 'Zr', suffix = 'ppm')
+#' testing_data %>%  Element_norm(return = 'append',preffix = 'Zr', suffix = 'ppm')
 #'
 Element_norm <- function(
   dat,
