@@ -35,7 +35,7 @@ Element_norm <- function(
     stop('Please choose a valid option: \n"rect" for a wide data return.\n"raw" for a long data return. \n"append" to append the results to the input data.')
   }
 
- ## add ID
+  ## add ID
 
 dat <- dat %>% Add_ID()
 
