@@ -126,6 +126,7 @@ dat <- dat %>%
   tidyr::pivot_wider(names_from = Element_name, values_from = c(NormalizedCalc, ppmCalc))  %>%
   dplyr::relocate(rowid, model_nree, dplyr::matches('NormalizedCalc'), dplyr::matches('ppmCalc'))  #%>%
 
+### join to original Data
 
 dat <- dplyr::left_join(Original, dat, by = 'rowid' )
  return(dat)
