@@ -123,7 +123,8 @@ dat <- dat %>%
   dplyr::bind_rows(.,exluded_rows) %>%
   dplyr::select(-c(models, ShannonRadiiVIII_Coord_3plus,`(ri/3 + r0/6)(ri-r0)^2`, value, {{method}})) %>%
 
-#   dplyr::relocate(rowid, model_nree, !dplyr::matches(Element_list))
+  tidyr::pivot_wider(names_from = Element_name, values_from = c(NormalizedCalc, ppmCalc))  %>%
+  dplyr::relocate(rowid, model_nree, dplyr::matches('NormalizedCalc'), dplyr::matches('ppmCalc'))  #%>%
 
 
 # dat <- dplyr::left_join(Original, dat, by = 'rowid' )
