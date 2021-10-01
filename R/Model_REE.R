@@ -127,8 +127,7 @@ dat <- dat %>%
   dplyr::relocate(rowid, model_nree, dplyr::matches('NormalizedCalc'), dplyr::matches('ppmCalc'))  #%>%
 
 
-# dat <- dplyr::left_join(Original, dat, by = 'rowid' )
-
+dat <- dplyr::left_join(Original, dat, by = 'rowid' )
  return(dat)
 }
 
