@@ -2,8 +2,10 @@
 
 export("%>%")
 export(Add_ID)
+export(Add_IonicRadii)
 export(Add_NormValues)
 export(CleanColnames)
 export(Element_norm)
+export(Model_REE)
 export(create_Element_Data)
 importFrom(magrittr,"%>%")

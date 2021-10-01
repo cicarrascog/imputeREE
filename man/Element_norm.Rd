@@ -33,7 +33,8 @@ a data frame
 Element norm normalize values according to published values for the Primitive mantle and chondrites. By defect, it uses the values from Palme and O'Neill (2014). By default, REE + Y list is provided
 }
 \examples{
-testing_data \%>\% Element_norm()
-
+testing_data \%>\%  Element_norm(preffix = 'Zr', suffix = 'ppm')
+testing_data \%>\%  Element_norm(return = 'raw', preffix = 'Zr', suffix = 'ppm')
+testing_data \%>\%  Element_norm(return = 'append',preffix = 'Zr', suffix = 'ppm')
 
 }
