@@ -1,3 +1,17 @@
+#' Model REE + Y contents using an empirical method based on the lattice strain theory
+#'
+#' @param dat A data frame
+#' @param r0 A number: ionic radii of the lattice site r0
+#' @param include_Y A logical: should Y be included or not
+#' @param exclude a string: vector including elements that should be ommited from modelling. La, Ce and Eu are the default. Ce and Eu should be always included
+#' @inheritParams Element_norm
+#'
+#' @return a dataframe
+#' @export
+#'
+#' @examples
+#'
+#' testing_data %>%  Model_REE(preffix = 'Zr', suffix = 'ppm')
 Model_REE <- function(dat,
                       r0 = 0.84,
                       include_Y = TRUE,
