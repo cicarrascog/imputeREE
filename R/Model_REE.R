@@ -131,13 +131,5 @@ dplyr::relocate(!dplyr::matches('Intercept')) %>%
  return(dat)
 }
 
-# model_ree ####################################################################
-
-## This function quickly takes the data from REE_norm() function and model the REE using a nested Table.
-# Arguments:
-# dat: a data frame in long data format from the REE_norm() function
-# group: unique identification for each observation in the long data. By default is ID.
-
-
 
 
