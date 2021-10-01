@@ -101,7 +101,7 @@ dat <- dat %>%
     `(ri/3 + r0/6)(ri-r0)^2` = (ShannonRadiiVIII_Coord_3plus / 3 + r0/6)*(ShannonRadiiVIII_Coord_3plus -r0)^2)
 
 
-
+### Model REE
 dat <- dat %>%
   dplyr::group_by(rowid) %>%
   tidyr::nest() %>%
