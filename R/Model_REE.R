@@ -3,7 +3,8 @@ Model_REE <- function(dat,
                       include_Y = TRUE,
                       exclude = c('La','Ce','Eu'),
                       preffix = NULL,
-                      suffix = NULL
+                      suffix = NULL,
+                      method = PalmeOneill2014CI
                       ) {
 
 
