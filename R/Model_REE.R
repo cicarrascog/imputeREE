@@ -114,8 +114,9 @@ dat <- dat %>%
   tidyr::pivot_wider(names_from = term, values_from = c(estimate, std.error, statistic, p.value)) %>%
   tidyr::unnest(glanced, names_sep = 'model_') %>%
   tidyr::unnest(data) %>%
-  dplyr::mutate(Element_name = paste0(Element_name, '_NormalizedCalc'),
-                value = exp(`(ri/3 + r0/6)(ri-r0)^2` * estimate_Slope+ estimate_Intercept )) %>%
+  Add_NormValues(method = {{method}}) %>%
+  dplyr::mutate(NormalizedCalc = exp(`(ri/3 + r0/6)(ri-r0)^2` * estimate_Slope+ estimate_Intercept ),
+                ppmCalc = NormalizedCalc * {{method}}) %>%
   dplyr::ungroup() %>%
    dplyr::rename_with(.cols = dplyr::matches('^glanced'), ~stringr::str_replace_all(pattern = 'glanced', replacement = '', string = .x)) %>%
   dplyr::select(-c(models, ShannonRadiiVIII_Coord_3plus,`(ri/3 + r0/6)(ri-r0)^2` )) %>%
