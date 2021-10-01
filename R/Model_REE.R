@@ -123,6 +123,7 @@ dat <- dat %>%
   tidyr::pivot_wider(names_from = Element_name, values_from = value)  %>%  dplyr::relocate(rowid, model_nree, dplyr::matches(paste0('^',Element_list), ignore.case = FALSE))  %>%
 dplyr::relocate(!dplyr::matches('Intercept')) %>%
  dplyr::relocate(!dplyr::matches('Slope'))
+  dplyr::bind_rows(.,exluded_rows) %>%
 
 #   dplyr::relocate(rowid, model_nree, !dplyr::matches(Element_list))
 
