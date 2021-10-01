@@ -121,6 +121,7 @@ dat <- dat %>%
    dplyr::rename_with(.cols = dplyr::matches('^glanced'),
                       ~stringr::str_replace_all(pattern = 'glanced', replacement = '', string = .x)) %>%
   dplyr::bind_rows(.,exluded_rows) %>%
+  dplyr::select(-c(models, ShannonRadiiVIII_Coord_3plus,`(ri/3 + r0/6)(ri-r0)^2`, value, {{method}})) %>%
 
 #   dplyr::relocate(rowid, model_nree, !dplyr::matches(Element_list))
 
