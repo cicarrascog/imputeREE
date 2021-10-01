@@ -118,11 +118,6 @@ dat <- dat %>%
   dplyr::mutate(NormalizedCalc = exp(`(ri/3 + r0/6)(ri-r0)^2` * estimate_Slope+ estimate_Intercept ),
                 ppmCalc = NormalizedCalc * {{method}}) %>%
   dplyr::ungroup() %>%
-   dplyr::rename_with(.cols = dplyr::matches('^glanced'), ~stringr::str_replace_all(pattern = 'glanced', replacement = '', string = .x)) %>%
-  dplyr::select(-c(models, ShannonRadiiVIII_Coord_3plus,`(ri/3 + r0/6)(ri-r0)^2` )) %>%
-  tidyr::pivot_wider(names_from = Element_name, values_from = value)  %>%  dplyr::relocate(rowid, model_nree, dplyr::matches(paste0('^',Element_list), ignore.case = FALSE))  %>%
-dplyr::relocate(!dplyr::matches('Intercept')) %>%
- dplyr::relocate(!dplyr::matches('Slope'))
    dplyr::rename_with(.cols = dplyr::matches('^glanced'),
                       ~stringr::str_replace_all(pattern = 'glanced', replacement = '', string = .x)) %>%
   dplyr::bind_rows(.,exluded_rows) %>%
