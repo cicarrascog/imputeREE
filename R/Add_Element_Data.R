@@ -1,5 +1,7 @@
 Add_Element_data <- function(dat) {
 
+  . <- NULL
+
   if (!is.data.frame(dat)) {
     stop("dat should be a dataframe, you provided:", class(dat)[1])
   }

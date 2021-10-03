@@ -5,16 +5,27 @@
 #' This is a test to see what happens in the following paragrapfs
 #'
 #' @family Add Functions
-#' @seealso \code{\link{Element_norm()}}
+#' @seealso \code{\link{Element_norm}}
 #'
-#' @param dat Dataframe or tibble.
+#' @param dat a dataframe or tibble.
 #' @param method Ionic Radii from shannon1976. Not.
 #'
 #' @return a data frame or tibble
 #' @export
 #'
 #' @examples
+#'
+#' testing_data %>%
+#' CleanColnames('Zr', 'ppm') %>%  Add_ID() %>%
+#' dplyr::select(rowid, La, Ce) %>%
+#' tidyr::pivot_longer(cols = -rowid, names_to = 'Element_name')  %>%
+#' Add_IonicRadii()
+#'
 Add_IonicRadii <- function(dat, method = ShannonRadiiVIII_Coord_3plus) {
+
+
+  Element_name <- ShannonRadiiVIII_Coord_3plus <- NULL
+
 
   if (!is.data.frame(dat)) {
     stop("dat should be a dataframe, you provided:", class(dat)[1])

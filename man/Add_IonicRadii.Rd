@@ -7,7 +7,7 @@
 Add_IonicRadii(dat, method = ShannonRadiiVIII_Coord_3plus)
 }
 \arguments{
-\item{dat}{Dataframe or tibble.}
+\item{dat}{a dataframe or tibble.}
 
 \item{method}{Ionic Radii from shannon1976. Not.}
 }
@@ -20,8 +20,17 @@ This is a helper function to work with Element_norm() and Element_denorm(). Take
 \details{
 This is a test to see what happens in the following paragrapfs
 }
+\examples{
+
+testing_data \%>\%
+CleanColnames('Zr', 'ppm') \%>\%  Add_ID() \%>\%
+dplyr::select(rowid, La, Ce) \%>\%
+tidyr::pivot_longer(cols = -rowid, names_to = 'Element_name')  \%>\%
+Add_IonicRadii()
+
+}
 \seealso{
-\code{\link{Element_norm()}}
+\code{\link{Element_norm}}
 
 Other Add Functions: 
 \code{\link{Add_NormValues}()}

@@ -1,6 +1,6 @@
-#' Title
+#' Clean variable names that have preffixes or suffixes
 #'
-#' @param dat
+#' @param dat a dataframe
 #' @param preffix A character of lengt 1
 #' @param suffix A character of lengt 1
 #'

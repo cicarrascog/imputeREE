@@ -1,5 +1,6 @@
-Element_denorm <- function(dat, method = Oneill2014CI) {
+Element_denorm <- function(dat, method = PalmeOneill2014CI) {
 
+  PalmeOneill2014CI <- rowid <- Element_Data <- Element_name <- NULL
 
   original <- dat
 

@@ -21,6 +21,32 @@ Model_REE <- function(dat,
                       method = PalmeOneill2014CI) {
   Original <- dat %>% Add_ID() ## backup of original data.
 
+
+  PalmeOneill2014CI <-
+  rowid <-
+  Element_Data <-
+  Element_name <-
+  value <-
+  ShannonRadiiVIII_Coord_3plus <-
+  data <-
+  models <-
+  tidied <-
+  term <-
+  estimate <-
+  std.error <-
+  statistic <-
+  p.value <-
+  glanced <-
+  `(ri/3 + r0/6)(ri-r0)^2` <-
+  estimate_Slope <-
+  estimate_Intercept <-
+  NormalizedCalc <-
+  . <-
+  ppmCalc <-
+  NULL
+
+
+
   dat <- dat %>%
     Element_norm("raw",
       preffix = preffix,

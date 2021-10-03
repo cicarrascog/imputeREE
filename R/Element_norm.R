@@ -26,7 +26,11 @@ Element_norm <- function(
   suffix = NULL, ## in case you use prefix like: Ce_wt%
   Element_list = REE_plus_Y_Elements) {
 
-  ### variable Checkin
+
+  PalmeOneill2014CI <- rowid <- Element_Data <- Element_name <- value <- NULL
+
+
+  ### variable Check
 
   if (!is.data.frame(dat)) {
     stop("dat should be a dataframe, you provided:", class(dat)[1])

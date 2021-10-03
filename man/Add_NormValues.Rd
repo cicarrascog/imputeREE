@@ -9,7 +9,8 @@ Add_NormValues(dat, method = PalmeOneill2014CI)
 \arguments{
 \item{dat}{Dataframe or tibble.}
 
-\item{method}{Values to normalize: an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI.}
+\item{method}{Values to normalize: an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI.
+load}
 }
 \value{
 a data frame or tibble
@@ -19,6 +20,16 @@ This is a helper function to work with Element_norm() and Element_denorm(). Take
 }
 \details{
 This is a test to see what happens in the following paragrapfs
+}
+\examples{
+
+Data <- testing_data \%>\%  CleanColnames('Zr', 'ppm') \%>\%  Add_ID()
+
+Data \%>\%
+dplyr::select(rowid, La, Ce) \%>\%
+tidyr::pivot_longer(cols = -rowid, names_to = 'Element_name')  \%>\%
+Add_NormValues()
+
 }
 \seealso{
 \code{\link{Element_norm()}}

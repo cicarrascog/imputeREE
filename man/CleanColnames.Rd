@@ -2,11 +2,13 @@
 % Please edit documentation in R/CleanColnames.R
 \name{CleanColnames}
 \alias{CleanColnames}
-\title{Title}
+\title{Clean variable names that have preffixes or suffixes}
 \usage{
 CleanColnames(dat, preffix = NULL, suffix = NULL)
 }
 \arguments{
+\item{dat}{a dataframe}
+
 \item{preffix}{A character of lengt 1}
 
 \item{suffix}{A character of lengt 1}
@@ -15,7 +17,7 @@ CleanColnames(dat, preffix = NULL, suffix = NULL)
 A dataframe
 }
 \description{
-Title
+Clean variable names that have preffixes or suffixes
 }
 \examples{
 
