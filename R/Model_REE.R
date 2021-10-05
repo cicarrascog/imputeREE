@@ -1,5 +1,9 @@
 #' Model REE + Y contents using an empirical method based on the lattice strain theory
 #'
+#' Model REE will make a linear regression between the REE (+Y) and the relationship of the ideal Ionic Radii in the lattice site (r0) and the ionic radii of the element that use that space (ri) according to the relationship : (ri/3 + r0/6)(ri-r0)^2`
+#'
+#' For details in the lattice strain theory, see Blundy and Wood 1994.
+#'
 #' @param dat A data frame
 #' @param r0 A number: ionic radii of the lattice site r0
 #' @param include_Y A logical: should Y be included or not
@@ -21,7 +25,7 @@ Model_REE <- function(dat,
                       method = PalmeOneill2014CI) {
   Original <- dat %>% Add_ID() ## backup of original data.
 
-
+## Notes removed
   PalmeOneill2014CI <-
   rowid <-
   Element_Data <-
@@ -47,6 +51,7 @@ Model_REE <- function(dat,
 
 
 
+## calculate chondrite normalized values and add ionic Radii
   dat <- dat %>%
     Element_norm("raw",
       preffix = preffix,
@@ -57,7 +62,7 @@ Model_REE <- function(dat,
 
 
 
-  ### Select element data
+### Select element data
 
   if (include_Y == F) {
     Element_list <- REE_Elements
@@ -99,7 +104,7 @@ Model_REE <- function(dat,
     dplyr::filter(model_nree < 4) %>%
     nrow()
 
-  warning("There are ", lessthan3REE, " Samples with less than 3 or less REE to model, consider filtering that data, or including more elements")
+  warning("There are ", lessthan3REE, " Samples with less than 3 or less elements to model, consider filtering that data, or including more elements")
 
 
 
@@ -115,6 +120,7 @@ Model_REE <- function(dat,
     nrow()
 
   if (stopper >= 2) {
+
     stopper <- dat %>%
       dplyr::ungroup() %>%
       dplyr::arrange(model_nree) %>%
@@ -166,10 +172,17 @@ Model_REE <- function(dat,
     dplyr::ungroup() %>%
     dplyr::rename_with(
       .cols = dplyr::matches("^glanced"),
-      ~ stringr::str_replace_all(pattern = "glanced", replacement = "", string = .x)
-    ) %>%
-    dplyr::bind_rows(., exluded_rows) %>%
-    dplyr::select(-c(models, ShannonRadiiVIII_Coord_3plus, `(ri/3 + r0/6)(ri-r0)^2`, value, {{ method }})) %>%
+      ~ stringr::str_replace_all(pattern = "glanced", replacement = "", string = .x))
+
+
+    if (stopper >= 2) {
+
+      dat <- dat %>%  dplyr::bind_rows(., exluded_rows)
+
+      }
+
+      dat <- dat %>%
+      dplyr::select(-c(models, ShannonRadiiVIII_Coord_3plus, `(ri/3 + r0/6)(ri-r0)^2`, value, {{ method }})) %>%
     tidyr::pivot_wider(names_from = Element_name, values_from = c(NormalizedCalc, ppmCalc)) %>%
     dplyr::relocate(rowid, model_nree, dplyr::matches("NormalizedCalc"), dplyr::matches("ppmCalc")) # %>%
 

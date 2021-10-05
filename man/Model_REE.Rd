@@ -33,7 +33,10 @@ Model_REE(
 a dataframe
 }
 \description{
-Model REE + Y contents using an empirical method based on the lattice strain theory
+Model REE will make a linear regression between the REE (+Y) and the relationship of the ideal Ionic Radii in the lattice site (r0) and the ionic radii of the element that use that space (ri) according to the relationship : (ri/3 + r0/6)(ri-r0)^2`
+}
+\details{
+For details in the lattice strain theory, see Blundy and Wood 1994.
 }
 \examples{
 
