@@ -1,21 +1,30 @@
-data <- testing_data %>%  Model_REE(preffix = 'Zr', suffix = 'ppm')
-# data %>% dplyr::glimpse()
-
-
-data2 <- data %>% CleanColnames(preffix = 'Zr', suffix = 'ppm')
-
-originalData <- data2 %>%  dplyr::select(rowid, dplyr::matches(paste0('^',REE_plus_Y_Elements,'$') , ignore.case = F)) %>% tidyr::pivot_longer(cols = -rowid, names_to = 'Element', values_to = 'values')
-
-
-calc_Data <- data2 %>% CleanColnames(preffix = 'Zr', suffix = 'ppm') %>%  dplyr::select(rowid, dplyr::matches('^ppmCalc'))
-
-
-rsquared_data <- data2 %>%   dplyr::select(rowid, model_r.squared )
-
-calc_Data <- calc_Data %>%  CleanColnames(preffix = 'ppmCalc') %>% tidyr::pivot_longer(cols = -rowid, names_to = 'Element', values_to = 'calc_value') %>%  dplyr::left_join(., rsquared_data, by = 'rowid') %>%  dplyr::filter(model_r.squared >0.9)
-
-originalData %>% dplyr::left_join(., calc_Data, by = c('rowid',"Element")) %>% dplyr::arrange(desc(is.na(values))) %>%  dplyr::mutate(imputated_values = ifelse(is.na(values), calc_value, values)) %>%  dplyr::mutate(Element = paste0('Imputated_', Element)) %>% dplyr::select(rowid, Element, imputated_values) %>% tidyr::pivot_wider( names_from = 'Element', values_from = 'imputated_values')
-
-
 load_all()
-data %>%  Imputate_REE('Zr', 'ppm') %>% View()
+data <- testing_data %>%  Model_REE(preffix = 'Zr', suffix = 'ppm')
+test <- data %>%  Imputate_REE('Zr', 'ppm')
+
+# Ce_Eudata <- test %>%
+#   CleanColnames('Zr', 'ppm') %>%
+#   dplyr::select(rowid, Eu, Ce) %>%
+#   tidyr::pivot_longer(-rowid, names_to = 'Element_name')
+# Ce_Eudata
+
+Others_REE_plus_y <-
+  test %>%
+  dplyr::select(rowid, dplyr::matches('Imputated')) %>%
+    tidyr::pivot_longer(-rowid, names_to = 'Element_name') %>%
+    dplyr::mutate(Element_name = stringr::str_remove(Element_name, '^Imputated_'))
+
+test2 <- dplyr::bind_rows(Ce_Eudata, Others_REE_plus_y)  %>%
+  Add_Element_data() %>%
+  dplyr::select(1:3, Atomic_Mass) %>%
+  dplyr::mutate(REE_plus_Y_molar = (value/Atomic_Mass)) %>%  dplyr::group_by(rowid) %>%
+  dplyr::summarise(REE_plus_Y_molar= sum(REE_plus_Y_molar))
+
+
+
+  test2 %>% dplyr::left_join( test,., by='rowid')
+
+  load_all()
+  # test %>%  Add_parameters() %>%  dplyr::glimpse()
+testing_data %>%  DoItALL(preffix  = 'Zr', suffix = 'ppm') %>%  dplyr::glimpse()
+
