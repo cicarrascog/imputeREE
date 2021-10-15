@@ -20,7 +20,8 @@ Imputate_REE <- function(data, preffix = NULL, suffix = NULL) {
   REE_DATA <-
     Original_cleanNames %>%
     dplyr::select(rowid, dplyr::matches(paste0('^',REE_plus_Y_Elements,'$') , ignore.case = F)) %>%
-    tidyr::pivot_longer(cols = -rowid, names_to = 'Element', values_to = 'values')
+    tidyr::pivot_longer(cols = -rowid, names_to = 'Element', values_to = 'values')%>%
+    dplyr::filter(Element != 'Ce' ,Element != 'Eu')
 
   rsquared_data <- Original_cleanNames %>%   dplyr::select(rowid, model_r.squared )
 
@@ -30,8 +31,7 @@ Imputate_REE <- function(data, preffix = NULL, suffix = NULL) {
     CleanColnames(preffix = 'ppmCalc') %>%
     tidyr::pivot_longer(cols = -rowid, names_to = 'Element', values_to = 'calc_value') %>%
     dplyr::left_join(., rsquared_data, by = 'rowid') %>%
-    dplyr::filter(model_r.squared >0.9) %>%
-    dplyr::filter(Element != 'Ce' | Element != 'Eu')
+    dplyr::filter(model_r.squared >0.9)
 
 
   REE_DATA <- REE_DATA %>%
