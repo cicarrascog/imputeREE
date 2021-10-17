@@ -7,8 +7,7 @@
 Model_REE(
   dat,
   r0 = 0.84,
-  include_Y = TRUE,
-  exclude = c("La", "Ce", "Eu"),
+  exclude = c("La", "Ce", "Eu", "Y"),
   preffix = NULL,
   suffix = NULL,
   method = PalmeOneill2014CI
@@ -18,8 +17,6 @@ Model_REE(
 \item{dat}{A data frame}
 
 \item{r0}{A number: ionic radii of the lattice site r0}
-
-\item{include_Y}{A logical: should Y be included or not}
 
 \item{exclude}{a string: vector including elements that should be ommited from modelling. La, Ce and Eu are the default. Ce and Eu should be always included}
 
