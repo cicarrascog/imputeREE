@@ -7,6 +7,7 @@
 #' @param dat A data frame
 #' @param r0 A number: ionic radii of the lattice site r0
 #' @param exclude a string: vector including elements that should be ommited from modelling. La, Ce and Eu are the default. Ce and Eu should be always included
+#' @param Y_correction_fact a number: correction factor for underestimated Y. 1.29 by default.
 #' @inheritParams Element_norm
 #'
 #' @return a dataframe
@@ -20,7 +21,8 @@ Model_REE <- function(dat,
                       exclude = c("La", "Ce", "Eu", "Y"),
                       preffix = NULL,
                       suffix = NULL,
-                      method = PalmeOneill2014CI) {
+                      method = PalmeOneill2014CI,
+                      Y_correction_fact = 1.29) {
   Original <- dat %>% Add_ID() ## backup of original data.
 
 ## Notes removed
@@ -142,7 +144,7 @@ Model_REE <- function(dat,
     )
 
 
-  ### Model REE
+### Model REE ####
   dat <- dat %>%
     dplyr::group_by(rowid) %>%
     tidyr::nest() %>%
@@ -178,7 +180,14 @@ Model_REE <- function(dat,
     tidyr::pivot_wider(names_from = Element_name, values_from = c(NormalizedCalc, ppmCalc)) %>%
     dplyr::relocate(rowid, model_nree, dplyr::matches("NormalizedCalc"), dplyr::matches("ppmCalc")) # %>%
 
-  ### join to original Data
+## Correction Factor for Y #####
+dat <- dat %>%
+        dplyr::mutate(
+          ppmCalc_Y =  ppmCalc_Y * Y_correction_fact,
+          NormalizedCalc_Y = NormalizedCalc_Y * Y_correction_fact
+)
+
+## join to original Data ####
 
   dat <- dplyr::left_join(Original, dat, by = "rowid")
   return(dat)
