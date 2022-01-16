@@ -10,7 +10,8 @@ Model_REE(
   exclude = c("La", "Ce", "Eu", "Y"),
   preffix = NULL,
   suffix = NULL,
-  method = PalmeOneill2014CI
+  method = PalmeOneill2014CI,
+  Y_correction_fact = 1.29
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ Model_REE(
 \item{suffix}{A character of lengt 1}
 
 \item{method}{an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI}
+
+\item{Y_correction_fact}{a number: correction factor for underestimated Y. 1.29 by default.}
 }
 \value{
 a dataframe
