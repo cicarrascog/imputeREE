@@ -41,7 +41,7 @@ Add_parameters <- function(
    CleanColnames(preffix, suffix) %>%
    dplyr::select(rowid, Eu, Ce, ppmCalc_Ce, ppmCalc_Eu, P ) %>%
    dplyr::mutate( `Eu/Eu*` = Eu/ppmCalc_Eu ,
-                  `Ce/Ce*` = Eu/ppmCalc_Ce,
+                  `Ce/Ce*` = Ce/ppmCalc_Ce,
                   P_molar  = P / Element_Data[Element_Data$Element_name == 'P', 'Atomic_Mass', drop = TRUE]) %>%
    dplyr::select(-c(Eu, Ce, ppmCalc_Ce, ppmCalc_Eu, P))
 
