@@ -1,5 +1,5 @@
 #' TBD
-#'
+#' Only data which model yield a value higher than 0.9 Rsquared and more than 2 ree are imputed
 #' @param data
 #' @param preffix
 #' @param suffix
