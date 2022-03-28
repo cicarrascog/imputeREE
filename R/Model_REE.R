@@ -22,7 +22,9 @@ Model_REE <- function(dat,
                       preffix = NULL,
                       suffix = NULL,
                       method = PalmeOneill2014CI,
-                      Y_correction_fact = 1.29) {
+                      Y_correction_fact = 1.29,
+Yb_correction_fact = 1/0.8785,
+Lu_correction_fact = 1/0.8943) {
   Original <- dat %>% Add_ID() ## backup of original data.
 
 ## Notes removed
@@ -184,7 +186,11 @@ Model_REE <- function(dat,
 dat <- dat %>%
         dplyr::mutate(
           ppmCalc_Y =  ppmCalc_Y * Y_correction_fact,
-          NormalizedCalc_Y = NormalizedCalc_Y * Y_correction_fact
+          NormalizedCalc_Y = NormalizedCalc_Y * Y_correction_fact,
+          ppmCalc_Yb =  ppmCalc_Yb * Yb_correction_fact,
+          NormalizedCalc_Yb = NormalizedCalc_Yb *Yb_correction_fact,
+          ppmCalc_Lu =  ppmCalc_Lu * Lu_correction_fact,
+          NormalizedCalc_Lu = NormalizedCalc_Lu *Lu_correction_fact
 )
 
 ## join to original Data ####
