@@ -1,5 +1,7 @@
 #' Clean variable names that have preffixes or suffixes
 #'
+#' This is a helper function
+#'
 #' @param dat a dataframe
 #' @param preffix A character of lengt 1
 #' @param suffix A character of lengt 1

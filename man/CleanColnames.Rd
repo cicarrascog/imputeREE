@@ -17,7 +17,7 @@ CleanColnames(dat, preffix = NULL, suffix = NULL)
 A dataframe
 }
 \description{
-Clean variable names that have preffixes or suffixes
+This is a helper function
 }
 \examples{
 

@@ -1,9 +1,10 @@
 #' Add_ID
 #'
 #' Add an unique ID per observation and checks that is not overwriting an existing column. If the column already exist, it will take no action.
+#' This is a wrapper of tibble::rowid_to_column() that checks that not colums is overwritten.
 #'
 #' @param dat a tibble or a dataframe
-#' @param ID Name of column to use for rownames.
+#' @param ID Name of column to use for rownames. 'rowid' is used if none is specified.
 #' @param ... Other parameters passed onto the `tibble::rowid_to_column()` function
 #'
 #' @return a data frame
@@ -29,7 +30,7 @@ Add_ID <- function(dat, ID = "rowid", ...) {
   }
 
   if (ID %in% colnames(dat)) {
-    warning( "It seems that you already have a `rowid` column. No changes has been made.")
+    warning( paste("It seems that you already have a",ID ,"column, please change the ID to another name. No changes has been made."))
 
 } else {
     dat <- dat %>% tibble::rowid_to_column(var = ID)

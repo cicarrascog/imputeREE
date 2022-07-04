@@ -2,22 +2,21 @@
 % Please edit documentation in R/Add_parameters.R, R/calc_anomalies.R
 \name{Add_parameters}
 \alias{Add_parameters}
-\title{Title}
+\title{Calculate Cerium, Eu anomalies and}
 \usage{
 Add_parameters(data, preffix = NULL, suffix = NULL)
 
 Add_parameters(data, preffix = NULL, suffix = NULL)
 }
 \arguments{
+\item{data}{a dataframe}
+
+\item{preffix}{A character of lengt 1}
+
 \item{suffix}{}
 }
-\value{
-
-
-
-}
 \description{
-Title
+Calculate Cerium, Eu anomalies and
 
 Title
 }

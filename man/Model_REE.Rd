@@ -11,7 +11,9 @@ Model_REE(
   preffix = NULL,
   suffix = NULL,
   method = PalmeOneill2014CI,
-  Y_correction_fact = 1.29
+  Y_correction_fact = 1.29,
+  Yb_correction_fact = 1/0.8785,
+  Lu_correction_fact = 1/0.8943
 )
 }
 \arguments{
@@ -28,6 +30,10 @@ Model_REE(
 \item{method}{an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI}
 
 \item{Y_correction_fact}{a number: correction factor for underestimated Y. 1.29 by default.}
+
+\item{Yb_correction_fact}{a number: correction factor for underestimated Yb 1/0.8785}
+
+\item{Lu_correction_fact}{a number: correction factor for underestimated Lu 1/0.8943}
 }
 \value{
 a dataframe

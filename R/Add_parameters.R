@@ -1,9 +1,8 @@
-#' Title
+#' Calculate Cerium, Eu anomalies and
 #'
 #' @param data
-#' @param preffix
-#' @param suffix
-#'
+#' @inheritParams Element_norm
+#' @importFrom dplyr desc
 #' @return
 #' @export
 #'
@@ -20,26 +19,26 @@ Add_parameters <- function(
 
   Ce_Eudata <- data %>%
     CleanColnames('Zr', 'ppm') %>%
-    dplyr::select(rowid, Eu, Ce) %>%
-    tidyr::pivot_longer(-rowid, names_to = 'Element_name')
+    dplyr::select(.data$rowid, .data$Eu, .data$Ce) %>%
+    tidyr::pivot_longer(-.data$rowid, names_to = 'Element_name')
 
   Others_REE_plus_y <-
     data %>%
-    dplyr::select(rowid, dplyr::matches('Imputated')) %>%
-    tidyr::pivot_longer(-rowid, names_to = 'Element_name') %>%
+    dplyr::select(.data$rowid, dplyr::matches('Imputated')) %>%
+    tidyr::pivot_longer(-.data$rowid, names_to = 'Element_name') %>%
     dplyr::mutate(Element_name = stringr::str_remove(Element_name, '^Imputated_'))
 
  molar_data <-  dplyr::bind_rows(Ce_Eudata, Others_REE_plus_y)  %>%
     Add_Element_data() %>%
     dplyr::select(1:3, Atomic_Mass) %>%
     dplyr::mutate(REE_plus_Y_molar = (value/Atomic_Mass)) %>%
-    dplyr::group_by(rowid) %>%
+    dplyr::group_by(.data$rowid) %>%
     dplyr::summarise(REE_plus_Y_molar= sum(REE_plus_Y_molar))
 
 
  anomalies <-  data %>%
    CleanColnames('Zr', 'ppm') %>%
-   dplyr::select(rowid, Eu, Ce, ppmCalc_Ce, ppmCalc_Eu, P ) %>%
+   dplyr::select(.data$rowid, Eu, Ce, ppmCalc_Ce, ppmCalc_Eu, P ) %>%
    dplyr::mutate( `Eu/Eu*` = Eu/ppmCalc_Eu ,
                   `Ce/Ce*` = Eu/ppmCalc_Ce,
                   P_molar  = P / Element_Data[Element_Data$Element_name == 'P', 'Atomic_Mass', drop = TRUE]) %>%

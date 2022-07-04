@@ -2,9 +2,7 @@
 #'
 #'  This is a wrapper for data %>% Model_REE() %>% Imputate_REE %>% Add_parameters()
 #' @param data
-#' @param preffix
-#' @param suffix
-#' @param method
+#' @inheritParams Element_norm
 #'
 #' @return
 #' @export

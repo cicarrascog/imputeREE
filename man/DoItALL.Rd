@@ -7,10 +7,13 @@
 DoItALL(data, preffix = NULL, suffix = NULL, method = PalmeOneill2014CI)
 }
 \arguments{
-\item{method}{}
-}
-\value{
+\item{data}{a dataframe}
 
+\item{preffix}{A character of lengt 1}
+
+\item{suffix}{A character of lengt 1}
+
+\item{method}{an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI}
 }
 \description{
 This is a wrapper for data \%>\% Model_REE() \%>\% Imputate_REE \%>\% Add_parameters()

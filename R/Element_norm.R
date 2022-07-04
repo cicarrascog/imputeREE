@@ -4,7 +4,7 @@
 #'
 #'
 #'
-#' @param dat a dataframe
+#' @param data a dataframe
 #' @param return a characther from: "rect" for a wide data return,"raw" for a long data return,"append" to append the results to the input data
 #' @param method an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI
 #' @param Element_list a character vector: indicating the elements that should be normalized. REE + Y by default
@@ -19,7 +19,7 @@
 #' testing_data %>%  Element_norm(return = 'append',preffix = 'Zr', suffix = 'ppm')
 #'
 Element_norm <- function(
-  dat,
+  data,
   return = "rect",
   method = PalmeOneill2014CI,
   preffix = NULL, ## in case you use prefix like: Whole_Rock_Ce
@@ -32,8 +32,8 @@ Element_norm <- function(
 
   ### variable Check
 
-  if (!is.data.frame(dat)) {
-    stop("dat should be a dataframe, you provided:", class(dat)[1])
+  if (!is.data.frame(data)) {
+    stop("data should be a dataframe, you provided:", class(data)[1])
   }
 
   if (!any(return == "rect", return == "raw", return == "append")) {
@@ -42,18 +42,18 @@ Element_norm <- function(
 
   ## add ID
 
-  dat <- dat %>% Add_ID()
+  data <- data %>% Add_ID()
 
-  original <- dat
+  original <- data
 
-  dat <- dat %>% CleanColnames(preffix = preffix, suffix = suffix)
+  data <- data %>% CleanColnames(preffix = preffix, suffix = suffix)
 
   # Element_Data <-  Element_Data %>% dplyr::select({{method}}, Element_name)
 
 
   # Normalize data
 
-  dat <- dat %>%
+  data <- data %>%
     dplyr::select(rowid, tidyr::matches(paste0("^", Element_list, "$"), ignore.case = FALSE)) %>% # Select all the columns with REE-Y plus the ID column
     tidyr::pivot_longer(-rowid, names_to = "Element_name") %>% # makes data long, so it is easier to calculate
     Add_NormValues(method = {{ method }}) %>%
@@ -66,24 +66,24 @@ Element_norm <- function(
   ### Returns
 
   if (return == "rect") {
-    dat <- dat %>%
+    data <- data %>%
       tidyr::pivot_wider(id_cols = rowid, names_from = Element_name, values_from = value)
-    return(dat)
+    return(data)
   }
 
   if (return == "raw") {
-    return(dat)
+    return(data)
   }
 
   if (return == "append") {
-    dat <- dat %>%
+    data <- data %>%
       tidyr::pivot_wider(id_cols = rowid, names_from = Element_name, values_from = value)
-    dat <- dplyr::left_join(original, dat, by = "rowid")
+    data <- dplyr::left_join(original, data, by = "rowid")
 
-    return(dat)
+    return(data)
   }
 
-  return(dat)
+  return(data)
 }
 
 # REE_norm #####################################################################

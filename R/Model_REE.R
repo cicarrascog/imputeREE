@@ -8,7 +8,10 @@
 #' @param r0 A number: ionic radii of the lattice site r0
 #' @param exclude a string: vector including elements that should be ommited from modelling. La, Ce and Eu are the default. Ce and Eu should be always included
 #' @param Y_correction_fact a number: correction factor for underestimated Y. 1.29 by default.
+#' @param Yb_correction_fact a number: correction factor for underestimated Yb 1/0.8785
+#' @param Lu_correction_fact a number: correction factor for underestimated Lu 1/0.8943
 #' @inheritParams Element_norm
+#' @importFrom rlang .data
 #'
 #' @return a dataframe
 #' @export
@@ -185,12 +188,12 @@ Lu_correction_fact = 1/0.8943) {
 ## Correction Factor for Y #####
 dat <- dat %>%
         dplyr::mutate(
-          ppmCalc_Y =  ppmCalc_Y * Y_correction_fact,
-          NormalizedCalc_Y = NormalizedCalc_Y * Y_correction_fact,
-          ppmCalc_Yb =  ppmCalc_Yb * Yb_correction_fact,
-          NormalizedCalc_Yb = NormalizedCalc_Yb *Yb_correction_fact,
-          ppmCalc_Lu =  ppmCalc_Lu * Lu_correction_fact,
-          NormalizedCalc_Lu = NormalizedCalc_Lu *Lu_correction_fact
+          ppmCalc_Y =  .data$ppmCalc_Y * Y_correction_fact,
+          NormalizedCalc_Y = .data$NormalizedCalc_Y * Y_correction_fact,
+          ppmCalc_Yb =  .data$ppmCalc_Yb * Yb_correction_fact,
+          NormalizedCalc_Yb = .data$NormalizedCalc_Yb *Yb_correction_fact,
+          ppmCalc_Lu =  .data$ppmCalc_Lu * Lu_correction_fact,
+          NormalizedCalc_Lu = .data$NormalizedCalc_Lu *Lu_correction_fact
 )
 
 ## join to original Data ####

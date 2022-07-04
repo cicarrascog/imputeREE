@@ -5,7 +5,7 @@
 \title{Calculate normalized values for a list of elements}
 \usage{
 Element_norm(
-  dat,
+  data,
   return = "rect",
   method = PalmeOneill2014CI,
   preffix = NULL,
@@ -14,7 +14,7 @@ Element_norm(
 )
 }
 \arguments{
-\item{dat}{a dataframe}
+\item{data}{a dataframe}
 
 \item{return}{a characther from: "rect" for a wide data return,"raw" for a long data return,"append" to append the results to the input data}
 

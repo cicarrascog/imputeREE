@@ -2,16 +2,19 @@
 % Please edit documentation in R/Imputate_REE.R
 \name{Imputate_REE}
 \alias{Imputate_REE}
-\title{TBD}
+\title{Impute Rare earth elememts}
 \usage{
-Imputate_REE(data, preffix = NULL, suffix = NULL)
+Imputate_REE(data, preffix = NULL, suffix = NULL, rsquared = 0.9)
 }
 \arguments{
-\item{suffix}{}
+\item{rsquared}{A numerical value between 0 and 1. Tolerance to missfiting models.}
 }
 \value{
-
+A dataframe
 }
 \description{
-TBD
+Imputes missing REE after modelling. Expect the output of Model_REE() function
+}
+\details{
+By default, exclude models with Rsqured lower than 0.9.
 }

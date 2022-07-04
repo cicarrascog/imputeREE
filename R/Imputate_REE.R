@@ -1,14 +1,24 @@
-#' TBD
-#' Only data which model yield a value higher than 0.9 Rsquared and more than 2 ree are imputed
+#' Impute Rare earth elememts
+#'
+#' Imputes missing REE after modelling. Expect the output of Model_REE() function
+#'
+#' By default, exclude models with Rsqured lower than 0.9.
+#'
+#'
+#'
+#'
 #' @param data
 #' @param preffix
 #' @param suffix
+#' @param rsquared A numerical value between 0 and 1. Tolerance to missfiting models.
 #'
-#' @return
+#' @return A dataframe
 #' @export
 #'
 #' @examples
-Imputate_REE <- function(data, preffix = NULL, suffix = NULL) {
+#'
+#'
+Imputate_REE <- function(data, preffix = NULL, suffix = NULL, rsquared = 0.9) {
 
   Original<-
     data
@@ -31,7 +41,7 @@ Imputate_REE <- function(data, preffix = NULL, suffix = NULL) {
     CleanColnames(preffix = 'ppmCalc') %>%
     tidyr::pivot_longer(cols = -rowid, names_to = 'Element', values_to = 'calc_value') %>%
     dplyr::left_join(., rsquared_data, by = 'rowid') %>%
-    dplyr::filter(model_r.squared >0.9)
+    dplyr::filter(model_r.squared > rsquared)
 
 
   REE_DATA <- REE_DATA %>%

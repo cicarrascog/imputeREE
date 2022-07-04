@@ -18,6 +18,7 @@ a data frame
 }
 \description{
 Add an unique ID per observation and checks that is not overwriting an existing column. If the column already exist, it will take no action.
+It is a wrapper of tibble::rowid_to_column()
 }
 \examples{
 
