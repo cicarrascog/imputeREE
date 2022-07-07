@@ -16,7 +16,7 @@ A data frame with 77 rows and 10 variables:
 \item{PalmeOneill2014Mantle}{Primitive Mantle values from Palme and Oneil (2014)}
 \item{PalmeOneill2014Mantle_RSD}{Uncertainty from Primitive Mantlevalues from palme and Oneil (2014) as RSD (Relative standard Deviation)}
 \item{McDonough1995CI}{Chondrite values from Mcdonough and Sun (1995)}
-\item{ShannonRadiiVIII_Coord_3plus}{Shannon (1976) Ionic Radii for elements in Eightfold coordination and 3+ charge}
+\item{ShannonRadiiVIII_Coord_3plus}{Shannon (1976) Ionic Radii for elements in Eight-fold coordination and 3+ charge}
 ...
 }
 }

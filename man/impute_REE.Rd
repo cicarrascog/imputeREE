@@ -2,7 +2,7 @@
 % Please edit documentation in R/Imputate_REE.R
 \name{impute_REE}
 \alias{impute_REE}
-\title{Impute Rare earth elememts}
+\title{Impute Rare earth elements}
 \usage{
 impute_REE(data, prefix = NULL, suffix = NULL, rsquared = 0.9)
 }
@@ -13,7 +13,7 @@ impute_REE(data, prefix = NULL, suffix = NULL, rsquared = 0.9)
 
 \item{suffix}{A suffix in your columns e.g. La_ppm}
 
-\item{rsquared}{A numerical value between 0 and 1. Tolerance to missfitting models. set as 0.9 by default.}
+\item{rsquared}{A numerical value between 0 and 1. Tolerance to mis-fitting models. set as 0.9 by default.}
 }
 \value{
 A dataframe
@@ -23,7 +23,7 @@ Imputes missing REE after modelling. Expect the output of 'model_REE()'
 function. Only missing values are replaced.
 }
 \details{
-By default, exclude models with Rsqured lower than 0.9.
+By default, exclude models with R-squared lower than 0.9.
 }
 \examples{
 

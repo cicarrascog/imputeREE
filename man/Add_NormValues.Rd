@@ -18,6 +18,3 @@ a data frame or tibble
 \description{
 This is a helper function to work with Element_norm() and Element_denorm(). Takes long pivoted data to match element name and add normalizing values from the Element_data dataset.
 }
-\details{
-This is a test to see what happens in the following paragrapfs
-}

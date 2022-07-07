@@ -14,9 +14,9 @@ Element_norm(
 )
 }
 \arguments{
-\item{data}{a dataframe}
+\item{data}{a data frame}
 
-\item{return}{a characther from: "rect" for a wide data return,"raw" for a long data return,"append" to append the results to the input data}
+\item{return}{a character from: "rect" for a wide data return,"raw" for a long data return,"append" to append the results to the input data}
 
 \item{method}{an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI}
 

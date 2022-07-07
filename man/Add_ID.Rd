@@ -4,14 +4,12 @@
 \alias{add_ID}
 \title{Add_ID}
 \usage{
-add_ID(dat, ID = "rowid", ...)
+add_ID(dat, ID = "rowid")
 }
 \arguments{
 \item{dat}{a tibble or a dataframe}
 
-\item{ID}{Name of column to use for rownames. 'rowid' is used if none is specified.}
-
-\item{...}{Oth
+\item{ID}{Name of column to use for rownames. 'rowid' is used if none is specified.
 er parameters passed onto the \code{tibble::rowid_to_column()} function}
 }
 \value{
@@ -19,5 +17,5 @@ a data frame
 }
 \description{
 Add an unique ID per observation and checks that is not overwriting an existing column. If the column already exist, it will take no action.
-This is a wrapper of tibble::rowid_to_column() that checks that not colums is overwritten.
+This is a wrapper of tibble::rowid_to_column() that checks that not columns is overwritten.
 }

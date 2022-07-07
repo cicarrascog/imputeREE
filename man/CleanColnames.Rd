@@ -7,14 +7,14 @@
 CleanColnames(dat, prefix = NULL, suffix = NULL)
 }
 \arguments{
-\item{dat}{a dataframe}
+\item{dat}{a data frame}
 
-\item{prefix}{A character of lengt 1}
+\item{prefix}{A character of length 1}
 
-\item{suffix}{A character of lengt 1}
+\item{suffix}{A character of length 1}
 }
 \value{
-A dataframe
+A data frame
 }
 \description{
 This is a helper function

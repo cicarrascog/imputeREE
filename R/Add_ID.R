@@ -9,7 +9,7 @@
 #'
 #' @return a data frame
 
-add_ID <- function(dat, ID = "rowid", ...) {
+add_ID <- function(dat, ID = "rowid") {
 
 
   if(!is.data.frame(dat)) {
