@@ -31,9 +31,9 @@ A data frame with 210 rows and 18 variables:
 \source{
 IUPAC Website (\url{https://iupac.org/})
 
-Ballard, J. R., Palin, J. M., Williams, I. S., Campbell, I. H., and Faunes, A., 2001, Two ages of porphyry intrusion resolved for the super-giant Chuquicamata copper deposit of northern Chile by ELA-ICP-MS and SHRIMP: Geology, v. 29, p. 383–386. (\url{https://pubs.geoscienceworld.org/gsa/geology/article/29/5/383/192017/two-ages-of-porphyry-intrusion-resolved-for-the})
+Ballard, J. R., Palin, J. M., Williams, I. S., Campbell, I. H., and Faunes, A., 2001, Two ages of porphyry intrusion resolved for the super-giant Chuquicamata copper deposit of northern Chile by ELA-ICP-MS and SHRIMP: Geology, v. 29, p. 383–386. (\url{https://pubs.geoscienceworld.org/gsa/geology/article-abstract/29/5/383/192017/Two-ages-of-porphyry-intrusion-resolved-for-the?redirectedFrom=fulltext})
 
-Ballard, J. R., Palin, M. J., and Campbell, I. H., 2002, Relative oxidation states of magmas inferred from Ce(IV)/Ce(III) in zircon: application to porphyry copper deposits of northern Chile: Contributions to Mineralogy and Petrology, v. 144, p. 347–364. (\url{http://link.springer.com/10.1007/s00410-002-0402-5})
+Ballard, J. R., Palin, M. J., and Campbell, I. H., 2002, Relative oxidation states of magmas inferred from Ce(IV)/Ce(III) in zircon: application to porphyry copper deposits of northern Chile: Contributions to Mineralogy and Petrology, v. 144, p. 347–364. (\url{https://link.springer.com/article/10.1007/s00410-002-0402-5})
 }
 \usage{
 testing_data

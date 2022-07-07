@@ -18,8 +18,8 @@
 #'   ...
 #' }
 #' @source IUPAC Website (\url{https://iupac.org/})
-#' @source Palme, H., and O’Neill, H. St. C., 2014, 3.1 - Cosmochemical Estimates of Mantle Composition, in Holland, H. D. and Turekian, K. K. eds., Treatise on Geochemistry (Second Edition): Oxford, Elsevier, p. 1-39.(\url{https://doi.org/10.1016/B978-0-08-095975-7.00201-1})
-#' @source McDonough, W. F., and Sun, S. -s., 1995, The composition of the Earth: Chemical Geology, v. 120, p. 223-253.(\url{https://doi.org/10.1016/0009-2541(94)00140-4})
-#' @source Shannon, R. D., 1976, Revised effective ionic radii and systematic studies of interatomic distances in halides and chalcogenides: Acta Crystallographica Section A, v. 32, p. 751-767. \url{ https://doi.org/10.1107/S0567739476001551}
+#' @source Palme, H., and O’Neill, H. St. C., 2014, 3.1 - Cosmochemical Estimates of Mantle Composition, in Holland, H. D. and Turekian, K. K. eds., Treatise on Geochemistry (Second Edition): Oxford, Elsevier, p. 1-39.(\doi{https://doi.org/10.1016/B978-0-08-095975-7.00201-1})
+#' @source McDonough, W. F., and Sun, S. -s., 1995, The composition of the Earth: Chemical Geology, v. 120, p. 223-253.(\doi{https://doi.org/10.1016/0009-2541(94)00140-4})
+#' @source Shannon, R. D., 1976, Revised effective ionic radii and systematic studies of interatomic distances in halides and chalcogenides: Acta Crystallographica Section A, v. 32, p. 751-767. \doi{ https://doi.org/10.1107/S0567739476001551}
 #'
 "Element_Data"
