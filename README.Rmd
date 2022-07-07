@@ -1,0 +1,29 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/cicarrascog/imputeREE/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/cicarrascog/imputeREE/actions/workflows/R-CMD-check.yaml)
+
+<!-- badges: end -->
+
+# imputeREE
+
+<!-- badges: start -->
+
+<!-- badges: end -->
+
+The goal of imputeREE is to ...
+
+## Installation
+
+You can install the development version of imputeREE from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("cicarrascog/imputeREE")
+```
