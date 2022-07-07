@@ -1,31 +1,40 @@
 #' Impute Rare earth elememts
 #'
-#' Imputes missing REE after modelling. Expect the output of Model_REE() function
+#' Imputes missing REE after modelling. Expect the output of 'model_REE()'
+#' function. Only missing values are replaced.
 #'
 #' By default, exclude models with Rsqured lower than 0.9.
 #'
 #'
 #'
 #'
-#' @param data
-#' @param preffix
-#' @param suffix
-#' @param rsquared A numerical value between 0 and 1. Tolerance to missfiting models.
+#' @param data A dataframe resulting from 'model_ree()'
+#' @param prefix A prefix in your columns e.g. ICP_La
+#' @param suffix A suffix in your columns e.g. La_ppm
+#' @param rsquared A numerical value between 0 and 1. Tolerance to missfitting models. set as 0.9 by default.
 #'
 #' @return A dataframe
 #' @export
 #'
+#'
+#'
 #' @examples
 #'
+#' testing_data %>%
+#' dplyr::slice(1:100) %>%
+#' model_REE(prefix = 'Zr', suffix = 'ppm') %>%
+#' impute_REE(prefix = 'Zr', suffix = 'ppm')
 #'
-Imputate_REE <- function(data, preffix = NULL, suffix = NULL, rsquared = 0.9) {
+#'
+#'
+impute_REE <- function(data, prefix = NULL, suffix = NULL, rsquared = 0.9) {
 
   Original<-
     data
 
   Original_cleanNames <-
     data %>%
-    CleanColnames(preffix = preffix, suffix = suffix)
+    CleanColnames(prefix = prefix, suffix = suffix)
 
   REE_DATA <-
     Original_cleanNames %>%
@@ -38,7 +47,7 @@ Imputate_REE <- function(data, preffix = NULL, suffix = NULL, rsquared = 0.9) {
   calc_Data <-
     Original_cleanNames %>%
     dplyr::select(rowid, dplyr::matches('^ppmCalc'))%>%
-    CleanColnames(preffix = 'ppmCalc') %>%
+    CleanColnames(prefix = 'ppmCalc') %>%
     tidyr::pivot_longer(cols = -rowid, names_to = 'Element', values_to = 'calc_value') %>%
     dplyr::left_join(., rsquared_data, by = 'rowid') %>%
     dplyr::filter(model_r.squared > rsquared)
@@ -47,10 +56,10 @@ Imputate_REE <- function(data, preffix = NULL, suffix = NULL, rsquared = 0.9) {
   REE_DATA <- REE_DATA %>%
     dplyr::left_join(., calc_Data, by = c('rowid',"Element")) %>%
     dplyr::arrange(desc(is.na(values))) %>%
-    dplyr::mutate(imputated_values = ifelse(is.na(values), calc_value, values)) %>%
-    dplyr::mutate(Element = paste0('Imputated_', Element)) %>%
-    dplyr::select(rowid, Element, imputated_values) %>%
-    tidyr::pivot_wider( names_from = 'Element', values_from = 'imputated_values')
+    dplyr::mutate(imputed_values = ifelse(is.na(values), calc_value, values)) %>%
+    dplyr::mutate(Element = paste0('Imputed_', Element)) %>%
+    dplyr::select(rowid, Element, imputed_values) %>%
+    tidyr::pivot_wider( names_from = 'Element', values_from = 'imputed_values')
 
 
 

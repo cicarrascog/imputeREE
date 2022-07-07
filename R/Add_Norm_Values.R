@@ -4,25 +4,14 @@
 #'
 #' This is a test to see what happens in the following paragrapfs
 #'
-#' @family Add Functions
-#' @seealso \code{\link{Element_norm()}}
 #'
 #' @param dat Dataframe or tibble.
 #' @param method Values to normalize: an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI.
 #'load
 #' @return a data frame or tibble
-#' @export
 #'
-#' @examples
-#'
-#' Data <- testing_data %>%  CleanColnames('Zr', 'ppm') %>%  Add_ID()
-#'
-#' Data %>%
-#' dplyr::select(rowid, La, Ce) %>%
-#' tidyr::pivot_longer(cols = -rowid, names_to = 'Element_name')  %>%
-#' Add_NormValues()
-#'
-Add_NormValues <- function(dat, method = PalmeOneill2014CI) {
+
+add_NormValues <- function(dat, method = PalmeOneill2014CI) {
 
  Element_name <-  PalmeOneill2014CI <- NULL
 
@@ -38,3 +27,12 @@ dat <- dplyr::left_join(dat, Element_Data, by = 'Element_name')
 return(dat)
 
 }
+# @examples
+#
+# Data <- testing_data %>%  CleanColnames('Zr', 'ppm') %>%  Add_ID()
+#
+# Data %>%
+# dplyr::select(rowid, La, Ce) %>%
+# tidyr::pivot_longer(cols = -rowid, names_to = 'Element_name')  %>%
+# Add_NormValues()
+#

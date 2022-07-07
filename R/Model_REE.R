@@ -1,7 +1,6 @@
 #' Model REE + Y contents using an empirical method based on the lattice strain theory
 #'
 #' Model REE will make a linear regression between the REE (+Y) and the relationship of the ideal Ionic Radii in the lattice site (r0) and the ionic radii of the element that use that space (ri) according to the relationship : (ri/3 + r0/6)(ri-r0)^2`
-#'
 #' For details in the lattice strain theory, see Blundy and Wood 1994.
 #'
 #' @param dat A data frame
@@ -9,8 +8,11 @@
 #' @param exclude a string: vector including elements that should be ommited from modelling. La, Ce and Eu are the default. Ce and Eu should be always included
 #' @param Y_correction_fact a number: correction factor for underestimated Y. 1.29 by default.
 #' @param Yb_correction_fact a number: correction factor for underestimated Yb 1/0.8785
+#' @param prefix A prefix in your columns e.g. ICP_La
+#' @param suffix A suffix in your columns e.g. La_ppm
+#' @param method an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI
 #' @param Lu_correction_fact a number: correction factor for underestimated Lu 1/0.8943
-#' @inheritParams Element_norm
+#'
 #' @importFrom rlang .data
 #'
 #' @return a dataframe
@@ -18,17 +20,19 @@
 #'
 #' @examples
 #'
-#' testing_data %>%  Model_REE(preffix = 'Zr', suffix = 'ppm')
-Model_REE <- function(dat,
+#' testing_data %>%  model_REE(prefix = 'Zr', suffix = 'ppm')
+#'
+#'
+model_REE <- function(dat,
                       r0 = 0.84,
                       exclude = c("La", "Ce", "Eu", "Y"),
-                      preffix = NULL,
+                      prefix = NULL,
                       suffix = NULL,
                       method = PalmeOneill2014CI,
                       Y_correction_fact = 1.29,
 Yb_correction_fact = 1/0.8785,
 Lu_correction_fact = 1/0.8943) {
-  Original <- dat %>% Add_ID() ## backup of original data.
+  Original <- dat %>% add_ID() ## backup of original data.
 
 ## Notes removed
   PalmeOneill2014CI <-
@@ -59,11 +63,11 @@ Lu_correction_fact = 1/0.8943) {
 ## calculate chondrite normalized values and add ionic Radii
   dat <- dat %>%
     Element_norm("raw",
-      preffix = preffix,
+      prefix = prefix,
       suffix  = suffix
     ) %>%
     dplyr::mutate(Element_name = stringr::str_remove(Element_name, "[:punct:]?Normalized")) %>%
-    Add_IonicRadii()
+    add_IonicRadii()
 
 
 
@@ -163,7 +167,7 @@ Lu_correction_fact = 1/0.8943) {
     tidyr::pivot_wider(names_from = term, values_from = c(estimate, std.error, statistic, p.value)) %>%
     tidyr::unnest(glanced, names_sep = "model_") %>%
     tidyr::unnest(data) %>%
-    Add_NormValues(method = {{ method }}) %>%
+    add_NormValues(method = {{ method }}) %>%
     dplyr::mutate(
       NormalizedCalc = exp(`(ri/3 + r0/6)(ri-r0)^2` * estimate_Slope + estimate_Intercept),
       ppmCalc = NormalizedCalc * {{ method }}

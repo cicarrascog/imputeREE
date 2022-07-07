@@ -2,7 +2,7 @@
 #'
 #' This is a helper function to work with Element_norm() and Element_denorm(). Takes long pivoted data to match element name and add normalizing values from the Element_data dataset.
 #'
-#' This is a test to see what happens in the following paragrapfs
+#' This is a test to see what happens in the following paragraphs
 #'
 #' @family Add Functions
 #' @seealso \code{\link{Element_norm}}
@@ -11,17 +11,9 @@
 #' @param method Ionic Radii from shannon1976. Not.
 #'
 #' @return a data frame or tibble
-#' @export
 #'
-#' @examples
-#'
-#' testing_data %>%
-#' CleanColnames('Zr', 'ppm') %>%  Add_ID() %>%
-#' dplyr::select(rowid, La, Ce) %>%
-#' tidyr::pivot_longer(cols = -rowid, names_to = 'Element_name')  %>%
-#' Add_IonicRadii()
-#'
-Add_IonicRadii <- function(dat, method = ShannonRadiiVIII_Coord_3plus) {
+
+add_IonicRadii <- function(dat, method = ShannonRadiiVIII_Coord_3plus) {
 
 
   Element_name <- ShannonRadiiVIII_Coord_3plus <- NULL
@@ -40,3 +32,11 @@ Add_IonicRadii <- function(dat, method = ShannonRadiiVIII_Coord_3plus) {
   return(dat)
 
 }
+# @examples
+#
+# testing_data %>%
+# CleanColnames('Zr', 'ppm') %>%  Add_ID() %>%
+# dplyr::select(rowid, La, Ce) %>%
+# tidyr::pivot_longer(cols = -rowid, names_to = 'Element_name')  %>%
+# Add_IonicRadii()
+#

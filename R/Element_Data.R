@@ -1,9 +1,9 @@
 #' Element data for calculations
 #'
-#' A dataset containing CI and Mantle values for normalization for selected elements. This is the result of `Create_Element_Data()` function. The data used is from IUPAC, Palme and O'Neill (2014), and McDonough and Sun (1995). Ionic Radii are from Shannon (1976).
+#' A dataset containing CI and Mantle values for normalization for selected elements. The data used is from IUPAC, Palme and O'Neill (2014), and McDonough and Sun (1995). Ionic Radii are from Shannon (1976).
 #'
 #'
-#' @format A data frame with 53940 rows and 10 variables:
+#' @format A data frame with 77 rows and 10 variables:
 #' \describe{
 #'   \item{Z}{Atomic Number}
 #'   \item{Element_name}{Element Symbol}

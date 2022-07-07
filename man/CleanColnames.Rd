@@ -2,14 +2,14 @@
 % Please edit documentation in R/CleanColnames.R
 \name{CleanColnames}
 \alias{CleanColnames}
-\title{Clean variable names that have preffixes or suffixes}
+\title{Clean variable names that have prefixes or suffixes}
 \usage{
-CleanColnames(dat, preffix = NULL, suffix = NULL)
+CleanColnames(dat, prefix = NULL, suffix = NULL)
 }
 \arguments{
 \item{dat}{a dataframe}
 
-\item{preffix}{A character of lengt 1}
+\item{prefix}{A character of lengt 1}
 
 \item{suffix}{A character of lengt 1}
 }
@@ -18,9 +18,4 @@ A dataframe
 }
 \description{
 This is a helper function
-}
-\examples{
-
-testing_data \%>\% CleanColnames(preffix = 'Zr', suffix = 'ppm')
-
 }

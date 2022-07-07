@@ -5,7 +5,7 @@
 \alias{Element_Data}
 \title{Element data for calculations}
 \format{
-A data frame with 53940 rows and 10 variables:
+A data frame with 77 rows and 10 variables:
 \describe{
 \item{Z}{Atomic Number}
 \item{Element_name}{Element Symbol}
@@ -33,6 +33,6 @@ Shannon, R. D., 1976, Revised effective ionic radii and systematic studies of in
 Element_Data
 }
 \description{
-A dataset containing CI and Mantle values for normalization for selected elements. This is the result of \code{Create_Element_Data()} function. The data used is from IUPAC, Palme and O'Neill (2014), and McDonough and Sun (1995). Ionic Radii are from Shannon (1976).
+A dataset containing CI and Mantle values for normalization for selected elements. The data used is from IUPAC, Palme and O'Neill (2014), and McDonough and Sun (1995). Ionic Radii are from Shannon (1976).
 }
 \keyword{datasets}

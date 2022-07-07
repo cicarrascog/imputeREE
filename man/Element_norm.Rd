@@ -8,7 +8,7 @@ Element_norm(
   data,
   return = "rect",
   method = PalmeOneill2014CI,
-  preffix = NULL,
+  prefix = NULL,
   suffix = NULL,
   Element_list = REE_plus_Y_Elements
 )
@@ -20,9 +20,9 @@ Element_norm(
 
 \item{method}{an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI}
 
-\item{preffix}{A character of lengt 1}
+\item{prefix}{A prefix in your columns e.g. ICP_La}
 
-\item{suffix}{A character of lengt 1}
+\item{suffix}{A suffix in your columns e.g. La_ppm}
 
 \item{Element_list}{a character vector: indicating the elements that should be normalized. REE + Y by default}
 }
@@ -31,10 +31,4 @@ a data frame
 }
 \description{
 Element norm normalize values according to published values for the Primitive mantle and chondrites. By defect, it uses the values from Palme and O'Neill (2014). By default, REE + Y list is provided
-}
-\examples{
-testing_data \%>\%  Element_norm(preffix = 'Zr', suffix = 'ppm')
-testing_data \%>\%  Element_norm(return = 'raw', preffix = 'Zr', suffix = 'ppm')
-testing_data \%>\%  Element_norm(return = 'append',preffix = 'Zr', suffix = 'ppm')
-
 }

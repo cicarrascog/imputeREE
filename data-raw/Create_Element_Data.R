@@ -1,28 +1,7 @@
-#' Create Element Data
-#'
-#' Auxiliar Function that create data. Format is prepared for easy update. Contained within the package.
-#' Explanation is in Element_Data dataset.
-#'
-#'
-#' @return tibble
-#' @export
-#'
-#' @examples
-#' REE_data <- create_Element_Data()
-#'
-#'
-create_Element_Data <- function() {
-#
-#   if (!require(tibble)) {
-#
-#     stop("tibble not installed")
-#   } else if (!require(dplyr)) {
-#
-#     stop("dplyr not installed")
-#
-#   } else {
+## code to prepare `REE_Elements` dataset goes here
 
-    REE_DATA <- dplyr::left_join( tibble::tribble(
+
+    Element_Data <- dplyr::left_join( tibble::tribble(
       ~Z , ~Element_name, ~Unit  ,~PalmeOneill2014CI  ,~PalmeOneill2014CI_RSD, ~PalmeOneill2014Mantle, ~PalmeOneill2014Mantle_RSD,  ~ McDonough1995CI,
       1 , "H"           ,"pct"  ,1.97          ,10                ,0.012            ,20     ,        NA                        ,
       3 , "Li"          ,"ppm"  ,1.45          ,10                ,10               ,1.6    ,       1.5                        ,
@@ -227,7 +206,4 @@ create_Element_Data <- function() {
     )
     )
 
-    return(REE_DATA)
-  # }
-}
-
+usethis::use_data(Element_Data, overwrite = TRUE)

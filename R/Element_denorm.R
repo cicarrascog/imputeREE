@@ -1,4 +1,12 @@
-Element_denorm <- function(dat, method = PalmeOneill2014CI) {
+#' Denormalize chrodrite Normalize to ppm
+#'
+#' @param dat A dataframe
+#' @param method an option from: 'PalmeOneill2014CI', 'Oneill2014Mantle', 'McDonough1995CI'
+#'
+#' @return A dataframe
+#'
+
+element_denorm <- function(dat, method = PalmeOneill2014CI) {
 
   PalmeOneill2014CI <- rowid <- Element_Data <- Element_name <- NULL
 

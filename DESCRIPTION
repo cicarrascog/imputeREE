@@ -1,13 +1,16 @@
-Package: feRtility
-Title: Impute missing rare earth element data using a lattice-strain derived method
+Package: imputeREE
+Title: Impute Missing Rare Earth Element Data Using a Lattice-Strain Derived Method
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Carlos",
            family = "Carrasco Godoy",
            role = c("aut", "cre"),
-           email = c("carlos.Carrasco@anu.edu.au", "ccarrasco@Outlook.cl"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+           email = c("carlos.Carrasco@anu.edu.au", "ccarrasco@outlook.cl"),
+           comment = c(ORCID = "0000-0003-4914-186X"))
+Description: Set of functions that fits a regression lines based on a 
+    method derived from the lattices strain theory of Blundy and Wood (1994).
+    Allows the calculation and imputing of missing Rare Earth Element 
+    (REE) in Zircon.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -28,4 +31,4 @@ Imports:
     rlang,
     broom
 Depends: 
-    R (>= 2.10)
+    R (>= 4.0)

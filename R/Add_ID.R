@@ -5,16 +5,12 @@
 #'
 #' @param dat a tibble or a dataframe
 #' @param ID Name of column to use for rownames. 'rowid' is used if none is specified.
-#' @param ... Other parameters passed onto the `tibble::rowid_to_column()` function
+#' @param ... Oth
+#' er parameters passed onto the `tibble::rowid_to_column()` function
 #'
 #' @return a data frame
-#' @export
-#'
-#' @examples
-#'
-#' Element_Data %>% Add_ID()
-#'
-Add_ID <- function(dat, ID = "rowid", ...) {
+
+add_ID <- function(dat, ID = "rowid", ...) {
 
 
   if(!is.data.frame(dat)) {
@@ -39,3 +35,8 @@ Add_ID <- function(dat, ID = "rowid", ...) {
 }
 
 
+#
+# @examples
+#
+# Element_Data %>% Add_ID()
+#
