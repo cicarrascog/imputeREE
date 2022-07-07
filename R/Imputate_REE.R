@@ -1,9 +1,9 @@
-#' Impute Rare earth elememts
+#' Impute Rare earth elements
 #'
 #' Imputes missing REE after modelling. Expect the output of 'model_REE()'
 #' function. Only missing values are replaced.
 #'
-#' By default, exclude models with Rsqured lower than 0.9.
+#' By default, exclude models with R-squared lower than 0.9.
 #'
 #'
 #'
@@ -11,7 +11,7 @@
 #' @param data A dataframe resulting from 'model_ree()'
 #' @param prefix A prefix in your columns e.g. ICP_La
 #' @param suffix A suffix in your columns e.g. La_ppm
-#' @param rsquared A numerical value between 0 and 1. Tolerance to missfitting models. set as 0.9 by default.
+#' @param rsquared A numerical value between 0 and 1. Tolerance to mis-fitting models. set as 0.9 by default.
 #'
 #' @return A dataframe
 #' @export

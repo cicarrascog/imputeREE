@@ -1,11 +1,10 @@
 #' Add_ID
 #'
 #' Add an unique ID per observation and checks that is not overwriting an existing column. If the column already exist, it will take no action.
-#' This is a wrapper of tibble::rowid_to_column() that checks that not colums is overwritten.
+#' This is a wrapper of tibble::rowid_to_column() that checks that not columns is overwritten.
 #'
 #' @param dat a tibble or a dataframe
 #' @param ID Name of column to use for rownames. 'rowid' is used if none is specified.
-#' @param ... Oth
 #' er parameters passed onto the `tibble::rowid_to_column()` function
 #'
 #' @return a data frame

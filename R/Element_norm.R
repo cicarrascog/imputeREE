@@ -4,8 +4,8 @@
 #'
 #'
 #'
-#' @param data a dataframe
-#' @param return a characther from: "rect" for a wide data return,"raw" for a long data return,"append" to append the results to the input data
+#' @param data a data frame
+#' @param return a character from: "rect" for a wide data return,"raw" for a long data return,"append" to append the results to the input data
 #' @param method an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI
 #' @param Element_list a character vector: indicating the elements that should be normalized. REE + Y by default
 #' @param prefix A prefix in your columns e.g. ICP_La

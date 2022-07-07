@@ -2,11 +2,11 @@
 #'
 #' This is a helper function
 #'
-#' @param dat a dataframe
-#' @param prefix A character of lengt 1
-#' @param suffix A character of lengt 1
+#' @param dat a data frame
+#' @param prefix A character of length 1
+#' @param suffix A character of length 1
 #' @importFrom magrittr %>%
-#' @return A dataframe
+#' @return A data frame
 
 
 CleanColnames <- function(dat, prefix = NULL, suffix = NULL) {
