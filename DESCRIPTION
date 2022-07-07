@@ -1,6 +1,6 @@
 Package: imputeREE
 Title: Impute Missing Rare Earth Element Data Using a Lattice-Strain Derived Method
-Version: 0.0.0.9000
+Version: 0.0.1
 Authors@R: 
     person(given = "Carlos",
            family = "Carrasco Godoy",
