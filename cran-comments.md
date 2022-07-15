@@ -15,3 +15,6 @@ New submission
 Possibly misspelled words in DESCRIPTION: Blundy (12:55) \# Lastname REE
 (14:6) \# Acronym
 
+Resubmission comments
+
+Added \<doi:\> in description and description files and spaces removed.
