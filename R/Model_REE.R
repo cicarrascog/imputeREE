@@ -64,7 +64,8 @@ Lu_correction_fact = 1/0.8943) {
   dat <- dat %>%
     Element_norm("raw",
       prefix = prefix,
-      suffix  = suffix
+      suffix  = suffix,
+      method = {{method}}
     ) %>%
     dplyr::mutate(Element_name = stringr::str_remove(Element_name, "[:punct:]?Normalized")) %>%
     add_IonicRadii()
