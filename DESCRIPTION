@@ -8,8 +8,8 @@ Authors@R:
            email = c("carlos.Carrasco@anu.edu.au", "ccarrasco@outlook.cl"),
            comment = c(ORCID = "0000-0003-4914-186X"))
 Description: Set of functions that fit a linear regression to calculate missing
-    missing Rare Earth Element (REE) in Zircon based on a method derived from the
-    lattice strain theory of Blundy and Wood (1994)<doi:10.1038/372452a0>.
+    Rare Earth Element (REE) in Zircon based on a method derived from the lattice 
+    strain theory of Blundy and Wood (1994)<doi:10.1038/372452a0>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -20,6 +20,7 @@ Suggests:
 Config/testthat/edition: 3
     janitor,
     tidyselect,
+    vctrs
 Imports: 
     tibble,
     dplyr,
