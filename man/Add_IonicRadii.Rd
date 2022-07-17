@@ -9,7 +9,7 @@ add_IonicRadii(dat, method = ShannonRadiiVIII_Coord_3plus)
 \arguments{
 \item{dat}{a dataframe or tibble.}
 
-\item{method}{Ionic Radii from shannon1976. Not.}
+\item{method}{Ionic Radii from Shannon, 1976}
 }
 \value{
 a data frame or tibble
@@ -17,10 +17,3 @@ a data frame or tibble
 \description{
 This is a helper function to work with Element_norm() and Element_denorm(). Takes long pivoted data to match element name and add normalizing values from the Element_data dataset.
 }
-\details{
-This is a test to see what happens in the following paragraphs
-}
-\seealso{
-\code{\link{Element_norm}}
-}
-\concept{Add Functions}

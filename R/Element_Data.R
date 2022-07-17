@@ -10,10 +10,10 @@
 #'   \item{Atomic_Mass}{Atomic Mass from IUPAC}
 #'   \item{Unit}{Measure Unit of the Concentrations, ppm = parts per million, pct = percentage}
 #'   \item{PalmeOneill2014CI}{Chondrite values from Palme and Oneil (2014)}
-#'   \item{PalmeOneill2014CI_RSD}{Uncertainty from chondrite values from palme and Oneil (2014) as RSD (Relative standard Deviation)}
-#'   \item{PalmeOneill2014Mantle}{Primitive Mantle values from Palme and Oneil (2014)}
-#'   \item{PalmeOneill2014Mantle_RSD}{Uncertainty from Primitive Mantlevalues from palme and Oneil (2014) as RSD (Relative standard Deviation)}
-#'   \item{McDonough1995CI}{Chondrite values from Mcdonough and Sun (1995)}
+#'   \item{PalmeOneill2014CI_RSD}{Uncertainty from chondrite values from Palme and O'Neill (2014) as RSD (Relative standard Deviation)}
+#'   \item{PalmeOneill2014Mantle}{Primitive Mantle values from Palme and O'Neill (2014)}
+#'   \item{PalmeOneill2014Mantle_RSD}{Uncertainty from Primitive Mantle Values from Palme and O'Neill (2014) as RSD (Relative standard Deviation)}
+#'   \item{McDonough1995CI}{Chondrite values from McDonough and Sun (1995)}
 #'   \item{ShannonRadiiVIII_Coord_3plus}{Shannon (1976) Ionic Radii for elements in Eight-fold coordination and 3+ charge}
 #'   ...
 #' }

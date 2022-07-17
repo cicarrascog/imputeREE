@@ -13,7 +13,8 @@ model_REE(
   method = PalmeOneill2014CI,
   Y_correction_fact = 1.29,
   Yb_correction_fact = 1/0.8785,
-  Lu_correction_fact = 1/0.8943
+  Lu_correction_fact = 1/0.8943,
+  correct_heavy = TRUE
 )
 }
 \arguments{
@@ -21,7 +22,7 @@ model_REE(
 
 \item{r0}{A number: ionic radii of the lattice site r0}
 
-\item{exclude}{a string: vector including elements that should be ommited from modelling. La, Ce and Eu are the default. Ce and Eu should be always included}
+\item{exclude}{a string: vector including elements that should be omitted from modelling. La, Ce and Eu are the default. Ce and Eu should be always included}
 
 \item{prefix}{A prefix in your columns e.g. ICP_La}
 
@@ -34,6 +35,8 @@ model_REE(
 \item{Yb_correction_fact}{a number: correction factor for underestimated Yb 1/0.8785}
 
 \item{Lu_correction_fact}{a number: correction factor for underestimated Lu 1/0.8943}
+
+\item{correct_heavy}{a logical. If \code{TRUE} will apply a correction factor for Yb, Lu and Y.}
 }
 \value{
 a dataframe

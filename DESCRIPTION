@@ -20,7 +20,6 @@ Suggests:
 Config/testthat/edition: 3
     janitor,
     tidyselect,
-    vctrs
 Imports: 
     tibble,
     dplyr,

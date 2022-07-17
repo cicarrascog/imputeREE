@@ -2,13 +2,10 @@
 #'
 #' This is a helper function to work with Element_norm() and Element_denorm(). Takes long pivoted data to match element name and add normalizing values from the Element_data dataset.
 #'
-#' This is a test to see what happens in the following paragraphs
 #'
-#' @family Add Functions
-#' @seealso \code{\link{Element_norm}}
 #'
 #' @param dat a dataframe or tibble.
-#' @param method Ionic Radii from shannon1976. Not.
+#' @param method Ionic Radii from Shannon, 1976
 #'
 #' @return a data frame or tibble
 #'

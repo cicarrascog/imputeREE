@@ -5,13 +5,14 @@
 #'
 #' @param dat A data frame
 #' @param r0 A number: ionic radii of the lattice site r0
-#' @param exclude a string: vector including elements that should be ommited from modelling. La, Ce and Eu are the default. Ce and Eu should be always included
+#' @param exclude a string: vector including elements that should be omitted from modelling. La, Ce and Eu are the default. Ce and Eu should be always included
 #' @param Y_correction_fact a number: correction factor for underestimated Y. 1.29 by default.
 #' @param Yb_correction_fact a number: correction factor for underestimated Yb 1/0.8785
 #' @param prefix A prefix in your columns e.g. ICP_La
 #' @param suffix A suffix in your columns e.g. La_ppm
 #' @param method an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI
 #' @param Lu_correction_fact a number: correction factor for underestimated Lu 1/0.8943
+#' @param correct_heavy a logical. If `TRUE` will apply a correction factor for Yb, Lu and Y.
 #'
 #' @importFrom rlang .data
 #'
@@ -31,7 +32,8 @@ model_REE <- function(dat,
                       method = PalmeOneill2014CI,
                       Y_correction_fact = 1.29,
 Yb_correction_fact = 1/0.8785,
-Lu_correction_fact = 1/0.8943) {
+Lu_correction_fact = 1/0.8943,
+correct_heavy = TRUE) {
   Original <- dat %>% add_ID() ## backup of original data.
 
 ## Notes removed
@@ -191,15 +193,9 @@ Lu_correction_fact = 1/0.8943) {
     dplyr::relocate(rowid, model_nree, dplyr::matches("NormalizedCalc"), dplyr::matches("ppmCalc")) # %>%
 
 ## Correction Factor for Y #####
-dat <- dat %>%
-        dplyr::mutate(
-          ppmCalc_Y =  .data$ppmCalc_Y * Y_correction_fact,
-          NormalizedCalc_Y = .data$NormalizedCalc_Y * Y_correction_fact,
-          ppmCalc_Yb =  .data$ppmCalc_Yb * Yb_correction_fact,
-          NormalizedCalc_Yb = .data$NormalizedCalc_Yb *Yb_correction_fact,
-          ppmCalc_Lu =  .data$ppmCalc_Lu * Lu_correction_fact,
-          NormalizedCalc_Lu = .data$NormalizedCalc_Lu *Lu_correction_fact
-)
+if (correct_heavy) {
+  dat <- correct_heavy(dat = dat, Y_correction_fact =Y_correction_fact , Yb_correction_fact =Yb_correction_fact , Lu_correction_fact =Lu_correction_fact )
+}
 
 ## join to original Data ####
 
