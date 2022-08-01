@@ -5,10 +5,10 @@
 #' @param dat A dataframe
 #' @param Y_correction_fact a number: correction factor for underestimated Y. 1/ 0.72 by default.
 #' @param Ho_correction_fact a number: correction factor for Ho. 1 by default.
-#' @param Er_correction_fact a number: correction factor for underestimated Er. 1/0.97 by default.
+#' @param Er_correction_fact a number: correction factor for underestimated Er. 1/0.974 by default.
 #' @param Tm_correction_fact a number: correction factor for Tm. 1 by default.
-#' @param Yb_correction_fact a number: correction factor for underestimated Yb. 1/0.8785  by default.
-#' @param Lu_correction_fact a number: correction factor for underestimated Lu. 1/0.8943 by default.
+#' @param Yb_correction_fact a number: correction factor for underestimated Yb. 1/0.907  by default.
+#' @param Lu_correction_fact a number: correction factor for underestimated Lu. 1/0.926 by default.
 #'
 #' @return a data frame
 

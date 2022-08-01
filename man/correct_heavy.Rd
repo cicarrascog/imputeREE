@@ -21,13 +21,13 @@ correct_heavy(
 
 \item{Ho_correction_fact}{a number: correction factor for Ho. 1 by default.}
 
-\item{Er_correction_fact}{a number: correction factor for underestimated Er. 1/0.97 by default.}
+\item{Er_correction_fact}{a number: correction factor for underestimated Er. 1/0.974 by default.}
 
 \item{Tm_correction_fact}{a number: correction factor for Tm. 1 by default.}
 
-\item{Yb_correction_fact}{a number: correction factor for underestimated Yb. 1/0.8785  by default.}
+\item{Yb_correction_fact}{a number: correction factor for underestimated Yb. 1/0.907  by default.}
 
-\item{Lu_correction_fact}{a number: correction factor for underestimated Lu. 1/0.8943 by default.}
+\item{Lu_correction_fact}{a number: correction factor for underestimated Lu. 1/0.926 by default.}
 }
 \value{
 a data frame
