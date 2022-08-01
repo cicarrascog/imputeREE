@@ -11,10 +11,19 @@ model_REE(
   prefix = NULL,
   suffix = NULL,
   method = PalmeOneill2014CI,
-  Y_correction_fact = 1.29,
+  correct_heavy = TRUE,
+  Y_correction_fact = 1/0.72,
+  Ho_correction_fact = 1,
+  Er_correction_fact = 1/0.974,
+  Tm_correction_fact = 1,
   Yb_correction_fact = 1/0.8785,
   Lu_correction_fact = 1/0.8943,
-  correct_heavy = TRUE
+  correct_middle = T,
+  Nd_correction_fact = 1/0.989,
+  Sm_correction_fact = 1/1.022,
+  Gd_correction_fact = 1/1.033,
+  Tb_correction_fact = 1/1.05,
+  Dy_correction_fact = 1/1.032
 )
 }
 \arguments{
@@ -30,13 +39,31 @@ model_REE(
 
 \item{method}{an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI}
 
-\item{Y_correction_fact}{a number: correction factor for underestimated Y. 1.29 by default.}
-
-\item{Yb_correction_fact}{a number: correction factor for underestimated Yb 1/0.8785}
-
-\item{Lu_correction_fact}{a number: correction factor for underestimated Lu 1/0.8943}
-
 \item{correct_heavy}{a logical. If \code{TRUE} will apply a correction factor for Yb, Lu and Y.}
+
+\item{Y_correction_fact}{a number: correction factor for underestimated Y. 1/ 0.72 by default.}
+
+\item{Ho_correction_fact}{a number: correction factor for Ho. 1 by default.}
+
+\item{Er_correction_fact}{a number: correction factor for underestimated Er. 1/0.97 by default.}
+
+\item{Tm_correction_fact}{a number: correction factor for Tm. 1 by default.}
+
+\item{Yb_correction_fact}{a number: correction factor for underestimated Yb. 1/0.8785  by default.}
+
+\item{Lu_correction_fact}{a number: correction factor for underestimated Lu. 1/0.8943 by default.}
+
+\item{correct_middle}{a logical. If \code{TRUE} will apply a correction factor for Nd, Sm, Gd, Tb and Dy.}
+
+\item{Nd_correction_fact}{a number: correction factor for underestimated Nd 1/0.0.989}
+
+\item{Sm_correction_fact}{a number: correction factor for overestimated Sm 1/1.022}
+
+\item{Gd_correction_fact}{a number: correction factor for overestimated Gd 1/1.033}
+
+\item{Tb_correction_fact}{a number: correction factor for overestimated Tb 1/1.050}
+
+\item{Dy_correction_fact}{a number: correction factor for overestimated Dy 1/1.032}
 }
 \value{
 a dataframe

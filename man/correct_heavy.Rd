@@ -2,11 +2,14 @@
 % Please edit documentation in R/correct_heavy_REE.r
 \name{correct_heavy}
 \alias{correct_heavy}
-\title{Corrects for the model deviations of Yb, Lu and Y}
+\title{Corrects for the model deviations of Er, Yb, Lu and Y}
 \usage{
 correct_heavy(
   dat,
-  Y_correction_fact = 1.29,
+  Y_correction_fact = 1/0.72,
+  Ho_correction_fact = 1,
+  Er_correction_fact = 1/0.974,
+  Tm_correction_fact = 1,
   Yb_correction_fact = 1/0.8785,
   Lu_correction_fact = 1/0.8943
 )
@@ -14,11 +17,17 @@ correct_heavy(
 \arguments{
 \item{dat}{A dataframe}
 
-\item{Y_correction_fact}{a number: correction factor for underestimated Y. 1.29 by default.}
+\item{Y_correction_fact}{a number: correction factor for underestimated Y. 1/ 0.72 by default.}
 
-\item{Yb_correction_fact}{a number: correction factor for underestimated Yb 1/0.8785}
+\item{Ho_correction_fact}{a number: correction factor for Ho. 1 by default.}
 
-\item{Lu_correction_fact}{a number: correction factor for underestimated Lu 1/0.8943}
+\item{Er_correction_fact}{a number: correction factor for underestimated Er. 1/0.97 by default.}
+
+\item{Tm_correction_fact}{a number: correction factor for Tm. 1 by default.}
+
+\item{Yb_correction_fact}{a number: correction factor for underestimated Yb. 1/0.8785  by default.}
+
+\item{Lu_correction_fact}{a number: correction factor for underestimated Lu. 1/0.8943 by default.}
 }
 \value{
 a data frame

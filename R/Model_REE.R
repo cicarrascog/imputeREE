@@ -6,13 +6,22 @@
 #' @param dat A data frame
 #' @param r0 A number: ionic radii of the lattice site r0
 #' @param exclude a string: vector including elements that should be omitted from modelling. La, Ce and Eu are the default. Ce and Eu should be always included
-#' @param Y_correction_fact a number: correction factor for underestimated Y. 1.29 by default.
-#' @param Yb_correction_fact a number: correction factor for underestimated Yb 1/0.8785
 #' @param prefix A prefix in your columns e.g. ICP_La
 #' @param suffix A suffix in your columns e.g. La_ppm
 #' @param method an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI
-#' @param Lu_correction_fact a number: correction factor for underestimated Lu 1/0.8943
+#' @param correct_middle a logical. If `TRUE` will apply a correction factor for Nd, Sm, Gd, Tb and Dy.
+#' @param Nd_correction_fact  a number: correction factor for underestimated Nd 1/0.0.989
+#' @param Sm_correction_fact  a number: correction factor for overestimated Sm 1/1.022
+#' @param Gd_correction_fact  a number: correction factor for overestimated Gd 1/1.033
+#' @param Tb_correction_fact  a number: correction factor for overestimated Tb 1/1.050
+#' @param Dy_correction_fact  a number: correction factor for overestimated Dy 1/1.032
 #' @param correct_heavy a logical. If `TRUE` will apply a correction factor for Yb, Lu and Y.
+#' @param Y_correction_fact a number: correction factor for underestimated Y. 1/ 0.72 by default.
+#' @param Ho_correction_fact a number: correction factor for Ho. 1 by default.
+#' @param Er_correction_fact a number: correction factor for underestimated Er. 1/0.97 by default.
+#' @param Tm_correction_fact a number: correction factor for Tm. 1 by default.
+#' @param Yb_correction_fact a number: correction factor for underestimated Yb. 1/0.8785  by default.
+#' @param Lu_correction_fact a number: correction factor for underestimated Lu. 1/0.8943 by default.
 #'
 #' @importFrom rlang .data
 #'
@@ -30,10 +39,20 @@ model_REE <- function(dat,
                       prefix = NULL,
                       suffix = NULL,
                       method = PalmeOneill2014CI,
-                      Y_correction_fact = 1.29,
-Yb_correction_fact = 1/0.8785,
-Lu_correction_fact = 1/0.8943,
-correct_heavy = TRUE) {
+                      correct_heavy = TRUE,
+                      Y_correction_fact = 1/0.72,
+                      Ho_correction_fact = 1,
+                      Er_correction_fact = 1/0.974,
+                      Tm_correction_fact = 1,
+                      Yb_correction_fact = 1/0.8785,
+                      Lu_correction_fact = 1/0.8943,
+                      correct_middle = T,
+                      Nd_correction_fact = 1/0.989,
+                      Sm_correction_fact = 1/1.022,
+                      Gd_correction_fact = 1/1.033,
+                      Tb_correction_fact = 1/1.050,
+                      Dy_correction_fact = 1/1.032
+) {
   Original <- dat %>% add_ID() ## backup of original data.
 
 ## Notes removed
@@ -192,10 +211,22 @@ correct_heavy = TRUE) {
     tidyr::pivot_wider(names_from = Element_name, values_from = c(NormalizedCalc, ppmCalc)) %>%
     dplyr::relocate(rowid, model_nree, dplyr::matches("NormalizedCalc"), dplyr::matches("ppmCalc")) # %>%
 
-## Correction Factor for Y #####
+## Correction Factor for Heavy  REE + Y #####
 if (correct_heavy) {
   dat <- correct_heavy(dat = dat, Y_correction_fact =Y_correction_fact , Yb_correction_fact =Yb_correction_fact , Lu_correction_fact =Lu_correction_fact )
 }
+
+      ## Correction Factor for Middle  REE  #####
+
+      if (correct_middle) {
+        dat <- correct_middle(dat = dat,
+                              Nd_correction_fact = Nd_correction_fact,
+                              Sm_correction_fact = Sm_correction_fact,
+                              Gd_correction_fact = Gd_correction_fact,
+                              Tb_correction_fact = Tb_correction_fact,
+                              Dy_correction_fact = Dy_correction_fact)
+      }
+
 
 ## join to original Data ####
 
