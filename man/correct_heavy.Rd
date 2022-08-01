@@ -10,8 +10,8 @@ correct_heavy(
   Ho_correction_fact = 1,
   Er_correction_fact = 1/0.974,
   Tm_correction_fact = 1,
-  Yb_correction_fact = 1/0.8785,
-  Lu_correction_fact = 1/0.8943
+  Yb_correction_fact = 1/0.907,
+  Lu_correction_fact = 1/0.926
 )
 }
 \arguments{
