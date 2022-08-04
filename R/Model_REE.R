@@ -213,7 +213,15 @@ model_REE <- function(dat,
 
 ## Correction Factor for Heavy  REE + Y #####
 if (correct_heavy) {
-  dat <- correct_heavy(dat = dat, Y_correction_fact =Y_correction_fact , Yb_correction_fact =Yb_correction_fact , Lu_correction_fact =Lu_correction_fact )
+  dat <- correct_heavy(dat = dat,
+                       Y_correction_fact =Y_correction_fact ,
+                       Yb_correction_fact =Yb_correction_fact ,
+                       Lu_correction_fact =Lu_correction_fact,
+                       Ho_correction_fact = Ho_correction_fact,
+                       Er_correction_fact = Er_correction_fact,
+                       Tm_correction_fact =Tm_correction_fact
+
+                       )
 }
 
       ## Correction Factor for Middle  REE  #####
