@@ -10,6 +10,7 @@
 #' @param suffix A suffix in your columns e.g. La_ppm
 #' @param method an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI
 #' @param correct_middle a logical. If `TRUE` will apply a correction factor for Nd, Sm, Gd, Tb and Dy.
+#' @param Pr_correction_fact  a number: correction factor for overestimated Pr 1/0.918
 #' @param Nd_correction_fact  a number: correction factor for underestimated Nd 1/0.0.989
 #' @param Sm_correction_fact  a number: correction factor for overestimated Sm 1/1.022
 #' @param Gd_correction_fact  a number: correction factor for overestimated Gd 1/1.033
@@ -51,7 +52,8 @@ model_REE <- function(dat,
                       Sm_correction_fact = 1/1.022,
                       Gd_correction_fact = 1/1.033,
                       Tb_correction_fact = 1/1.050,
-                      Dy_correction_fact = 1/1.032
+                      Dy_correction_fact = 1/1.032,
+                      Pr_correction_fact =1/0.918
 ) {
   Original <- dat %>% add_ID() ## backup of original data.
 
@@ -228,6 +230,7 @@ if (correct_heavy) {
 
       if (correct_middle) {
         dat <- correct_middle(dat = dat,
+                              Pr_correction_fact = Pr_correction_fact,
                               Nd_correction_fact = Nd_correction_fact,
                               Sm_correction_fact = Sm_correction_fact,
                               Gd_correction_fact = Gd_correction_fact,

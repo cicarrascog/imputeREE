@@ -23,7 +23,8 @@ model_REE(
   Sm_correction_fact = 1/1.022,
   Gd_correction_fact = 1/1.033,
   Tb_correction_fact = 1/1.05,
-  Dy_correction_fact = 1/1.032
+  Dy_correction_fact = 1/1.032,
+  Pr_correction_fact = 1/0.918
 )
 }
 \arguments{
@@ -64,6 +65,8 @@ model_REE(
 \item{Tb_correction_fact}{a number: correction factor for overestimated Tb 1/1.050}
 
 \item{Dy_correction_fact}{a number: correction factor for overestimated Dy 1/1.032}
+
+\item{Pr_correction_fact}{a number: correction factor for overestimated Pr 1/0.918}
 }
 \value{
 a dataframe
