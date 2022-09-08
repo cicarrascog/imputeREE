@@ -19,6 +19,13 @@ Set of functions that fit a linear regression to calculate missing Rare
 Earth Element (REE) in Zircon based on a method derived from the lattice
 strain theory of Blundy and Wood (1994) (<doi:10.1038/372452a0>).
 
+## ImputeREEapp
+
+A companion app can be found in <http://ccarr.shinyapps.io/ImputeREEapp>
+
+The source code for the app can be found in
+<https://github.com/cicarrascog/ImputeREEapp>
+
 ## Installation
 
 You can install the development version of imputeREE from
