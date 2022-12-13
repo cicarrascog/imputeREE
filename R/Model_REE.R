@@ -231,7 +231,7 @@ model_REE <- function(dat,
       tidyr::unnest(data) %>%
       add_NormValues(chondrite = {{ chondrite }}) %>%
       dplyr::mutate(
-        NormalizedCalc = exp(Z_Zhong * estimate_Slope + estimate_Intercept),
+        NormalizedCalc = 10^(Z_Zhong * estimate_Slope + estimate_Intercept),
         ppmCalc = NormalizedCalc * {{ chondrite }}
       ) %>%
       dplyr::ungroup() %>%
