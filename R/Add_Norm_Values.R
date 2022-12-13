@@ -9,7 +9,7 @@
 #' @return a data frame or tibble
 #'
 
-add_NormValues <- function(dat, method = PalmeOneill2014CI) {
+add_NormValues <- function(dat, chondrite = PalmeOneill2014CI) {
 
  Element_name <-  PalmeOneill2014CI <- NULL
 
@@ -18,7 +18,7 @@ add_NormValues <- function(dat, method = PalmeOneill2014CI) {
     stop("dat should be a dataframe, you provided:", class(dat)[1])
   }
 
-Element_Data <-  Element_Data %>% dplyr::select({{method}}, Element_name)
+Element_Data <-  Element_Data %>% dplyr::select({{chondrite}}, Element_name)
 
 dat <- dplyr::left_join(dat, Element_Data, by = 'Element_name')
 

@@ -6,7 +6,7 @@
 #'
 #' @param data a data frame
 #' @param return a character from: "rect" for a wide data return,"raw" for a long data return,"append" to append the results to the input data
-#' @param method an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI
+#' @param chondrite an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI
 #' @param Element_list a character vector: indicating the elements that should be normalized. REE + Y by default
 #' @param prefix A prefix in your columns e.g. ICP_La
 #' @param suffix A suffix in your columns e.g. La_ppm
@@ -16,7 +16,7 @@
 Element_norm <- function(
   data,
   return = "rect",
-  method = PalmeOneill2014CI,
+  chondrite = PalmeOneill2014CI,
   prefix = NULL, ## in case you use prefix like: Whole_Rock_Ce
   suffix = NULL, ## in case you use prefix like: Ce_wt%
   Element_list = REE_plus_Y_Elements) {
@@ -43,7 +43,7 @@ Element_norm <- function(
 
   data <- data %>% CleanColnames(prefix = prefix, suffix = suffix)
 
-  # Element_Data <-  Element_Data %>% dplyr::select({{method}}, Element_name)
+  # Element_Data <-  Element_Data %>% dplyr::select({{chondrite}}, Element_name)
 
 
   # Normalize data
@@ -51,12 +51,12 @@ Element_norm <- function(
   data <- data %>%
     dplyr::select(rowid, tidyr::matches(paste0("^", Element_list, "$"), ignore.case = FALSE)) %>% # Select all the columns with REE-Y plus the ID column
     tidyr::pivot_longer(-rowid, names_to = "Element_name") %>% # makes data long, so it is easier to calculate
-    add_NormValues(method = {{ method }}) %>%
+    add_NormValues(chondrite = {{ chondrite }}) %>%
     dplyr::mutate(
       Element_name = paste(Element_name, "Normalized", sep = "_"),
-      value = value / {{ method }}
+      value = value / {{ chondrite }}
     ) %>%
-    dplyr::select(-{{ method }})
+    dplyr::select(-{{ chondrite }})
   # #
   ### Returns
 
