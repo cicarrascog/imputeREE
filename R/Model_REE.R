@@ -218,9 +218,11 @@ model_REE <- function(dat,
 
     dat <- dat %>%
       dplyr::group_by(rowid) %>%
+      dplyr::mutate(value = log10(value),
+                    Z_Zhong = log10(Z_Zhong)) %>%
       tidyr::nest() %>%
       dplyr::mutate(
-        models = purrr::map(data, ~ lm(log10(value) ~ Z_Zhong, na.action = na.omit, data = .x)),
+        models = purrr::map(data, ~ lm(value ~ Z_Zhong, na.action = na.omit, data = .x)),
         tidied = purrr::map(models, broom::tidy),
         glanced = purrr::map(models, broom::glance)
       ) %>%
