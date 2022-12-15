@@ -37,6 +37,7 @@
 #'
 model_REE <- function(dat,
                       r0 = 0.84,
+                      Estimate_r0 = FALSE,
                       method = 1,
                       exclude = c("La", "Ce", "Eu", "Y"),
                       prefix = NULL,
@@ -181,11 +182,37 @@ model_REE <- function(dat,
 
   if (method == 1) {
 
-    dat <- dat  %>%
 
-      dplyr::mutate(
-        `(ri/3 + r0/6)(ri-r0)^2` = (ShannonRadiiVIII_Coord_3plus / 3 + r0 / 6) * (ShannonRadiiVIII_Coord_3plus - r0)^2
-      )
+
+    if(Estimate_r0 == T ) {
+
+      r_0 <- dat %>%
+        dplyr::group_by(rowid) %>%
+        mutate(value = log(value)) %>%
+        tidyr::nest() %>%
+        dplyr::mutate(
+          models = purrr::map(data, ~ lm(value ~ poly(ShannonRadiiVIII_Coord_3plus,2,raw = F) , na.action = na.omit, data = .x)),
+          tidied = purrr::map(models, broom::tidy),
+          glanced = purrr::map(models, broom::glance)
+        ) %>%
+        tidyr::unnest(tidied)
+
+
+      dat <- dat  %>%
+        dplyr::mutate(
+          `(ri/3 + r0/6)(ri-r0)^2` = (ShannonRadiiVIII_Coord_3plus / 3 + r0 / 6) * (ShannonRadiiVIII_Coord_3plus - r0)^2 )
+
+
+    }
+    else {
+      dat <- dat  %>%
+        dplyr::mutate(
+          `(ri/3 + r0/6)(ri-r0)^2` = (ShannonRadiiVIII_Coord_3plus / 3 + r0 / 6) * (ShannonRadiiVIII_Coord_3plus - r0)^2
+        )
+#
+    }
+
+
 
     dat <- dat %>%
       dplyr::group_by(rowid) %>%
@@ -300,5 +327,11 @@ if (correct_heavy) {
 ## join to original Data ####
 
   dat <- dplyr::left_join(Original, dat, by = "rowid")
-  return(dat)
+
+  if (Estimate_r0 == T) {
+    return(r_0)
+  } else {
+    return(dat)
+  }
+
 }
