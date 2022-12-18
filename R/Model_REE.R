@@ -206,8 +206,9 @@ model_REE <- function(dat,
     }
     else {
       dat <- dat  %>%
+        mutate(R0 = r0) %>%
         dplyr::mutate(
-          `(ri/3 + r0/6)(ri-r0)^2` = (ShannonRadiiVIII_Coord_3plus / 3 + r0 / 6) * (ShannonRadiiVIII_Coord_3plus - r0)^2
+          `(ri/3 + r0/6)(ri-r0)^2` = (ShannonRadiiVIII_Coord_3plus / 3 + R0 / 6) * (ShannonRadiiVIII_Coord_3plus - R0)^2
         )
 #
     }
@@ -221,22 +222,24 @@ model_REE <- function(dat,
         models = purrr::map(data, ~ lm(log(value) ~ `(ri/3 + r0/6)(ri-r0)^2`, na.action = na.omit, data = .x)),
         tidied = purrr::map(models, broom::tidy),
         glanced = purrr::map(models, broom::glance)
-      ) %>%
-      tidyr::unnest(tidied) %>%
-      dplyr::mutate(term = ifelse(stringr::str_detect("Intercept", term), "Intercept", "Slope")) %>%
-      tidyr::pivot_wider(names_from = term, values_from = c(estimate, std.error, statistic, p.value)) %>%
-      tidyr::unnest(glanced, names_sep = "model_") %>%
-      tidyr::unnest(data) %>%
-      add_NormValues(chondrite = {{chondrite}}) %>%
-      dplyr::mutate(
-        NormalizedCalc = exp(`(ri/3 + r0/6)(ri-r0)^2` * estimate_Slope + estimate_Intercept),
-        ppmCalc = NormalizedCalc * {{ chondrite }}
-      ) %>%
-      dplyr::ungroup() %>%
-      dplyr::rename_with(
-        .cols = dplyr::matches("^glanced"),
-        ~ stringr::str_replace_all(pattern = "glanced", replacement = "", string = .x))
-  }
+      )  %>%
+    tidyr::unnest(tidied) %>%
+    dplyr::mutate(term = ifelse(stringr::str_detect("Intercept", term), "Intercept", "Slope")) %>%
+    tidyr::pivot_wider(names_from = term, values_from = c(estimate, std.error, statistic, p.value)) %>%
+    tidyr::unnest(glanced, names_sep = "model_") %>%
+    tidyr::unnest(data) %>%
+    add_NormValues(chondrite = {{chondrite}}) %>%
+    dplyr::mutate(
+      NormalizedCalc = exp(`(ri/3 + r0/6)(ri-r0)^2` * estimate_Slope + estimate_Intercept),
+      ppmCalc = NormalizedCalc * {{ chondrite }}
+    ) %>%
+    dplyr::ungroup() %>%
+    dplyr::rename_with(
+      .cols = dplyr::matches("^glanced"),
+      ~ stringr::str_replace_all(pattern = "glanced", replacement = "", string = .x))
+
+
+    }
 
 
   if (method == 2) {
