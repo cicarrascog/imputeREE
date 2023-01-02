@@ -36,71 +36,74 @@
 #'
 #'
 model_REE <- function(dat,
-                      r0 = 0.84,
-                      Estimate_r0 = FALSE,
                       method = 1,
-                      exclude = c("La", "Ce", "Eu", "Y"),
+                      long_format = F,
+                      exclude = c("La", "Pr", "Ce", "Eu", "Y"),
+                      r0 = 0.84,
+                      chondrite = PalmeOneill2014CI,
+                      estimate_r0 = FALSE,
+                      r0_step = 0.01,
+                      r0_min = 0.01,
+                      r0_max = 0.15,
                       prefix = NULL,
                       suffix = NULL,
-                      chondrite = PalmeOneill2014CI,
-                      correct_heavy = TRUE,
-                      Y_correction_fact = 1/0.72,
+                      correct_heavy = F,
+                      correct_middle = F,
+                      Pr_correction_fact = 1 / 0.918,
+                      Y_correction_fact = 1 / 0.72,
+                      Dy_correction_fact = 1 / 1.032,
                       Ho_correction_fact = 1,
-                      Er_correction_fact = 1/0.974,
+                      Er_correction_fact = 1 / 0.974,
                       Tm_correction_fact = 1,
-                      Yb_correction_fact = 1/0.8785,
-                      Lu_correction_fact = 1/0.8943,
-                      correct_middle = T,
-                      Nd_correction_fact = 1/0.989,
-                      Sm_correction_fact = 1/1.022,
-                      Gd_correction_fact = 1/1.033,
-                      Tb_correction_fact = 1/1.050,
-                      Dy_correction_fact = 1/1.032,
-                      Pr_correction_fact =1/0.918
-) {
+                      Yb_correction_fact = 1 / 0.8785,
+                      Lu_correction_fact = 1 / 0.8943,
+                      Nd_correction_fact = 1 / 0.989,
+                      Sm_correction_fact = 1 / 1.022,
+                      Gd_correction_fact = 1 / 1.033,
+                      Tb_correction_fact = 1 / 1.050) {
   Original <- dat %>% add_ID() ## backup of original data.
 
-## Notes removed
+  ## Notes removed
   PalmeOneill2014CI <-
-  rowid <-
-  Element_Data <-
-  Element_name <-
-  value <-
-  ShannonRadiiVIII_Coord_3plus <-
-  data <-
-  models <-
-  tidied <-
-  term <-
-  estimate <-
-  std.error <-
-  statistic <-
-  p.value <-
-  glanced <-
-  `(ri/3 + r0/6)(ri-r0)^2` <-
-  estimate_Slope <-
-  estimate_Intercept <-
-  NormalizedCalc <-
-  . <-
-  ppmCalc <-
-  NULL
+    rowid <-
+    Element_Data <-
+    Element_name <-
+    value <-
+    ShannonRadiiVIII_Coord_3plus <-
+    data <-
+    models <-
+    tidied <-
+    term <-
+    estimate <-
+    std.error <-
+    statistic <-
+    p.value <-
+    glanced <-
+    `(ri/3 + r0/6)(ri-r0)^2` <-
+    estimate_Slope <-
+    estimate_Intercept <-
+    NormalizedCalc <-
+    . <-
+    ppmCalc <-
+    NULL
 
 
 
-## calculate chondrite normalized values and add ionic Radii
+  ## calculate chondrite normalized values and add ionic Radii
 
-   dat <- dat %>%
+  dat <- dat %>%
     Element_norm("raw",
       prefix = prefix,
-      suffix  = suffix,
-      chondrite = {{chondrite}}
+      suffix = suffix,
+      chondrite = {{ chondrite }}
     ) %>%
     dplyr::mutate(Element_name = stringr::str_remove(Element_name, "[:punct:]?Normalized")) %>%
-     add_IonicRadii()
+    add_IonicRadii()
 
 
 
 
-    Element_list <- REE_plus_Y_Elements
+  Element_list <- REE_plus_Y_Elements
   #
   ###
   excludedREE <- dat %>%
@@ -151,7 +154,6 @@ model_REE <- function(dat,
     nrow()
 
   if (stopper >= 2) {
-
     stopper <- dat %>%
       dplyr::ungroup() %>%
       dplyr::arrange(model_nree) %>%
@@ -178,78 +180,96 @@ model_REE <- function(dat,
 
 
 
-### Model REE ####
+  ### Model REE ####
 
   if (method == 1) {
+    if (estimate_r0 == F) {
 
-
-
-    if(Estimate_r0 == T ) {
-
-      r_0 <- dat %>%
-        dplyr::group_by(rowid) %>%
-        mutate(value = log(value)) %>%
-        tidyr::nest() %>%
+      dat <- dat %>%
         dplyr::mutate(
-          models = purrr::map(data, ~ lm(value ~ poly(ShannonRadiiVIII_Coord_3plus,2,raw = F) , na.action = na.omit, data = .x)),
+          `(ri/3 + r0/6)(ri-r0)^2` = (ShannonRadiiVIII_Coord_3plus / 3 + r0 / 6) * (ShannonRadiiVIII_Coord_3plus - r0)^2
+        )
+
+      dat <- dat %>%
+        dplyr::group_by(rowid) %>%
+        tidyr::nest() %>%
+        plyr::mutate(
+          models = purrr::map(data, ~ lm(log(value) ~ `(ri/3 + r0/6)(ri-r0)^2`, na.action = na.omit, data = .x)),
           tidied = purrr::map(models, broom::tidy),
           glanced = purrr::map(models, broom::glance)
         ) %>%
-        tidyr::unnest(tidied)
-
-
-      dat <- dat  %>%
+        tidyr::unnest(tidied) %>%
+        dplyr::mutate(term = ifelse(stringr::str_detect("Intercept", term), "Intercept", "Slope")) %>%
+        tidyr::pivot_wider(names_from = term, values_from = c(estimate, std.error, statistic, p.value)) %>%
+        tidyr::unnest(glanced, names_sep = "model_") %>%
+        tidyr::unnest(data) %>%
+        add_NormValues(chondrite = {{ chondrite }}) %>%
         dplyr::mutate(
-          `(ri/3 + r0/6)(ri-r0)^2` = (ShannonRadiiVIII_Coord_3plus / 3 + r0 / 6) * (ShannonRadiiVIII_Coord_3plus - r0)^2 )
-
-
-    }
-    else {
-      dat <- dat  %>%
-        mutate(R0 = r0) %>%
-        dplyr::mutate(
-          `(ri/3 + r0/6)(ri-r0)^2` = (ShannonRadiiVIII_Coord_3plus / 3 + R0 / 6) * (ShannonRadiiVIII_Coord_3plus - R0)^2
+          NormalizedCalc = exp(`(ri/3 + r0/6)(ri-r0)^2` * estimate_Slope + estimate_Intercept),
+          ppmCalc = NormalizedCalc * {{ chondrite }}
+        ) %>%
+        dplyr::ungroup() %>%
+        dplyr::rename_with(
+          .cols = dplyr::matches("^glanced"),
+          ~ stringr::str_replace_all(pattern = "glanced", replacement = "", string = .x)
         )
-#
-    }
+    } # method assumes constant r0 for all
+
+    if (estimate_r0 == T) {
+      binder <- NULL
+      r0_range <- seq(r0 - r0_min, r0 + r0_max, r0_step)
+
+      for (i in r0_range) {
+        data_to_bind <- dat %>%
+          dplyr::group_by(rowid) %>%
+          tidyr::nest() %>%
+          dplyr::mutate(data = purrr::map(
+            data, ~ .x %>% dplyr::mutate(`(ri/3 + r0/6)(ri-r0)^2` = ((ShannonRadiiVIII_Coord_3plus / 3) + (i / 6)) * (ShannonRadiiVIII_Coord_3plus - i)^2)
+          )) %>%
+          dplyr::mutate(
+            models = purrr::map(data, ~ lm(log(value) ~ `(ri/3 + r0/6)(ri-r0)^2`, na.action = na.omit, data = .x)),
+            tidied = purrr::map(models, broom::tidy),
+            glanced = purrr::map(models, broom::glance)
+          ) %>%
+          dplyr::mutate(r0 = i)
+
+        binder <- dplyr::bind_rows(binder, data_to_bind)
+      }
 
 
-
-    dat <- dat %>%
-      dplyr::group_by(rowid) %>%
-      tidyr::nest() %>%
-      dplyr::mutate(
-        models = purrr::map(data, ~ lm(log(value) ~ `(ri/3 + r0/6)(ri-r0)^2`, na.action = na.omit, data = .x)),
-        tidied = purrr::map(models, broom::tidy),
-        glanced = purrr::map(models, broom::glance)
-      )  %>%
-    tidyr::unnest(tidied) %>%
-    dplyr::mutate(term = ifelse(stringr::str_detect("Intercept", term), "Intercept", "Slope")) %>%
-    tidyr::pivot_wider(names_from = term, values_from = c(estimate, std.error, statistic, p.value)) %>%
-    tidyr::unnest(glanced, names_sep = "model_") %>%
-    tidyr::unnest(data) %>%
-    add_NormValues(chondrite = {{chondrite}}) %>%
-    dplyr::mutate(
-      NormalizedCalc = exp(`(ri/3 + r0/6)(ri-r0)^2` * estimate_Slope + estimate_Intercept),
-      ppmCalc = NormalizedCalc * {{ chondrite }}
-    ) %>%
-    dplyr::ungroup() %>%
-    dplyr::rename_with(
-      .cols = dplyr::matches("^glanced"),
-      ~ stringr::str_replace_all(pattern = "glanced", replacement = "", string = .x))
+      dat <- binder %>%
+        tidyr::unnest(glanced, names_sep = "_model_") %>%
+        dplyr::group_by(rowid) %>%
+        dplyr::slice_max(glanced_model_r.squared) %>%
+        tidyr::unnest(tidied) %>%
+        dplyr::mutate(term = ifelse(stringr::str_detect("Intercept", term), "Intercept", "Slope")) %>%
+        tidyr::pivot_wider(names_from = term, values_from = c(estimate, std.error, statistic, p.value)) %>%
+        tidyr::unnest(data) %>%
+        add_NormValues(chondrite = {{ chondrite }}) %>%
+        dplyr::mutate(
+          NormalizedCalc = exp(`(ri/3 + r0/6)(ri-r0)^2` * estimate_Slope + estimate_Intercept),
+          ppmCalc = NormalizedCalc * {{ chondrite }}
+        ) %>%
+        dplyr::ungroup() %>%
+        dplyr::rename_with(
+          .cols = dplyr::matches("^glanced_"),
+          ~ stringr::str_replace_all(pattern = "glanced_", replacement = "", string = .x)
+        )
+    } # method estimate r0 interating along a range r0 values and selecting the best fit.
+  } # Carrasco and Campbell method
 
 
-    }
 
 
   if (method == 2) {
-
-    dat <- dplyr::left_join(dat, imputeREE::Element_Data %>% dplyr::select(Z_Zhong, Element_name), by = 'Element_name')
+    dat <- dplyr::left_join(dat, imputeREE::Element_Data %>% dplyr::select(Z_Zhong, Element_name), by = "Element_name")
 
     dat <- dat %>%
       dplyr::group_by(rowid) %>%
-      dplyr::mutate(value = log10(value),
-                    Z_Zhong = log10(Z_Zhong)) %>%
+      dplyr::mutate(
+        value = log10(value),
+        Z_Zhong = log10(Z_Zhong)
+      ) %>%
       tidyr::nest() %>%
       dplyr::mutate(
         models = purrr::map(data, ~ lm(value ~ Z_Zhong, na.action = na.omit, data = .x)),
@@ -269,72 +289,131 @@ model_REE <- function(dat,
       dplyr::ungroup() %>%
       dplyr::rename_with(
         .cols = dplyr::matches("^glanced"),
-        ~ stringr::str_replace_all(pattern = "glanced", replacement = "", string = .x))
+        ~ stringr::str_replace_all(pattern = "glanced", replacement = "", string = .x)
+      )
   }
 
 
-
-
-    if (stopper >= 2) {
-
-      dat <- dat %>%  dplyr::bind_rows(., exluded_rows)
-
-      }
-
-
-if (method == 1) {
-  dat <- dat %>%
-    dplyr::select(-c(models, ShannonRadiiVIII_Coord_3plus, `(ri/3 + r0/6)(ri-r0)^2`, value, {{ chondrite }})) %>%
-    tidyr::pivot_wider(names_from = Element_name, values_from = c(NormalizedCalc, ppmCalc)) %>%
-    dplyr::relocate(rowid, model_nree, dplyr::matches("NormalizedCalc"), dplyr::matches("ppmCalc"))
-}
-
-if (method == 2) {
-  dat <- dat %>%
-    dplyr::select(-c(models, ShannonRadiiVIII_Coord_3plus, value, Z_Zhong, {{ chondrite }})) %>%
-    tidyr::pivot_wider(names_from = Element_name, values_from = c(NormalizedCalc, ppmCalc)) %>%
-    dplyr::relocate(rowid, model_nree, dplyr::matches("NormalizedCalc"), dplyr::matches("ppmCalc"))
-
-}
-
-
-
-## Correction Factor for Heavy  REE + Y #####
-if (method == 1) {
-if (correct_heavy) {
-  dat <- correct_heavy(dat = dat,
-                       Y_correction_fact =Y_correction_fact ,
-                       Yb_correction_fact =Yb_correction_fact ,
-                       Lu_correction_fact =Lu_correction_fact,
-                       Ho_correction_fact = Ho_correction_fact,
-                       Er_correction_fact = Er_correction_fact,
-                       Tm_correction_fact =Tm_correction_fact
-
-                       )
-}
-
-      ## Correction Factor for Middle  REE  #####
-
-      if (correct_middle) {
-        dat <- correct_middle(dat = dat,
-                              Pr_correction_fact = Pr_correction_fact,
-                              Nd_correction_fact = Nd_correction_fact,
-                              Sm_correction_fact = Sm_correction_fact,
-                              Gd_correction_fact = Gd_correction_fact,
-                              Tb_correction_fact = Tb_correction_fact,
-                              Dy_correction_fact = Dy_correction_fact)
-      }
-
-}
-
-## join to original Data ####
-
-  dat <- dplyr::left_join(Original, dat, by = "rowid")
-
-  if (Estimate_r0 == T) {
-    return(r_0)
-  } else {
-    return(dat)
+  if (stopper >= 2) {
+    dat <- dat %>% dplyr::bind_rows(., exluded_rows)
   }
 
+
+  ## correction if output is LONG format ########################
+  if (long_format == T) {
+    if (method == 1) {
+      if (correct_heavy == T) {
+
+
+      corrections <- data.frame(Element_name = c("La",
+                                                 "Ce",
+                                                 "Pr",
+                                                 "Nd",
+                                                 "Sm",
+                                                 "Eu",
+                                                 "Gd",
+                                                 "Tb",
+                                                 "Dy",
+                                                 "Ho",
+                                                 "Er",
+                                                 "Tm",
+                                                 "Yb",
+                                                 "Lu",
+                                                 "Y"
+      ),
+      correct = c(  1,
+                    1,
+                    Pr_correction_fact,
+                    Nd_correction_fact,
+                    Sm_correction_fact,
+                    1,
+                    Gd_correction_fact,
+                    Tb_correction_fact,
+                    Dy_correction_fact,
+                    Ho_correction_fact,
+                    Er_correction_fact,
+                    Tm_correction_fact,
+                    Yb_correction_fact,
+                    Lu_correction_fact,
+                    Y_correction_fact)
+
+      )
+
+      dat <- dplyr::left_join(dat, corrections,by = 'Element_name') %>%
+                mutate(NormalizedCalc = correct * NormalizedCalc,
+                       ppmCalc =correct *ppmCalc ) %>% select(-correct)
+
+    }
+    }
+    }
+
+
+
+## correction if output is wide format ########################
+  if (long_format == F) {
+    if (method == 1) {
+      if (estimate_r0 == F) {
+        dat <- dat %>%
+          dplyr::select(-c(models, ShannonRadiiVIII_Coord_3plus, `(ri/3 + r0/6)(ri-r0)^2`, value, {{ chondrite }})) %>%
+          tidyr::pivot_wider(names_from = Element_name, values_from = c(NormalizedCalc, ppmCalc)) %>%
+          dplyr::relocate(rowid, model_nree, dplyr::matches("NormalizedCalc"), dplyr::matches("ppmCalc"))
+      }
+
+      if (estimate_r0 == T) {
+        dat <- dat %>%
+          dplyr::select(-c(models, ShannonRadiiVIII_Coord_3plus, `(ri/3 + r0/6)(ri-r0)^2`, value, {{ chondrite }})) %>%
+          tidyr::pivot_wider(names_from = Element_name, values_from = c(NormalizedCalc, ppmCalc)) %>%
+          dplyr::relocate(rowid, model_nree, r0, dplyr::matches("NormalizedCalc"), dplyr::matches("ppmCalc"))
+      }
+
+      # ## Correction Factor for Heavy  REE + Y #####
+
+      if (method == 1) {
+        if (correct_heavy) {
+          dat <- correct_heavy(
+            dat = dat,
+            Y_correction_fact = Y_correction_fact,
+            Yb_correction_fact = Yb_correction_fact,
+            Lu_correction_fact = Lu_correction_fact,
+            Ho_correction_fact = Ho_correction_fact,
+            Er_correction_fact = Er_correction_fact,
+            Tm_correction_fact = Tm_correction_fact
+          )
+        }
+
+        ## Correction Factor for Middle  REE  #####
+
+        if (correct_middle) {
+          dat <- correct_middle(
+            dat = dat,
+            Pr_correction_fact = Pr_correction_fact,
+            Nd_correction_fact = Nd_correction_fact,
+            Sm_correction_fact = Sm_correction_fact,
+            Gd_correction_fact = Gd_correction_fact,
+            Tb_correction_fact = Tb_correction_fact,
+            Dy_correction_fact = Dy_correction_fact
+          )
+        }
+      }
+
+      dat <- dplyr::left_join(Original, dat, by = "rowid")
+    }
+
+
+
+
+    if (method == 2) {
+      dat <- dat %>%
+        dplyr::select(-c(models, ShannonRadiiVIII_Coord_3plus, value, Z_Zhong, {{ chondrite }})) %>%
+        tidyr::pivot_wider(names_from = Element_name, values_from = c(NormalizedCalc, ppmCalc)) %>%
+        dplyr::relocate(rowid, model_nree, dplyr::matches("NormalizedCalc"), dplyr::matches("ppmCalc"))
+
+      dat <- dplyr::left_join(Original, dat, by = "rowid")
+    }
+    }
+
+
+
+
+  return(dat)
 }
