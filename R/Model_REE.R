@@ -5,7 +5,7 @@
 #'
 #' @param dat A data frame
 #' @param r0 A number: ionic radii of the lattice site r0
-#' @param method  a number. a choice of `1` for Carrasco-Godoy and Campell or `2` for Zhong et al. method for REE regression.
+#' @param method  a number. a choice of `1` for Carrasco-Godoy and Campell or `2` for Zhong et al. method for REE regression, or 3 for fitting a Onuma diagram.
 #' @param exclude a string: vector including elements that should be omitted from modelling. La, Ce and Eu are the default. Ce and Eu should be always included
 #' @param prefix A prefix in your columns e.g. ICP_La
 #' @param suffix A suffix in your columns e.g. La_ppm
@@ -284,8 +284,49 @@ model_REE <- function(dat,
       add_NormValues(chondrite = {{ chondrite }}) %>%
       dplyr::mutate(
         NormalizedCalc = 10^(Z_Zhong * estimate_Slope + estimate_Intercept),
-        ppmCalc = NormalizedCalc * {{ chondrite }}
+        ppmCalc = NormalizedCalc * {{ chondrite }},
+        value = 10^value
       ) %>%
+      dplyr::ungroup() %>%
+      dplyr::rename_with(
+        .cols = dplyr::matches("^glanced"),
+        ~ stringr::str_replace_all(pattern = "glanced", replacement = "", string = .x)
+      )
+  }
+
+
+## onuma Diagram
+  if (method == 3) {
+    # dat <- dplyr::left_join(dat, imputeREE::Element_Data %>% dplyr::select(ShannonRadiiVIII_Coord_3plus, Element_name), by = "Element_name")
+
+    dat <- dat %>%
+      dplyr::group_by(rowid) %>%
+      dplyr::mutate(
+      value = log10(value)
+      ) %>%
+      tidyr::nest() %>%
+      dplyr::mutate(
+        models = purrr::map(data, ~
+                              lm(value ~ poly(ShannonRadiiVIII_Coord_3plus, degree = 2, raw = T),
+                                 na.action = na.omit, data = .x)),
+        tidied = purrr::map(models, broom::tidy),
+        glanced = purrr::map(models, broom::glance)
+      ) %>%
+
+      tidyr::unnest(tidied) %>%
+      dplyr::mutate(term = dplyr::case_when(
+        stringr::str_detect(string = term, pattern =  "Intercept")  ~ "Intercept",
+        stringr::str_detect(string = term, pattern = ".*1$")  ~ "X1",
+        stringr::str_detect(string = term, pattern = ".*2$")  ~ "X2"))  %>%
+      tidyr::pivot_wider(names_from = term, values_from = c(estimate, std.error, statistic, p.value)) %>%
+      tidyr::unnest(glanced, names_sep = "model_") %>%
+      tidyr::unnest(data) %>%
+      add_NormValues(chondrite = {{ chondrite }}) %>%
+      dplyr::mutate(
+        NormalizedCalc = 10^((ShannonRadiiVIII_Coord_3plus * estimate_X1) + (ShannonRadiiVIII_Coord_3plus*ShannonRadiiVIII_Coord_3plus*estimate_X2) + estimate_Intercept),
+        ppmCalc = NormalizedCalc * {{ chondrite }},
+        value = 10^value
+        ) %>%
       dplyr::ungroup() %>%
       dplyr::rename_with(
         .cols = dplyr::matches("^glanced"),
@@ -410,7 +451,53 @@ model_REE <- function(dat,
 
       dat <- dplyr::left_join(Original, dat, by = "rowid")
     }
+
+
+
+
+    if (method == 3) {
+      dat <- dat %>%
+        dplyr::select(-c(models, ShannonRadiiVIII_Coord_3plus, value, {{ chondrite }})) %>%
+        tidyr::pivot_wider(names_from = Element_name, values_from = c(NormalizedCalc, ppmCalc)) %>%
+        dplyr::relocate(rowid, model_nree, dplyr::matches("NormalizedCalc"), dplyr::matches("ppmCalc"))
+
+
+      if (method == 3) {
+        if (correct_heavy) {
+          dat <- correct_heavy(
+            dat = dat,
+            Y_correction_fact = Y_correction_fact,
+            Yb_correction_fact = Yb_correction_fact,
+            Lu_correction_fact = Lu_correction_fact,
+            Ho_correction_fact = Ho_correction_fact,
+            Er_correction_fact = Er_correction_fact,
+            Tm_correction_fact = Tm_correction_fact
+          )
+        }
+
+        ## Correction Factor for Middle  REE  #####
+
+        if (correct_middle) {
+          dat <- correct_middle(
+            dat = dat,
+            Pr_correction_fact = Pr_correction_fact,
+            Nd_correction_fact = Nd_correction_fact,
+            Sm_correction_fact = Sm_correction_fact,
+            Gd_correction_fact = Gd_correction_fact,
+            Tb_correction_fact = Tb_correction_fact,
+            Dy_correction_fact = Dy_correction_fact
+          )
+        }
+      }
+
+      dat <- dplyr::left_join(Original, dat, by = "rowid")
     }
+
+
+
+  }
+
+
 
 
 
