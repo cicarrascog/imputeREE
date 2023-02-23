@@ -3,9 +3,9 @@
 #' This is a helper function to work with Element_norm() and Element_denorm(). Takes long pivoted data to match element name and add normalizing values from the Element_data dataset.
 #'
 #'
+#' @param chondrite PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI
 #' @param dat Dataframe or tibble.
-#' @param method Values to normalize: an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI.
-#'load
+#'doc
 #' @return a data frame or tibble
 #'
 

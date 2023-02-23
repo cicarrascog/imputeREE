@@ -4,13 +4,13 @@
 \alias{add_NormValues}
 \title{Add Chondrite or Mantle values for normalization.}
 \usage{
-add_NormValues(dat, method = PalmeOneill2014CI)
+add_NormValues(dat, chondrite = PalmeOneill2014CI)
 }
 \arguments{
-\item{dat}{Dataframe or tibble.}
+\item{dat}{Dataframe or tibble.
+doc}
 
-\item{method}{Values to normalize: an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI.
-load}
+\item{chondrite}{PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI}
 }
 \value{
 a data frame or tibble

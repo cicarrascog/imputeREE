@@ -5,7 +5,7 @@
 \alias{Element_Data}
 \title{Element data for calculations}
 \format{
-A data frame with 77 rows and 10 variables:
+A data frame with 77 rows and 11 variables:
 \describe{
 \item{Z}{Atomic Number}
 \item{Element_name}{Element Symbol}
@@ -17,6 +17,7 @@ A data frame with 77 rows and 10 variables:
 \item{PalmeOneill2014Mantle_RSD}{Uncertainty from Primitive Mantle Values from Palme and O'Neill (2014) as RSD (Relative standard Deviation)}
 \item{McDonough1995CI}{Chondrite values from McDonough and Sun (1995)}
 \item{ShannonRadiiVIII_Coord_3plus}{Shannon (1976) Ionic Radii for elements in Eight-fold coordination and 3+ charge}
+\item{Z_Zhong}{numbers assigned by Zhong et al. (2019) for a logarithmic regression to calculate Zircon REE.}
 ...
 }
 }
@@ -28,6 +29,10 @@ Palme, H., and O’Neill, H. St. C., 2014, 3.1 - Cosmochemical Estimates of Mant
 McDonough, W. F., and Sun, S. -s., 1995, The composition of the Earth: Chemical Geology, v. 120, p. 223-253.(\doi{https://doi.org/10.1016/0009-2541(94)00140-4})
 
 Shannon, R. D., 1976, Revised effective ionic radii and systematic studies of interatomic distances in halides and chalcogenides: Acta Crystallographica Section A, v. 32, p. 751-767. \doi{ https://doi.org/10.1107/S0567739476001551}
+
+Shannon, R. D., 1976, Revised effective ionic radii and systematic studies of interatomic distances in halides and chalcogenides: Acta Crystallographica Section A, v. 32, p. 751-767. \doi{ https://doi.org/10.1107/S0567739476001551}
+
+Zhong, S., Seltmann, R., Qu, H., and Song, Y., 2019, Characterization of the zircon Ce anomaly for estimation of oxidation state of magmas: a revised Ce/Ce* method: Mineralogy and Petrology, v. 113, no. 6, p. 755–763. \doi{10.1007/s00710-019-00682-y}
 }
 \usage{
 Element_Data

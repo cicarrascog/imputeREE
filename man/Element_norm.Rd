@@ -7,7 +7,7 @@
 Element_norm(
   data,
   return = "rect",
-  method = PalmeOneill2014CI,
+  chondrite = PalmeOneill2014CI,
   prefix = NULL,
   suffix = NULL,
   Element_list = REE_plus_Y_Elements
@@ -18,7 +18,7 @@ Element_norm(
 
 \item{return}{a character from: "rect" for a wide data return,"raw" for a long data return,"append" to append the results to the input data}
 
-\item{method}{an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI}
+\item{chondrite}{an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI}
 
 \item{prefix}{A prefix in your columns e.g. ICP_La}
 

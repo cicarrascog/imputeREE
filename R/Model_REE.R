@@ -1,29 +1,34 @@
-#' Model REE + Y contents using an empirical method based on the lattice strain theory
+#' Model REE + Y contents using different methods.
 #'
-#' Model REE will make a linear regression between the REE (+Y) and the relationship of the ideal Ionic Radii in the lattice site (r0) and the ionic radii of the element that use that space (ri) according to the relationship : (ri/3 + r0/6)(ri-r0)^2`
-#' For details in the lattice strain theory, see Blundy and Wood 1994.
+#' This function models REE + Y using different methods. The Chondrite-Lattice method use
+#'  a linear regression between the REE (+Y) chondrite-normalized  and the missfit term from the lattice strain equation `(ri/3 + r0/6)(ri-r0)^2`. The Chondrite-Onuma method use the quadratic relationship between the ionic radii and chondrite normalized REE values. The method of Zhong et al. (2019) use a logaritmic relationship between the atomic number of the REE and the chondrite normalized REE.
+#' For details in the lattice strain theory, see Blundy and Wood 1994. For more details in the imputation methods see Carrasco-Godoy and Campbell, and Zhong et al. (2019)
 #'
 #' @param dat A data frame
-#' @param r0 A number: ionic radii of the lattice site r0
-#' @param method  a number. a choice of `1` for Carrasco-Godoy and Campell or `2` for Zhong et al. method for REE regression, or 3 for fitting a Onuma diagram.
+#' @param r0 A number: ionic radii of the lattice site r0. By default is 0.87 A, the median value obtained by Carrasco-Godoy and Campbell.
+#' @param method  a number. a choice of `1` for Chondrite Lattice or `2` for Zhong et al. (2019) or `3` for Chondrite-Onuma method.
 #' @param exclude a string: vector including elements that should be omitted from modelling. La, Ce and Eu are the default. Ce and Eu should be always included
 #' @param prefix A prefix in your columns e.g. ICP_La
 #' @param suffix A suffix in your columns e.g. La_ppm
 #' @param chondrite an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI
-#' @param correct_middle a logical. If `TRUE` will apply a correction factor for Nd, Sm, Gd, Tb and Dy.
 #' @param Pr_correction_fact  a number: correction factor for overestimated Pr 1/0.918
 #' @param Nd_correction_fact  a number: correction factor for underestimated Nd 1/0.0.989
 #' @param Sm_correction_fact  a number: correction factor for overestimated Sm 1/1.022
 #' @param Gd_correction_fact  a number: correction factor for overestimated Gd 1/1.033
 #' @param Tb_correction_fact  a number: correction factor for overestimated Tb 1/1.050
 #' @param Dy_correction_fact  a number: correction factor for overestimated Dy 1/1.032
-#' @param correct_heavy a logical. If `TRUE` will apply a correction factor for Yb, Lu and Y.
 #' @param Y_correction_fact a number: correction factor for underestimated Y. 1/ 0.72 by default.
 #' @param Ho_correction_fact a number: correction factor for Ho. 1 by default.
 #' @param Er_correction_fact a number: correction factor for underestimated Er. 1/0.97 by default.
 #' @param Tm_correction_fact a number: correction factor for Tm. 1 by default.
 #' @param Yb_correction_fact a number: correction factor for underestimated Yb. 1/0.8785  by default.
 #' @param Lu_correction_fact a number: correction factor for underestimated Lu. 1/0.8943 by default.
+#' @param Calibrate Logical (T or F). If True, the model is calibrated using the correction factors. By default it is the reciprocal of the median REE from the work of Carrasco-Godoy and Campbell is used.
+#' @param long_format If T, rectangular long data is returned.
+#' @param estimate_r0 If T, r0 is estimated using a method similar to the one from Loader et al. 2022.
+#' @param r0_step If r0 is estimated, this define the step for iteration. smaller step heavily increases the computing time.
+#' @param r0_min Minimun value from which the iteration starts. Calculated from r0.
+#' @param r0_max Maximun value at which iteration ends. Calculated from r0.
 #'
 #' @importFrom rlang .data
 #'
@@ -47,8 +52,7 @@ model_REE <- function(dat,
                       r0_max = 0.15,
                       prefix = NULL,
                       suffix = NULL,
-                      correct_heavy = F,
-                      correct_middle = F,
+                      Calibrate = T,
                       Pr_correction_fact = 1 / 0.918,
                       Y_correction_fact = 1 / 0.72,
                       Dy_correction_fact = 1 / 1.032,
@@ -85,7 +89,15 @@ model_REE <- function(dat,
     NormalizedCalc <-
     . <-
     ppmCalc <-
+    Z_Zhong <-
+    correct <-
+    estimate_X1 <-
+  estimate_X2 <-
+  glanced_model_r.squared <-
+
     NULL
+
+
 
 
 
@@ -193,7 +205,7 @@ model_REE <- function(dat,
       dat <- dat %>%
         dplyr::group_by(rowid) %>%
         tidyr::nest() %>%
-        plyr::mutate(
+        dplyr::mutate(
           models = purrr::map(data, ~ lm(log(value) ~ `(ri/3 + r0/6)(ri-r0)^2`, na.action = na.omit, data = .x)),
           tidied = purrr::map(models, broom::tidy),
           glanced = purrr::map(models, broom::glance)
@@ -343,7 +355,7 @@ model_REE <- function(dat,
   ## correction if output is LONG format ########################
   if (long_format == T) {
     if (method == 1) {
-      if (correct_heavy == T) {
+      if (Calibrate == T) {
 
 
       corrections <- data.frame(Element_name = c("La",
@@ -381,8 +393,8 @@ model_REE <- function(dat,
       )
 
       dat <- dplyr::left_join(dat, corrections,by = 'Element_name') %>%
-                mutate(NormalizedCalc = correct * NormalizedCalc,
-                       ppmCalc =correct *ppmCalc ) %>% select(-correct)
+                dplyr::mutate(NormalizedCalc = correct * NormalizedCalc,
+                       ppmCalc =correct *ppmCalc ) %>% dplyr::select(-correct)
 
     }
     }
@@ -410,7 +422,7 @@ model_REE <- function(dat,
       # ## Correction Factor for Heavy  REE + Y #####
 
       if (method == 1) {
-        if (correct_heavy) {
+        if (Calibrate) {
           dat <- correct_heavy(
             dat = dat,
             Y_correction_fact = Y_correction_fact,
@@ -424,7 +436,7 @@ model_REE <- function(dat,
 
         ## Correction Factor for Middle  REE  #####
 
-        if (correct_middle) {
+        if (Calibrate) {
           dat <- correct_middle(
             dat = dat,
             Pr_correction_fact = Pr_correction_fact,
@@ -463,7 +475,7 @@ model_REE <- function(dat,
 
 
       if (method == 3) {
-        if (correct_heavy) {
+        if (Calibrate) {
           dat <- correct_heavy(
             dat = dat,
             Y_correction_fact = Y_correction_fact,
@@ -475,9 +487,9 @@ model_REE <- function(dat,
           )
         }
 
-        ## Correction Factor for Middle  REE  #####
+ ## Correction Factor for Middle  REE  #####
 
-        if (correct_middle) {
+        if (Calibrate) {
           dat <- correct_middle(
             dat = dat,
             Pr_correction_fact = Pr_correction_fact,

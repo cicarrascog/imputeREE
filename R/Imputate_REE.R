@@ -55,7 +55,7 @@ impute_REE <- function(data, prefix = NULL, suffix = NULL, rsquared = 0.9) {
 
   REE_DATA <- REE_DATA %>%
     dplyr::left_join(., calc_Data, by = c('rowid',"Element")) %>%
-    dplyr::arrange(desc(is.na(values))) %>%
+    dplyr::arrange(dplyr::desc(is.na(values))) %>%
     dplyr::mutate(imputed_values = ifelse(is.na(values), calc_value, values)) %>%
     dplyr::mutate(Element = paste0('Imputed_', Element)) %>%
     dplyr::select(rowid, Element, imputed_values) %>%

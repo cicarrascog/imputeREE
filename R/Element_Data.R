@@ -3,7 +3,7 @@
 #' A dataset containing CI and Mantle values for normalization for selected elements. The data used is from IUPAC, Palme and O'Neill (2014), and McDonough and Sun (1995). Ionic Radii are from Shannon (1976).
 #'
 #'
-#' @format A data frame with 77 rows and 10 variables:
+#' @format A data frame with 77 rows and 11 variables:
 #' \describe{
 #'   \item{Z}{Atomic Number}
 #'   \item{Element_name}{Element Symbol}
@@ -15,7 +15,7 @@
 #'   \item{PalmeOneill2014Mantle_RSD}{Uncertainty from Primitive Mantle Values from Palme and O'Neill (2014) as RSD (Relative standard Deviation)}
 #'   \item{McDonough1995CI}{Chondrite values from McDonough and Sun (1995)}
 #'   \item{ShannonRadiiVIII_Coord_3plus}{Shannon (1976) Ionic Radii for elements in Eight-fold coordination and 3+ charge}
-#'   \item{Z_zhong}{numbers assigned by Zhong et al. (2019) for a logarithmic regression to calculate Zircon REE.}
+#'   \item{Z_Zhong}{numbers assigned by Zhong et al. (2019) for a logarithmic regression to calculate Zircon REE.}
 #'   ...
 #' }
 #' @source IUPAC Website (\url{https://iupac.org/})

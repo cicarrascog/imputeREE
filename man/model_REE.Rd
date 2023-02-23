@@ -2,47 +2,68 @@
 % Please edit documentation in R/Model_REE.R
 \name{model_REE}
 \alias{model_REE}
-\title{Model REE + Y contents using an empirical method based on the lattice strain theory}
+\title{Model REE + Y contents using different methods.}
 \usage{
 model_REE(
   dat,
+  method = 1,
+  long_format = F,
+  exclude = c("La", "Pr", "Ce", "Eu", "Y"),
   r0 = 0.84,
-  exclude = c("La", "Ce", "Eu", "Y"),
+  chondrite = PalmeOneill2014CI,
+  estimate_r0 = FALSE,
+  r0_step = 0.01,
+  r0_min = 0.01,
+  r0_max = 0.15,
   prefix = NULL,
   suffix = NULL,
-  method = PalmeOneill2014CI,
-  correct_heavy = TRUE,
+  Calibrate = T,
+  Pr_correction_fact = 1/0.918,
   Y_correction_fact = 1/0.72,
+  Dy_correction_fact = 1/1.032,
   Ho_correction_fact = 1,
   Er_correction_fact = 1/0.974,
   Tm_correction_fact = 1,
   Yb_correction_fact = 1/0.8785,
   Lu_correction_fact = 1/0.8943,
-  correct_middle = T,
   Nd_correction_fact = 1/0.989,
   Sm_correction_fact = 1/1.022,
   Gd_correction_fact = 1/1.033,
-  Tb_correction_fact = 1/1.05,
-  Dy_correction_fact = 1/1.032,
-  Pr_correction_fact = 1/0.918
+  Tb_correction_fact = 1/1.05
 )
 }
 \arguments{
 \item{dat}{A data frame}
 
-\item{r0}{A number: ionic radii of the lattice site r0}
+\item{method}{a number. a choice of \code{1} for Chondrite Lattice or \code{2} for Zhong et al. (2019) or \code{3} for Chondrite-Onuma method.}
+
+\item{long_format}{If T, rectangular long data is returned.}
 
 \item{exclude}{a string: vector including elements that should be omitted from modelling. La, Ce and Eu are the default. Ce and Eu should be always included}
+
+\item{r0}{A number: ionic radii of the lattice site r0. By default is 0.87 A, the median value obtained by Carrasco-Godoy and Campbell.}
+
+\item{chondrite}{an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI}
+
+\item{estimate_r0}{If T, r0 is estimated using a method similar to the one from Loader et al. 2022.}
+
+\item{r0_step}{If r0 is estimated, this define the step for iteration. smaller step heavily increases the computing time.}
+
+\item{r0_min}{Minimun value from which the iteration starts. Calculated from r0.}
+
+\item{r0_max}{Maximun value at which iteration ends. Calculated from r0.}
 
 \item{prefix}{A prefix in your columns e.g. ICP_La}
 
 \item{suffix}{A suffix in your columns e.g. La_ppm}
 
-\item{method}{an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI}
+\item{Calibrate}{Logical (T or F). If True, the model is calibrated using the correction factors. By default it is the reciprocal of the median REE from the work of Carrasco-Godoy and Campbell is used.}
 
-\item{correct_heavy}{a logical. If \code{TRUE} will apply a correction factor for Yb, Lu and Y.}
+\item{Pr_correction_fact}{a number: correction factor for overestimated Pr 1/0.918}
 
 \item{Y_correction_fact}{a number: correction factor for underestimated Y. 1/ 0.72 by default.}
+
+\item{Dy_correction_fact}{a number: correction factor for overestimated Dy 1/1.032}
 
 \item{Ho_correction_fact}{a number: correction factor for Ho. 1 by default.}
 
@@ -54,8 +75,6 @@ model_REE(
 
 \item{Lu_correction_fact}{a number: correction factor for underestimated Lu. 1/0.8943 by default.}
 
-\item{correct_middle}{a logical. If \code{TRUE} will apply a correction factor for Nd, Sm, Gd, Tb and Dy.}
-
 \item{Nd_correction_fact}{a number: correction factor for underestimated Nd 1/0.0.989}
 
 \item{Sm_correction_fact}{a number: correction factor for overestimated Sm 1/1.022}
@@ -63,17 +82,14 @@ model_REE(
 \item{Gd_correction_fact}{a number: correction factor for overestimated Gd 1/1.033}
 
 \item{Tb_correction_fact}{a number: correction factor for overestimated Tb 1/1.050}
-
-\item{Dy_correction_fact}{a number: correction factor for overestimated Dy 1/1.032}
-
-\item{Pr_correction_fact}{a number: correction factor for overestimated Pr 1/0.918}
 }
 \value{
 a dataframe
 }
 \description{
-Model REE will make a linear regression between the REE (+Y) and the relationship of the ideal Ionic Radii in the lattice site (r0) and the ionic radii of the element that use that space (ri) according to the relationship : (ri/3 + r0/6)(ri-r0)^2`
-For details in the lattice strain theory, see Blundy and Wood 1994.
+This function models REE + Y using different methods. The Chondrite-Lattice method use
+a linear regression between the REE (+Y) chondrite-normalized  and the missfit term from the lattice strain equation \code{(ri/3 + r0/6)(ri-r0)^2}. The Chondrite-Onuma method use the quadratic relationship between the ionic radii and chondrite normalized REE values. The method of Zhong et al. (2019) use a logaritmic relationship between the atomic number of the REE and the chondrite normalized REE.
+For details in the lattice strain theory, see Blundy and Wood 1994. For more details in the imputation methods see Carrasco-Godoy and Campbell, and Zhong et al. (2019)
 }
 \examples{
 

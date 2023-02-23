@@ -4,9 +4,13 @@
 
 # imputeREE 0.0.2
 
--   Added correction factors for middle and light REE
+-   Added model calibration
 
 # imputeREE 0.0.3
 
-- Atomic number (Z) is also included in addition to the ionic Radius
+- Atomic number (Z) added to the elements dataset
+- Added the Chondrite-Onuma method
+- Added the Zhong et al. (2019) method.
+- r0 in the chondrite method now can be estimated. It is slow for big datasets.
+- Some functions were removed
 

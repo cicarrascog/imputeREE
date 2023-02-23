@@ -4,7 +4,7 @@
 \alias{calc_all}
 \title{Calculate and Impute REE missing data and anomalies.}
 \usage{
-calc_all(data, prefix = NULL, suffix = NULL, method = PalmeOneill2014CI)
+calc_all(data, prefix = NULL, suffix = NULL, chondrite = PalmeOneill2014CI)
 }
 \arguments{
 \item{data}{A data frame containing REE data}
@@ -13,7 +13,7 @@ calc_all(data, prefix = NULL, suffix = NULL, method = PalmeOneill2014CI)
 
 \item{suffix}{a string. A suffix in the columns names e.g 'La_ppm', where '_ppm' is the suffix}
 
-\item{method}{an option from: 'PalmeOneill2014CI', 'Oneill2014Mantle', 'McDonough1995CI'}
+\item{chondrite}{an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI}
 }
 \value{
 A data frame. Includes imputed REE, model metrics, and calculated variables.
