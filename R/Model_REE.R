@@ -98,7 +98,7 @@ model_REE <- function(dat,
     NULL
 
 
-
+  ### Known Bug: If a colum is missing, it will not be calculated. Still easy to recalculate with the model parameters.
 
 
   ## calculate chondrite normalized values and add ionic Radii
