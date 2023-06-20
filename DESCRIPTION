@@ -1,5 +1,5 @@
 Package: imputeREE
-Title: Impute Missing Rare Earth Element Data Using a Lattice-Strain Derived Method
+Title: Impute Missing Rare Earth Element Data in Zircon Minerals
 Version: 0.0.1
 Authors@R: 
     person(given = "Carlos",
@@ -7,9 +7,13 @@ Authors@R:
            role = c("aut", "cre"),
            email = c("carlos.carrasco@anu.edu.au", "ccarrasco@outlook.cl"),
            comment = c(ORCID = "0000-0003-4914-186X"))
-Description: Set of functions that fit a linear regression to calculate missing
-    Rare Earth Element (REE) in zircon based on a method derived from the lattice 
-    strain theory of Blundy and Wood (1994)<doi:10.1038/372452a0>.
+Description: Set of functions to impute missing rare earth data, calculate La 
+             and Pr concentrations and Ce anomalies in zircons based on the
+             Chondrite-Onuma and Chondrite-Lattice of 
+             \href{https://doi.org/10.1007/s00410-023-02025-9}{Carrasco-Godoy and 
+             Campbell (2023)} and the Logarithmic regression from  
+             \href{https://link.springer.com/article/10.1007/s00710-019-00682-y}
+             {Zhong et al. (2019)}.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -31,3 +35,5 @@ Imports:
     broom
 Depends: 
     R (>= 4.0)
+URL: https://github.com/cicarrascog/imputeREE
+BugReports: https://github.com/cicarrascog/imputeREE/issues
