@@ -17,8 +17,8 @@ editor_options:
 
 Impute Missing Rare Earth Element Data in Zircon
 
-Imputation methods for missing rare earth elements data, calculate La
-and Pr concentrations and Ce anomalies in zircons based on the
+Imputation methods for missing rare earth elements (REE) data, calculate
+La and Pr concentrations and Ce anomalies in zircons based on the
 Chondrite-Onuma and Chondrite-Lattice methods of [Carrasco-Godoy and
 Campbell (2023)](https://doi.org/10.1007/s00410-023-02025-9) and the
 logarithmic regression from [Zhong et al.

@@ -9,15 +9,14 @@
 
 <!-- badges: end -->
 
-Impute Missing Rare Earth Element Data Using a Lattice-Strain Derived
-Method
+Impute Missing Rare Earth Element Data in Zircon
 
-Set of functions to impute missing rare earth data, calculate La and Pr
-concentrations and Ce anomalies in zircons based on the Chondrite-Onuma
-and Chondrite-Lattice of [Carrasco-Godoy and Campbell
-(2023)](https://doi.org/10.1007/s00410-023-02025-9) and the Logarithmic
-regression from [Zhong et
-al. (2019)](https://link.springer.com/article/10.1007/s00710-019-00682-y).
+Imputation methods for missing rare earth elements (REE) data, calculate
+La and Pr concentrations and Ce anomalies in zircons based on the
+Chondrite-Onuma and Chondrite-Lattice methods of [Carrasco-Godoy and
+Campbell (2023)](https://doi.org/10.1007/s00410-023-02025-9) and the
+logarithmic regression from [Zhong et al.
+(2019)](https://link.springer.com/article/10.1007/s00710-019-00682-y).
 
 ## ImputeREEapp
 
