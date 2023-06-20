@@ -4,14 +4,14 @@
 \alias{calc_all}
 \title{Calculate and Impute REE missing data and anomalies.}
 \usage{
-calc_all(data, prefix = NULL, suffix = NULL, chondrite = PalmeOneill2014CI)
+calc_all(dat, prefix = NULL, suffix = NULL, chondrite = PalmeOneill2014CI)
 }
 \arguments{
-\item{data}{A data frame containing REE data}
+\item{dat}{A data frame with REE data in ppm}
 
-\item{prefix}{a string. A prefix in the columns names e.g 'Whole_rock_La', where 'Whole_rock_' is the prefix}
+\item{prefix}{A prefix in your columns e.g. ICP_La}
 
-\item{suffix}{a string. A suffix in the columns names e.g 'La_ppm', where '_ppm' is the suffix}
+\item{suffix}{A suffix in your columns e.g. La_ppm}
 
 \item{chondrite}{an option from: PalmeOneill2014CI, Oneill2014Mantle, McDonough1995CI}
 }
@@ -19,11 +19,11 @@ calc_all(data, prefix = NULL, suffix = NULL, chondrite = PalmeOneill2014CI)
 A data frame. Includes imputed REE, model metrics, and calculated variables.
 }
 \description{
-This is a wrapper for data \%>\% model_REE() \%>\% impute_REE \%>\% add_parameters()
+This is a wrapper for \code{data \%>\% model_REE() \%>\% impute_REE() \%>\% add_parameters()}
 }
 \examples{
 
-testing_data \%>\% calc_all(prefix = 'Zr_', suffix = '_ppm')
+Ballard_et_al_Zircon \%>\% calc_all(prefix = 'Zr_', suffix = '_ppm')
 
 
 }

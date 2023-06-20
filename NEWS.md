@@ -14,3 +14,7 @@
 - r0 in the chondrite method now can be estimated. It is slow for big datasets.
 - Some functions were removed
 
+# imputeREE 0.0.5
+
+- added the `modelZhong()`, `modelChondrite_lattice()`, `modelChondrite_Onuma()`
+- Package description updated

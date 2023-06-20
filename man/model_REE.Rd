@@ -33,7 +33,7 @@ model_REE(
 )
 }
 \arguments{
-\item{dat}{A data frame}
+\item{dat}{A data frame with REE data in ppm}
 
 \item{method}{a number. a choice of \code{1} for Chondrite Lattice or \code{2} for Zhong et al. (2019) or \code{3} for Chondrite-Onuma method.}
 
@@ -93,7 +93,14 @@ For details in the lattice strain theory, see Blundy and Wood 1994. For more det
 }
 \examples{
 
-testing_data \%>\%  model_REE(prefix = 'Zr', suffix = 'ppm')
+Ballard_et_al_Zircon \%>\%  model_REE(prefix = 'Zr', suffix = 'ppm')
 
 
 }
+\seealso{
+Other model REE: 
+\code{\link{modelChondrite_Onuma}()},
+\code{\link{modelChondrite_lattice}()},
+\code{\link{modelZhong}()}
+}
+\concept{model REE}

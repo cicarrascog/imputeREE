@@ -31,7 +31,7 @@ add_IonicRadii <- function(dat, method = ShannonRadiiVIII_Coord_3plus) {
 }
 # @examples
 #
-# testing_data %>%
+# Ballards_2002_Zr %>%
 # CleanColnames('Zr', 'ppm') %>%  Add_ID() %>%
 # dplyr::select(rowid, La, Ce) %>%
 # tidyr::pivot_longer(cols = -rowid, names_to = 'Element_name')  %>%

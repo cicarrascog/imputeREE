@@ -12,7 +12,7 @@
 #'
 # @examples
 #
-# testing_data %>%
+# Ballard_et_al_Zircon %>%
 # CleanColnames(prefix = 'Zr_', suffix = '_ppm') %>%
 # dplyr::select(REE_plus_Y_Elements) %>%
 # tidyr::pivot_longer(cols = REE_plus_Y_Elements, names_to = 'Element_name') %>%

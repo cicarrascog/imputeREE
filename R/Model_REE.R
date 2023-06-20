@@ -4,7 +4,7 @@
 #'  a linear regression between the REE (+Y) chondrite-normalized  and the missfit term from the lattice strain equation `(ri/3 + r0/6)(ri-r0)^2`. The Chondrite-Onuma method use the quadratic relationship between the ionic radii and chondrite normalized REE values. The method of Zhong et al. (2019) use a logaritmic relationship between the atomic number of the REE and the chondrite normalized REE.
 #' For details in the lattice strain theory, see Blundy and Wood 1994. For more details in the imputation methods see Carrasco-Godoy and Campbell, and Zhong et al. (2019)
 #'
-#' @param dat A data frame
+#' @param dat A data frame with REE data in ppm
 #' @param r0 A number: ionic radii of the lattice site r0. By default is 0.87 A, the median value obtained by Carrasco-Godoy and Campbell.
 #' @param method  a number. a choice of `1` for Chondrite Lattice or `2` for Zhong et al. (2019) or `3` for Chondrite-Onuma method.
 #' @param exclude a string: vector including elements that should be omitted from modelling. La, Ce and Eu are the default. Ce and Eu should be always included
@@ -31,13 +31,14 @@
 #' @param r0_max Maximun value at which iteration ends. Calculated from r0.
 #'
 #' @importFrom rlang .data
+#' @family model REE
 #'
 #' @return a dataframe
 #' @export
 #'
 #' @examples
 #'
-#' testing_data %>%  model_REE(prefix = 'Zr', suffix = 'ppm')
+#' Ballard_et_al_Zircon %>%  model_REE(prefix = 'Zr', suffix = 'ppm')
 #'
 #'
 model_REE <- function(dat,
