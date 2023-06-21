@@ -89,7 +89,7 @@ a dataframe
 \description{
 This function models REE + Y using different methods. The Chondrite-Lattice method use
 a linear regression between the REE (+Y) chondrite-normalized  and the missfit term from the lattice strain equation \code{(ri/3 + r0/6)(ri-r0)^2}. The Chondrite-Onuma method use the quadratic relationship between the ionic radii and chondrite normalized REE values. The method of Zhong et al. (2019) use a logaritmic relationship between the atomic number of the REE and the chondrite normalized REE.
-For details in the lattice strain theory, see Blundy and Wood 1994. For more details in the imputation methods see Carrasco-Godoy and Campbell, and Zhong et al. (2019)
+For details in the lattice strain theory, see Blundy and Wood 1994. For more details in the imputation methods see \href{https://link.springer.com/article/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)}, and \href{https://link.springer.com/article/10.1007/s00710-019-00682-y}{Zhong et al. (2019)}
 }
 \examples{
 

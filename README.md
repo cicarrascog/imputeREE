@@ -14,13 +14,15 @@ Impute Missing Rare Earth Element Data in Zircon
 Imputation methods for missing rare earth elements (REE) data, calculate
 La and Pr concentrations and Ce anomalies in zircons based on the
 Chondrite-Onuma and Chondrite-Lattice methods of [Carrasco-Godoy and
-Campbell (2023)](https://doi.org/10.1007/s00410-023-02025-9) and the
-logarithmic regression from [Zhong et al.
+Campbell
+(2023)](https://link.springer.com/article/10.1007/s00710-019-00682-y)
+and the logarithmic regression from [Zhong et al.
 (2019)](https://link.springer.com/article/10.1007/s00710-019-00682-y).
 
 ## ImputeREEapp
 
-A companion app can be found in <http://ccarr.shinyapps.io/ImputeREEapp>
+A companion app can be found in
+<https://ccarr.shinyapps.io/ImputeREEapp>
 
 The source code for the app can be found in
 <https://github.com/cicarrascog/ImputeREEapp>

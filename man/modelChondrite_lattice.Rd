@@ -2,7 +2,7 @@
 % Please edit documentation in R/Model_Wrappers.r
 \name{modelChondrite_lattice}
 \alias{modelChondrite_lattice}
-\title{Model REE contents using the Chondrite-Lattice method of \href{https://doi.org/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)}}
+\title{Model REE contents using the Chondrite-Lattice method of \href{https://link.springer.com/article/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)}}
 \usage{
 modelChondrite_lattice(
   dat,
@@ -70,7 +70,7 @@ a dataframe
 }
 \description{
 This function apply the Chondrite-Lattice method which is a linear regression between the misfit parameter from the lattice strain equation and the logarithm of their chondrite normalized values. At least 2 points are required to use this method.
-This method is based on the work of  \href{https://www.nature.com/articles/372452a0}{Blundy and Wood (1994)} but using chondrite normalized values as noted by \href{https://doi.org/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)}. Refer to \href{https://doi.org/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)} for details.
+This method is based on the work of  \href{https://www.nature.com/articles/372452a0}{Blundy and Wood (1994)} but using chondrite normalized values as noted by \href{https://link.springer.com/article/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)}. Refer to \href{https://link.springer.com/article/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)} for details.
 }
 \examples{
 Ballard_et_al_Zircon \%>\%  modelChondrite_lattice(prefix = 'Zr', suffix = 'ppm')

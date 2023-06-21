@@ -30,7 +30,7 @@ modelZhong(
 a dataframe
 }
 \description{
-This function apply the logarithmic regression using the method of \href{https://link.springer.com/article/10.1007/s00710-019-00682-y}{Zhong et al. (2019)}. This method considers the relationship between the logarithm of the REE atomic number vs their chondrite normalized values. For more information refer to the \href{https://link.springer.com/article/10.1007/s00710-019-00682-y}{Zhong et al. (2019)} and \href{https://doi.org/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)} for a discussion of its limitations to calculate La or Ce*.
+This function apply the logarithmic regression using the method of \href{https://link.springer.com/article/10.1007/s00710-019-00682-y}{Zhong et al. (2019)}. This method considers the relationship between the logarithm of the REE atomic number vs their chondrite normalized values. For more information refer to the \href{https://link.springer.com/article/10.1007/s00710-019-00682-y}{Zhong et al. (2019)} and \href{https://link.springer.com/article/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)} for a discussion of its limitations to calculate La or Ce*.
 }
 \examples{
 Ballard_et_al_Zircon \%>\%  modelZhong(prefix = 'Zr', suffix = 'ppm')

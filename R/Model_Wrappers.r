@@ -1,6 +1,6 @@
 #' Model REE contents using the method of \href{https://link.springer.com/article/10.1007/s00710-019-00682-y}{Zhong et al. (2019)}
 #'
-#' This function apply the logarithmic regression using the method of \href{https://link.springer.com/article/10.1007/s00710-019-00682-y}{Zhong et al. (2019)}. This method considers the relationship between the logarithm of the REE atomic number vs their chondrite normalized values. For more information refer to the \href{https://link.springer.com/article/10.1007/s00710-019-00682-y}{Zhong et al. (2019)} and \href{https://doi.org/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)} for a discussion of its limitations to calculate La or Ce*.
+#' This function apply the logarithmic regression using the method of \href{https://link.springer.com/article/10.1007/s00710-019-00682-y}{Zhong et al. (2019)}. This method considers the relationship between the logarithm of the REE atomic number vs their chondrite normalized values. For more information refer to the \href{https://link.springer.com/article/10.1007/s00710-019-00682-y}{Zhong et al. (2019)} and \href{https://link.springer.com/article/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)} for a discussion of its limitations to calculate La or Ce*.
 #'
 #' @inheritParams model_REE
 #' @family model REE
@@ -30,11 +30,11 @@ modelZhong <- function(dat,
 }
 
 
-#' Model REE contents using the Chondrite-Lattice method of \href{https://doi.org/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)}
+#' Model REE contents using the Chondrite-Lattice method of \href{https://link.springer.com/article/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)}
 #'
 
 #' This function apply the Chondrite-Lattice method which is a linear regression between the misfit parameter from the lattice strain equation and the logarithm of their chondrite normalized values. At least 2 points are required to use this method.
-#' This method is based on the work of  \href{https://www.nature.com/articles/372452a0}{Blundy and Wood (1994)} but using chondrite normalized values as noted by \href{https://doi.org/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)}. Refer to \href{https://doi.org/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)} for details.
+#' This method is based on the work of  \href{https://www.nature.com/articles/372452a0}{Blundy and Wood (1994)} but using chondrite normalized values as noted by \href{https://link.springer.com/article/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)}. Refer to \href{https://link.springer.com/article/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)} for details.
 #'
 #' @inheritParams model_REE
 #' @family model REE
@@ -91,10 +91,10 @@ modelChondrite_lattice <- function(dat,
 }
 
 
-#' Model REE contents using the Chondrite-Onuma method of \href{https://doi.org/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)}
+#' Model REE contents using the Chondrite-Onuma method of \href{https://link.springer.com/article/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)}
 #'
 #' This function apply the Chondrite-Onuma method which is a quadratic regression between the ionic radius of the REE and the logarithm of their chondrite normalized values. At least 3 non-linear points are required to use this method.
-#'This method is based on the work of  \href{https://www.sciencedirect.com/science/article/abs/pii/S0012821X6880010X}{Onuma et al. (1968)} but using chondrite normalized values as noted by \href{https://doi.org/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)}. Refer to \href{https://doi.org/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)} for details.
+#'This method is based on the work of  \href{https://www.sciencedirect.com/science/article/abs/pii/S0012821X6880010X}{Onuma et al. (1968)} but using chondrite normalized values as noted by \href{https://link.springer.com/article/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)}. Refer to \href{https://link.springer.com/article/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)} for details.
 #'
 #' @inheritParams model_REE
 #' @family model REE

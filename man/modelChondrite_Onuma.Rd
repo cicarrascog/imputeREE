@@ -2,7 +2,7 @@
 % Please edit documentation in R/Model_Wrappers.r
 \name{modelChondrite_Onuma}
 \alias{modelChondrite_Onuma}
-\title{Model REE contents using the Chondrite-Onuma method of \href{https://doi.org/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)}}
+\title{Model REE contents using the Chondrite-Onuma method of \href{https://link.springer.com/article/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)}}
 \usage{
 modelChondrite_Onuma(
   dat,
@@ -67,7 +67,7 @@ a dataframe
 }
 \description{
 This function apply the Chondrite-Onuma method which is a quadratic regression between the ionic radius of the REE and the logarithm of their chondrite normalized values. At least 3 non-linear points are required to use this method.
-This method is based on the work of  \href{https://www.sciencedirect.com/science/article/abs/pii/S0012821X6880010X}{Onuma et al. (1968)} but using chondrite normalized values as noted by \href{https://doi.org/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)}. Refer to \href{https://doi.org/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)} for details.
+This method is based on the work of  \href{https://www.sciencedirect.com/science/article/abs/pii/S0012821X6880010X}{Onuma et al. (1968)} but using chondrite normalized values as noted by \href{https://link.springer.com/article/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)}. Refer to \href{https://link.springer.com/article/10.1007/s00410-023-02025-9}{Carrasco-Godoy and Campbell (2023)} for details.
 }
 \examples{
 Ballard_et_al_Zircon \%>\%  modelChondrite_Onuma(prefix = 'Zr', suffix = 'ppm')
