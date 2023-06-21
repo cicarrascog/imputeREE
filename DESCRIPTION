@@ -1,6 +1,6 @@
 Package: imputeREE
 Title: Impute Missing Rare Earth Element Data in Zircon
-Version: 0.0.1
+Version: 0.0.5
 Authors@R: 
     person(given = "Carlos",
            family = "Carrasco Godoy",
