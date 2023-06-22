@@ -1,8 +1,8 @@
 ## R CMD check results
 
-0 errors \| 0 warnings \| 1 note
+0 errors \| 0 warnings \| 0 note
 
--   This is a new release.
+
 
 ## from CRAN winbuilder (r-release)
 
@@ -12,9 +12,8 @@
 
 New submission
 
-Possibly misspelled words in DESCRIPTION: Blundy (12:55) \# Lastname REE
-(14:6) \# Acronym
+Possibly misspelled words are Last names.  
 
 Resubmission comments
 
-Added \<doi:\> in description and description files and spaces removed.
+URL fixed.
