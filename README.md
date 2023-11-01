@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/cicarrascog/imputeREE/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/cicarrascog/imputeREE/actions/workflows/R-CMD-check.yaml)
-[![DOI](https://zenodo.org/badge/513134235.svg)](https://zenodo.org/doi/10.5281/zenodo.8086692)
+[![DOI](https://zenodo.org/badge/409395192.svg)](https://zenodo.org/doi/10.5281/zenodo.7052610)
 <!-- badges: end -->
 
 Impute Missing Rare Earth Element Data in Zircon
